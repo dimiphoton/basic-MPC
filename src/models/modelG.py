@@ -3,15 +3,15 @@ import itertools
 
 def myedge(G,node1,node2):
     G.add_edge(node1,node2,
-    R={'value':10000000,'uncertainty':None},
+    R={'value':100,'uncertainty':None},
     dQ={'value':None,'uncertainty':None})
-    return
+    
 def mynode(G,nodename='noname',category='room',heated=False):
     G.add_node(nodename,
     category=category,
     T={'value':None,'uncertainty':None},)
     if category!='external':
-        G.nodes[nodename]['C']={'value':0.1,'uncertainty':None}
+        G.nodes[nodename]['C']={'value':100,'uncertainty':None}
         G.nodes[nodename]['dH']={'value':None,'uncertainty':None}
         G.nodes[nodename]['dT']={'value':None,'uncertainty':None}
         G.nodes[nodename]['Solarcoeff']={'value':0.0001,'uncertainty':None}
@@ -30,7 +30,7 @@ def makesingle():
     mynode(G,'room','room',heated=True)
     mynode(G,'exterior','external',heated=False)
     mynode(G,'boiler','external',heated=False)
-    G['room']['C']['value']=50000
+    G['room']['C']['value']=100
     return G
 
 
