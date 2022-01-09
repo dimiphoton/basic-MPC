@@ -1,7 +1,7 @@
 import numpy as np
 import os
 import pandas as pd
-
+import os.path
 def load_data_multi_room():
     room_filenames = [("temperature_bathroom.csv", "bath"), 
                       ("temperature_bedroom_1.csv", "bed_1"), 
