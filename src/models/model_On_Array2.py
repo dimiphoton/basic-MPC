@@ -2,6 +2,7 @@
 from datetime import *
 import os
 from pyexpat import features
+from statistics import mean
 import pandas as pd
 import ast
 import numpy as np
@@ -98,7 +99,7 @@ class mainmodel():
         self.param['Pocc']=np.ones(self.nbrooms)
 
         self.param2optimize=['Lambda','C','Prad']
-        self.update_theta()         
+        self.theta= np.concatenate([self.param[key] for key in self.param2optimize])   
         
     
 
@@ -109,8 +110,11 @@ class mainmodel():
         """
         updates the theta attribute (array) from param dic and param2optimize liste
         """
-        #print([self.param[key] for key in self.param2optimize])
+        #print('liste à concaténer',[self.param[key] for key in self.param2optimize])
+        #print('concatenration',np.concatenate([self.param[key] for key in self.param2optimize]))
+        #print('theta avant',self.theta)
         self.theta= np.concatenate([self.param[key] for key in self.param2optimize])
+        #print('theta après',self.theta)
 
             
 
@@ -311,6 +315,7 @@ class mainmodel():
                                                      ,occupancy=dic['occupancy'][line]\
                                                      ,timestep=dic['timestep'][line]\
                                                      ,noisymeasure=noisymeasure)
+        #print('rms',mean_squared_error(dic['predicted'],dic['next_state']))
 
     
     def res1(self,theta,dic,noisymeasure=False):
@@ -321,9 +326,9 @@ class mainmodel():
 
     def metric1(self,theta,dic,noisymeasure=False):
         self.set_theta(theta)
-        self.update_theta
-        print(self.theta)
-        print(self.param)
+        self.update_theta()
+        #print(self.theta)
+        #print(self.param)
         self.predict1(dic,noisymeasure=noisymeasure)
         
 
