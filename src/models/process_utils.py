@@ -53,3 +53,20 @@ def row_to_dayANDmin(row):
     badstring=row['time']
     goodstring=badstring.replace("T"," ").replace("Z","")
     return goodstring.split(" ")
+
+def load_df(filename):
+    df=pd.read_csv(filename,header=[0,1])
+    MI=pd.MultiIndex.from_tuples(df,names=['data','zone'])
+    MI2=[]
+    for tuple in MI:
+        if tuple[1].startswith('Unnamed:'):
+            MI2.append((tuple[0],''))
+        else:
+            MI2.append(tuple)
+    df.columns=pd.MultiIndex.from_tuples(MI2,names=['data','zone'])
+    
+    df.set_index(["uniqueday_Id","sequence_Id","intraday_Id"],inplace=True)
+    
+    return df
+
+

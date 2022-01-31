@@ -40,7 +40,7 @@ class mainmodel():
             self.nbzones=2
                         
             self.edges=[]
-            self.edges=[(1,2)]
+            self.edges=[(0,1)]
             self.colnames=['singlezone_temperature','singlezone_setpoint']
 
         elif maison=='multiroom':
@@ -204,7 +204,7 @@ class mainmodel():
 
         #PARTIE RADIATEURS
 
-        heating_array=self.heating(state[:-self.nbextra],Tset)
+        heating_array=self.heating(state[:self.nbheated],Tset)
 
         for i in range(self.nbheated):
             dH[i] += timestep*heating_array[i]
@@ -272,10 +272,10 @@ class mainmodel():
         """
         pass
 
+    
 
 
-
-    def level1_pred(self,X,y,recordingIndex, debug=False):
+    def level1_pred(self,X,y,recordingIndex=('2020-05-24', 0.0), debug=False):
 
         """
         this function takes a recording and returns a tuple (record mse, record size)
@@ -298,12 +298,15 @@ class mainmodel():
             #predicted=self.daysimulate(initialState, Text_array, Tset_array, timestep_array, save=False)[:,0:len(self.diczones['heated']['T'])]
 
             #return mean_squared_error(predicted,recorded)*len(predicted)/(np.shape(predicted)[0] * 10000)
-            if debug==True:
-                return initialState, Text_array, Tset_array, timestep_array
+
             if debug==False:
                 return predicted,recorded
-        except:
-            print('ERREUR au niveau de ', recordingIndex)
+        #except:
+        #    if debug==True:
+        #        return initialState, Text_array, Tset_array, timestep_array
+        #    print('ERREUR au niveau de ', recordingIndex)
+        except Exception as e:
+            print(e)
 
     def level0_pred(self,X,y):
         """

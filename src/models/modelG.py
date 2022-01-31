@@ -34,19 +34,22 @@ def makesingle():
     return G
 
 
-def makemulti():
+def makemulti(rooms=['bath','bed1','bed2','bed3','dining','kitchen','living'],
+            extrarooms=['hall'],
+            external=['exterior','boiler']):
     G=nx.Graph()
-    rooms=['bath','bed1','bed2','bed3','dining','kitchen','living']
-    extrarooms=['hall']
-    external=['exterior','boiler']
+    
+    
+    
 
     #créer les zones chauffées, les heaters, les edges
     for zone in rooms:
         mynode(G,zone,'room',heated=True)
     
     #créer les zones non chauffées
-    for zone in extrarooms:
-        mynode(G,zone,'room',heated=False)
+    if extrarooms != None:
+        for zone in extrarooms:
+            mynode(G,zone,'room',heated=False)
     
     #créer l'exterieur
     for zone in external:
