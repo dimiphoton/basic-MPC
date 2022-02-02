@@ -196,7 +196,7 @@ class mainmodel():
         #days=np.unique([index[0] for index in self.raw.index])
         #seq=np.unique([index for index in self.raw.index])
         lines=self.raw.index
-        self.split_array=train_test_split(lines,test_size=0.5, random_state=seed)
+        self.split_array=train_test_split(lines,test_size=0.99998, random_state=seed)
 
         self.trainarray=self.make_transition_dict(self.raw.loc[self.split_array[0]].sort_index())
         self.testarray=self.make_transition_dict(self.raw.loc[self.split_array[1]].sort_index())
