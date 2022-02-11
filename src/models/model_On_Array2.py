@@ -11,23 +11,20 @@ import dataprocessing2
 from sklearn.metrics import mean_squared_error
 import itertools
 import process_utils
+import random
 
 
 
 class mainmodel():
     def __init__(self,maison='singleroom',extrafeatures=dict()) -> None:
 
-
+        self.noisymeasure=False
         self.param=dict()
         self.magnitude=dict()
         self.param['temperature_noise']=np.array([0.0])
         self.param['obs_noise']=np.array([0.1])
-        
-        self.param['Qfamily']=np.array([0.5])
-        self.magnitude['Qfamily']=1000.0
         self.param['log_f'] = np.array([1.0])
-
-
+        self.param['valverange']=1
         self.guessPrad=1.0
         self.guessC=1.0
         self.guessLambda=1.0
@@ -42,7 +39,7 @@ class mainmodel():
                             'outside':['outside'],
                             'ground':[]}
             self.edges=dict()
-            self.edges['floor0-outside']=[(0,1)]
+            self.edges['floor0-outside']=[(0,1),(0,1)]
             self.param['Lambda']=self.guessLambda*np.ones(1)
 
 
@@ -62,7 +59,7 @@ class mainmodel():
             self.edges['floor1-floor1']=list(itertools.permutations([0, 1, 2, 3], 2))
             self.edges['floor0-floor1']=list(itertools.product([0,1,2,3],[4,5,6]))+list(itertools.product([4,5,6],[0,1,2,3]))
             self.edges['floor0-outside']=list(itertools.product([7],[4,5,6]))+list(itertools.product([4,5,6],[7]))
-            self.edges['floor1-outside']=list(itertools.product([7],[4,5,6]))+list(itertools.product([4,5,6],[7]))
+            self.edges['floor1-outside']=list(itertools.product([7],[0,1,2,3]))+list(itertools.product([0,1,2,3],[7]))
 
             self.param['Lambda']=self.guessLambda*np.ones(5)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
@@ -75,12 +72,14 @@ class mainmodel():
         self.magnitude['Lambda']=0.0010
         self.param['C']=self.guessC*np.ones(self.nbrooms)
         self.magnitude['C']=1000000.0
-        self.param['Prad']=self.guessPrad*np.ones(self.nbrooms)
-        self.magnitude['Prad']=700
-        self.param['ThetaRad1']=5.0*np.ones(self.nbrooms)
-        self.param['ThetaRad2']=1.0*np.ones(self.nbrooms)
+        self.param['Prad']=self.guessPrad*np.array([1])
+        self.magnitude['Prad']=1
+        #self.param['ThetaRad1']=5.0*np.ones(self.nbrooms)
+        #self.param['ThetaRad2']=1.0*np.ones(self.nbrooms)
+        self.param['Tadd']=np.ones(self.nbrooms)
+        self.magnitude['Tadd']=3
         #self.param['valverange']=np.array([5])
-        self.magnitude['Pocc']=100.0
+        self.magnitude['Pocc']=0
         self.param['Pocc']=np.ones(self.nbrooms)
 
         self.param2optimize=['Lambda','C','Prad']
@@ -127,16 +126,26 @@ class mainmodel():
         for i in range(self.nbzones):
             self.Lmatrix[i][i]=-np.sum(self.Lmatrix[i])
 
-    def make_trajectory_dict(self,df):
+    def make_trajectory_dict(self,df,days):
         """
         returns dictionary 'data': list(sequence) of 2darray data
         """
-        days=np.unique([index[0] for index in df.index])
+        D=dict()
+        for day in days:
+            D[day]=dict()
+            for nom, liste in self.features.items():
+                D[day][nom]=df.loc[day,liste].to_numpy()
+        return D
+
+    def make_day_trajectory_dict(self,df,random_day=True):
+        """
+        returns dictionary 'data': 2darray data
+        """
+        if random_day:
+            day=random.choice(df.index.levels[0])
         D=dict()
         for nom, liste in self.features.items():
-            D[nom]=[]
-            for day in days:
-                D[nom].append(df.loc[day,liste].to_numpy())
+            D[nom]=df.loc[day,liste].to_numpy()
         return D
         
 
@@ -179,24 +188,12 @@ class mainmodel():
         if addoccupancy:
             self.raw.loc[:,('occupancy','')]=True
 
+        self.traindays,self.testdays=train_test_split(np.unique(self.raw.index.get_level_values(0))[40:65],test_size=0.3,random_state=seed)
+        self.traindic=self.make_trajectory_dict(self.raw,self.traindays)
+        self.testdic=self.make_trajectory_dict(self.raw,self.testdays[0:10])
 
-        #tuplesX=[('Tset',i) for i in self.rooms] \
-        #       +[('T',i) for i in self.rooms+['outside']] \
-        #       +[(feature,'') for feature in self.features] \
-        #       +[('Rad',i) for i in self.rooms]
-
-        #tuplesY=[('Tnext',i) for i in self.rooms]
-
-        #self.X.loc[:,tuplesX]=self.raw.loc[:,tuplesX]
-        #self.X.columns=pd.MultiIndex.from_tuples(tuplesX, names=('data', 'zone'))
-        #self.y.loc[:,tuplesY]=self.raw.loc[:,tuplesY]
-        #self.y.columns=pd.MultiIndex.from_tuples(tuplesY, names=('data', 'zone'))
-
-
-        #days=np.unique([index[0] for index in self.raw.index])
-        #seq=np.unique([index for index in self.raw.index])
         lines=self.raw.index
-        self.split_array=train_test_split(lines,test_size=0.99999, random_state=seed)
+        self.split_array=train_test_split(lines,test_size=0.5, random_state=seed)
 
         self.trainarray=self.make_transition_dict(self.raw.loc[self.split_array[0]].sort_index())
         self.testarray=self.make_transition_dict(self.raw.loc[self.split_array[1]].sort_index())
@@ -226,25 +223,30 @@ class mainmodel():
                 if state[i]-Twater+self.param['ThetaRad1'][i]>0:
 
                     coeff=min(self.param['valverange']*np.subtract(Tset[i],state[i]),1)
-                    heating_array=self.param['Prad'][i] *(np.log((state[i]-Twater+self.param['ThetaRad1'][i])/(state[i]-Twater+self.param['ThetaRad2'][i])))**(-1.33)
+                    coeff=1
+                    try:
+                        heating_array=self.param['Prad'][i] *(np.log((state[i]-Twater+self.param['ThetaRad1'][i])/(state[i]-Twater+self.param['ThetaRad2'][i])))**(-1.33)
+                        #heating_array=self.param['Prad'][i] * (state[i]-Twater+self.param['ThetaRad1'][i])/(state[i]-Twater+self.param['ThetaRad2'][i])
+                    except:
+                        heating_array=0
                     command[i]=coeff*heating_array
                 else:
                     command[i]=0
         
         return command
 
-    def heating(self,switch):
+    def heating(self,Tset,Twater,state):
 
         """
         returns instant heating array
         """
-        command=np.zeros_like(switch)
-        for i,s in enumerate(switch):
-            if s:
-                command[i]=self.param['Prad'][i]
+        Q=np.zeros_like(state)
+        for index,value in enumerate(state):
+            if Tset[index]>(state[index]-1):
+                Q[index]=self.param['Prad']*(Twater-state[index])
             else:
-                command[i]= 0
-        return command
+                Q[index]= 0
+        return Q
 
     def heating_occupancy(self,occupancy):
         return 0
@@ -254,13 +256,12 @@ class mainmodel():
 
     
     def thermalmodel(self,state=0,Tset=0,external=0,Twater=0 \
-                    , occupancy=True, switch=True, timestep=300, noisymeasure=False, debug=False):
+                    , occupancy=False, switch=True, timestep=300, debug=False):
         """
         returns next state given current state, Text,timestep
         """
-
         #zones=np.concatenate((state, Text,Tbasement))
-        print('state',state)
+        #print('state',state)
         dH=np.zeros_like(state)
         #print('dH ligne 264',dH)
 
@@ -285,11 +286,11 @@ class mainmodel():
         #print(Tset)
         #print(Twater)
         #print(switch)
-        dH+=timestep*self.heating(switch)
+        dH+=timestep*self.heating(Tset,Twater,state)
         #print('dH ligne 288',dH)
         #PARTIE occupation
         #print(occupancy)
-        if occupancy[0]==True:
+        if occupancy:
             dH+=timestep*self.magnitude['Pocc']*self.param['Pocc']*np.ones_like(state)
         #print('dH ligne 294', dH)
 
@@ -297,18 +298,17 @@ class mainmodel():
         #conversion température
         fulldT=dH*np.reciprocal(self.magnitude['C'] * self.param['C'])
         #print('fulldT ligne 298',fulldT)
-        state += fulldT
+        result= state + fulldT
 
         #ajout bruit thermique
-        noisymeasure=False
-        if noisymeasure:
+        if self.noisymeasure:
             if self.param['temperature_noise'][0] >0.0:
-                state += (self.param['temperature_noise'][0]**0.5)*np.random.randn(self.nbrooms)
+                result += (self.param['temperature_noise'][0]**0.5)*np.random.randn(self.nbrooms)
         
-        return state
+        return result
 
 
-    def predict1(self,dic,noisymeasure=False):
+    def predict1(self,dic):
         dic['predicted']=np.empty_like(dic['state'])
         for line,vector in enumerate(dic['state']):
             dic['predicted'][line]=self.thermalmodel(state=dic['state'][line]\
@@ -317,27 +317,68 @@ class mainmodel():
                                                      ,Twater=dic['Twater'][line]\
                                                      ,switch=dic['switch'][line]\
                                                      ,occupancy=dic['occupancy'][line]\
-                                                     ,timestep=dic['timestep'][line]\
-                                                     ,noisymeasure=noisymeasure)
+                                                     ,timestep=dic['timestep'][line])
         #print('rms',mean_squared_error(dic['predicted'],dic['next_state']))
 
     
-    def res1(self,theta,dic,noisymeasure=False):
+    def res1(self,theta,dic):
         self.set_theta(theta)
         self.update_theta
-        self.predict1(dic,noisymeasure=noisymeasure)
+        self.predict1(dic)
         return (dic['predicted']-dic['next_state']).flatten()
 
-    def metric1(self,theta,dic,noisymeasure=False):
+    def metric1(self,theta,dic):
         self.set_theta(theta)
         self.update_theta()
         #print(self.theta)
         #print(self.param)
-        self.predict1(dic,noisymeasure=noisymeasure)
+        self.predict1(dic)
         
 
         return mean_squared_error(dic['next_state'],dic['predicted'])
 
+    def dic_simulate(self,dic):
+        """
+        simulate on a dic of datadic
+        """
+
+        for day,data in dic.items():
+            self.simulate(data)
+
+    def metric2(self,theta,dic):
+        """
+        returns mse of double dic
+        """
+        self.set_theta(theta)
+        self.update_theta()
+        self.dic_simulate(dic)
+        mse=[mean_squared_error(data['predicted'],data['state']) for day,data in dic.items()]
+        return np.linalg.norm(mse)/len(mse)
+
+
+    
+
+    def simulate(self,dic):
+        """
+        simulate on a datadic
+        """
+        temp=np.zeros(shape=(dic['state'].shape[0]+1,dic['state'].shape[1]))
+        temp[0]=(dic['external'][0]+7)*np.ones(self.nbrooms)
+        for i, out in enumerate(dic['external']):
+            temp[i+1] = self.thermalmodel(temp[i]\
+                                          ,dic['Tset'][i]\
+                                          ,dic['external'][i]\
+                                          ,dic['Twater'][i]\
+                                          ,dic['occupancy'][i]\
+                                          ,dic['switch'][i]\
+                                          ,dic['timestep'][i])
+                                                      
+        dic['predicted']=temp[1:]
+
+
+
+    def errorplot(self):
+        liste=(self.trainarray['next_state']-self.trainarray['predicted'])**2
 
 
     def log_likelihood(self,theta, out_temperature, obs_temperature):

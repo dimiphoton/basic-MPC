@@ -87,7 +87,7 @@ def makedf():
     for idx0, data0 in DF.groupby(level=0):
         sequ_Id=0
         for idx1,row in data0.iterrows():
-            if row['timestep','']<1800:
+            if row['timestep','']<5400:
                 DF.at[idx1,('sequence_Id','')]=sequ_Id
             else:
                 #print(idx1,row[('timestep','')])
