@@ -48,7 +48,7 @@ This project should not be some notebooks, but a good quality code with document
 
 ## teaching
 
-This project should leave a how-to manual on organizing a project: which classes to create, is cookiecutter useful, how to copy code from tutorials, how to keep trace of the project structure, how prototyping and mlops differ, how to use vscode to code faster.
+This project should leave a how-to manual on organizing a project: which classes to create, are decorators of any use, is cookiecutter useful, how to copy code from tutorials, how to keep trace of the project structure, how prototyping and mlops differ, how to use vscode to code faster.
 
 In a nutshell, which questions should the modeler asks himself and how and how long time to do it.
 
