@@ -1,57 +1,63 @@
 Building MPC ULG project
 ==============================
 
-modelling building thermal response with data
 
-Project Organization
-------------
+# the goal
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+the goal is to practice statistical inference and later to learn model predictive control.
 
+# the project
 
---------
+## what is given
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+a data set of a house temperature behaviour given time, heater command.
+
+## what is expected
+
+EVERYTHING IS PIPELINED FROM THE START
+
+### building thermal response
+
+a building response model should be proposed:
+
+- base model
+- model with single room or all the rooms
+- the sensor themselves have a reading model
+
+### statistical inference model
+
+- write a full statistical inference pipeline with model, optimizer, bayesian modeling
+
+### vizualisation
+
+- propose a simple vizualisation (I think the phase plot is good)
+- set up a little dashboard
+
+### model predictive control
+
+- build a little simulator
+- given the price of fuel and a metric of confort, use pyzo to optimize the mpc given a 24h weather/occupancy etc forecast
+- try to think about uncertainty
+- compare the concumption to a binary command
+
+# How this project should be done
+
+## code
+
+This project should not be some notebooks, but a good quality code with documentation, modularity,
+
+## teaching
+
+This project should leave a how-to manual on organizing a project: which classes to create, is cookiecutter useful, how to copy code from tutorials, how to keep trace of the project structure, how prototyping and mlops differ, how to use vscode to code faster.
+
+In a nutshell, which questions should the modeler asks himself and how and how long time to do it.
+
+## nice to have
+
+- get rid of the data and build a data generator with a model (different from the later infered)
+
+# what was done/tried
+
+- the source code is in the [/old folder](old/src)
+- my first attempt lead to big classes either [with arrays](old/src/models/model_On_Array2.py) or [with networkX graphs]([old/src/models/Model_On_G.py])
+

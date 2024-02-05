@@ -1,4 +1,0 @@
-name: buildingmpc
-channels:
-  - defaults
-prefix: /home/dimi/miniconda3/envs/buildingmpc
