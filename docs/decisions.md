@@ -21,3 +21,4 @@
 | 2026-08-30 | R2C2 : C_a=1, Nelder-Mead, plafond R_ae → τ_air ≤ 139 h | BFGS ; R,C libres | BFGS partait dans des A singulières. Le plafond évite un R_ae infini ; les deux τ restent lentes — le R2C2 n'est pas un air rapide + masse. |
 | 2026-08-30 | Modèle interne MPC = R2C2 plant **sans** `α_s,mass`, pas le fit maison | Réutiliser le R2C2 identifié sur le salon | τ ~ 140 h et l'échelle de P du salon ne commandent pas le plant (~3 h / ~11 h). La non-circularité tient à `α_s,mass`. |
 | 2026-08-30 | MPC : QP condensé SciPy, horizon 6 h, blocs 30 min ; météo oracle | cvxpy ; prévisions imparfaites | SciPy déjà dans la stack. L'oracle est une limite à dire : on mesure le gain du modèle, pas d'un prévisionniste. |
+| 2026-08-30 | Slides RH : S6+S4 ; technique : Kalman+I1+S5 | Reprendre I1 côté RH ; Bode / Nyquist | RMSE brut décroche un RH. Le technique a besoin du Kalman et de la commande, pas du même barplot confort. |

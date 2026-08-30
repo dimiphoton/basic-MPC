@@ -16,4 +16,4 @@ Figures : catalogue dans `docs/visualisations.md`. On les génère dans
 - [x] Identification R1C1 + filtre de Kalman (`feature/identification-r1c1`)
 - [x] Identification R2C2 et comparaison multi-horizon (`feature/comparaison-r1c1-r2c2`)
 - [x] MPC à horizon glissant vs thermostat bang-bang (`feature/mpc-vs-bang-bang`)
-- [ ] Polish portfolio : README, slides, limites (`feature/portfolio-slides`)
+- [x] Polish portfolio : README, slides, limites (`feature/portfolio-slides`)

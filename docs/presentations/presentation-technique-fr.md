@@ -7,10 +7,9 @@ paginate: true
 <!-- _class: cover -->
 <!-- _paginate: false -->
 
-<!-- Photo : pictures/presentations/photos/hero.png -->
-<!-- ![bg brightness:0.40](../../pictures/presentations/photos/hero.png) -->
+![bg brightness:0.40](../../pictures/presentations/photos/hero.jpg)
 
-# Un modèle RC identifiable
+# Un RC identifiable
 # suffit-il au MPC ?
 
 Machine learning · Bâtiment · Python / NumPy / SciPy
@@ -21,64 +20,75 @@ Maison instrumentée · 2020 · ~5 min
 
 <!-- _class: split -->
 
-<!-- ![bg left:46%](../../pictures/presentations/photos/motivation.png) -->
+![bg left:46%](../../pictures/presentations/photos/action.jpg)
 
-# [Pourquoi
-# mesurer ça.]
+# L'erreur se juge
+# à 24 heures.
 
-[Enjeu chiffré si on l'a. Coût d'une mauvaise décision.]
+À un pas, R1C1 et R2C2 sont à égalité : 0,56 °C.
 
-**[Ce qui manque aujourd'hui pour trancher.]**
+**À 24 h, le second état gagne 0,2 °C. C'est pour ça qu'on le garde.**
 
 ---
 
 <!-- _class: split -->
 
-<!-- ![bg left:46%](../../pictures/presentations/photos/hero.png) -->
+![bg left:46%](../../pictures/presentations/photos/cta.jpg)
 
-# [Qui consomme
-# le résultat.]
+# Le livrable
+# est le contrôleur.
 
-[Agence / régulateur]. [Opérateur / assureur / bureau d'études].
+Pas un dashboard. Pas un rapport d'identification.
 
-Le livrable : [indicateur, vue, reco], pas un rapport.
+Bureaux d'études et exploitants : une commande, une bande de confort, un plant distinct.
 
 ---
 
 <!-- _class: full -->
 
-<!-- ![bg brightness:0.38](../../pictures/presentations/photos/physique.png) -->
+![bg brightness:0.38](../../pictures/presentations/photos/cta.jpg)
 
-# [Mécanisme.]
+# Deux échelles.
+# Un état caché.
 
-[Physique ou processus : pluie → saturé → rendement, courbe de charge, Espec…]
-
----
-
-<!-- _class: split -->
-
-<!-- ![bg left:46%](../../pictures/presentations/photos/motivation.png) -->
-
-# [Logique du
-# traitement.]
-
-Salon + extérieur, maille 5 min. Interpolation limitée à 10 min.
-
-On ne ponte pas un trou de 12 h. Quantification 0,1 °C (salon) vs 1 °C (extérieur) : modèle de capteur, pas de RC.
-
-Pas de watts mesurés : `P` = écart eau/air si la zone demande, `S` = PV.
+L'air réagit. La masse stocke.
+Le capteur ne voit que l'air, et encore : par 0,1 °C.
 
 ---
 
 <!-- _class: split -->
 
-<!-- ![bg left:46%](../../pictures/presentations/photos/physique.png) -->
+![bg left:46%](../../pictures/presentations/photos/action.jpg)
 
-# [Ce qu'on isole.]
+# Logique du
+# traitement.
 
-On retire [confondant]. Ce qui reste, c'est [cible].
+Salon + extérieur, maille 5 min. Interpolation plafonnée à 10 min.
 
-Pas [ce qu'on ne prétend pas].
+Un trou de 12 h reste un trou. Quantification 0,1 °C vs 1 °C : capteur, pas RC.
+
+Pas de watts : `P` = écart eau/air si la zone demande, `S` = PV.
+
+---
+
+<!-- _class: split -->
+
+![bg left:46%](../../pictures/presentations/photos/hero.jpg)
+
+# Ce qu'on isole.
+
+PEM : vraisemblance des innovations Kalman, split 70/30, fit sur 50 jours d'hiver.
+
+On retire la quantification du capteur de la dynamique.
+Ce qui reste, ce sont `R`, `C` et des gains proxy.
+
+---
+
+<!-- _class: chart -->
+
+## Kalman : prédire, innover, mettre à jour — à la main.
+
+![w:920](../../pictures/presentations/schema-kalman.png)
 
 ---
 
@@ -86,54 +96,73 @@ Pas [ce qu'on ne prétend pas].
 
 # Périmètre.
 
-On identifie un RC sur capteurs réels. On teste le MPC sur un plant littérature.
+On identifie un RC sur capteurs réels.
+On teste le MPC sur un plant littérature.
 
-On n'est pas une validation en maison réelle : le solaire du plant tape aussi les murs.
+Le solaire du plant tape aussi les murs. Ce n'est pas une validation en maison.
 
 ---
 
 <!-- _class: chart -->
 
-[Baseline / tendance / donnée brute — titre-phrase.]
+## Le second état se lit après 6 h, pas au pas suivant.
 
-<!-- ![w:920](../../pictures/presentations/baseline-fr.png) -->
+![w:920](../../pictures/presentations/i1-rmse-horizons.png)
 
 ---
 
 <!-- _class: full -->
 
-<!-- ![bg brightness:0.38](../../pictures/presentations/photos/physique.png) -->
+![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# [Résultat principal]
-# [métrique + n]
+# 0 h hors bande
+# après 2 h de montée.
+
+Bang-bang : 7 h. Même météo, même plant, même graine.
 
 ---
 
 <!-- _class: chart -->
 
-[Graphe de *ce* récit technique — pas forcément celui du deck RH.]
+## Tout-ou-rien contre une commande dosée sur 6 h.
 
-<!-- ![w:980](../../pictures/presentations/graphique-cle-fr.png) -->
+![w:980](../../pictures/presentations/s5-commande-p.png)
 
 ---
 
 <!-- _class: split -->
 
-<!-- ![bg left:40%](../../pictures/presentations/photos/hero.png) -->
+![bg left:40%](../../pictures/presentations/photos/action.jpg)
 
-# [Robustesse.]
+# Horizon glissant.
 
-[Spatial / années / n]. [Ce qui n'est pas indépendant.]
+Six heures d'avance. Commande constante par blocs de 30 min.
 
-<!-- ![w:480](../../pictures/presentations/carte-ou-robustesse-fr.png) -->
+Kalman à chaque pas. SciPy, pas cvxpy. Météo future connue (oracle).
 
 ---
 
-<!-- _class: chart -->
+<!-- _class: split -->
 
-Pourquoi pas [modèle tape-à-l'œil] ? n = […]. [Modèle retenu + validation.]
+![bg left:40%](../../pictures/presentations/photos/cta.jpg)
 
-<!-- ![w:640](../../pictures/presentations/validation-fr.png) -->
+# Pas circulaire.
+
+Même `u`, deux physiques : le plant a `α_s,mass`.
+
+Le R2C2 maison (τ ~ 140 h) ne pilote pas ce plant.
+Le modèle interne reprend la structure d'identification, sans solaire sur la masse.
+
+---
+
+<!-- _class: dark -->
+
+# Pourquoi pas le R2C2 salon.
+
+Les deux constantes de temps saturent vers 140 h.
+Ce n'est pas un air rapide plus une masse.
+
+On le dit. On ne s'en sert pas comme modèle interne du plant.
 
 ---
 
@@ -141,24 +170,27 @@ Pourquoi pas [modèle tape-à-l'œil] ? n = […]. [Modèle retenu + validation.
 
 # Où ça casse.
 
-[Limite 1.]
+Prévisions météo parfaites (oracle).
 
-[Limite 2.]
+`P` n'est pas des watts.
 
-[Limite 3. Corrélation ≠ cause si pertinent.]
+Une maison, un hiver de fit, pas un parc.
 
 ---
 
 <!-- _class: cta -->
 
-<!-- ![bg brightness:0.30](../../pictures/presentations/photos/cta.png) -->
+![bg brightness:0.30](../../pictures/presentations/photos/cta.jpg)
 
 # Reproduire.
 
-[Explorer en ligne](../explore-fr.html)
+[Slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-technique-fr.html)
+[Repo](https://github.com/dimiphoton/basic-MPC)
 
-`python -m basic_mpc run`
+`python -m basic_mpc mpc-vs-bang-bang`
 
-`python -m basic_mpc dashboard`
+`pytest`
 
-<!-- Badges de stack ici, pas en slide 1 recruteur. -->
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white)

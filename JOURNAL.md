@@ -1,5 +1,12 @@
 # Journal de développement
 
+## 2026-08-30 — Polish portfolio
+
+- Quatre decks Marp remplis (RH ≠ technique). RH : 0 h vs 7 h, graphes S6 et S4.
+  Technique : RMSE multi-horizon, Kalman, S5, non-circularité, τ 140 h.
+- README en v1.0 : limites, figure S6, liens GitHub Pages (pas le `.md`).
+- Graphes slides : S4, S5, S6, I1, schéma Kalman. Pas de dashboard.
+
 ## 2026-08-30 — MPC vs bang-bang
 
 - Boucle fermée 48 h sur le plant littérature (`α_s,mass` > 0). Modèle interne
