@@ -56,7 +56,8 @@ tests/
 docs/presentations/   # Marp sources
 ```
 
-French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`.
+French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`,
+`docs/visualisations.md`.
 
 ## Presentations
 
