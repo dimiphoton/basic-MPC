@@ -10,13 +10,13 @@ paginate: true
 <!-- Photo: pictures/presentations/photos/hero.png -->
 <!-- ![bg brightness:0.40](../../pictures/presentations/photos/hero.png) -->
 
-# [Human question]
-# on two or three
-# lines?
+# Can we heat
+# a house
+# by looking ahead?
 
-[Role] · [Domain] · [Stack]
+Machine learning · Buildings · Python / NumPy / SciPy
 
-Wallonia · period
+Instrumented house · 2020 · ~5 min
 
 ---
 

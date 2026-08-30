@@ -5,7 +5,9 @@ import argparse
 
 def main() -> None:
     """Point d'entrée principal du CLI."""
-    parser = argparse.ArgumentParser(description="À compléter")
+    parser = argparse.ArgumentParser(
+        description="Grey-box RC, Kalman et MPC chauffage",
+    )
     parser.parse_args()
 
 

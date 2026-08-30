@@ -1,25 +1,29 @@
 # Objectif du projet
 
-- **But** : pratiquer l'inférence statistique, puis le model predictive
-  control (MPC), sur le comportement thermique d'une maison (températures
-  par pièce, commande de chauffage, production PV).
-- **Origine** : ancien projet ULG. Le code d'origine est archivé sur la
-  branche `old` (notebooks, classes trop grosses avec arrays ou NetworkX).
-  Reprise pour le portfolio : code modulaire, documenté, pas des notebooks.
-- **Contraintes de départ** : jeu de données imposé (séries de températures
-  par pièce, chauffage, extérieur, PV). Pipeline dès le départ.
+- **But** : inférer un modèle thermique grey-box (RC) crédible à partir
+  de capteurs réels, avec modèle de capteur et filtre de Kalman, puis
+  s'en servir comme modèle interne d'un MPC du chauffage. Le simulateur
+  (plant) n'est pas fourni : il est à coder, distinct du modèle identifié.
+- **Origine** : reprise d'un projet ULG (code archivé sur la branche
+  `old`). Briefs dans `brief/01-thermique-grey-box-mpc.md` et
+  `brief/Cadrage de la modélisation thermique.md`.
+- **Contraintes de départ** : données imposées (températures par pièce,
+  circuit de chauffage, extérieur, PV/charge). Pas de puissance de
+  chauffage ni d'ensoleillement mesurés tels quels. Kalman à la main.
+  Comparer **R1C1** (baseline) et **R2C2** (cible si les horizons longs
+  le justifient).
 
-Attendu (formulation d'origine, à affiner en roadmap) :
+Décisions de cadrage (2026-08-30) :
 
-- modèle de réponse thermique du bâtiment (base, une pièce / toutes les
-  pièces, modèle de lecture des capteurs) ;
-- pipeline d'inférence statistique (modèle, optimiseur, bayésien) ;
-- visualisation simple + petit dashboard ;
-- simulateur MPC (prix du combustible, confort, prévision 24 h,
-  incertitude, comparaison à une commande binaire).
+- v1 **mono-zone** : salon (`temperature_livingroom.csv`).
+- Entrée chauffage `P` **construite** (eau du circuit + consignes),
+  documentée comme n'étant pas une puissance mesurée.
+- PV comme **proxy solaire** possible, à valider sur les données.
+- Identification sur le **réel** ; boucle fermée MPC sur le **plant
+  simulé** (évite la circularité).
+- Hors v1 : Airflow, AWS S3, MLflow, multi-zone. Docker seulement
+  en polish si le temps le permet.
+- Contrôle : le livrable est le MPC ; le métier affiché reste le ML
+  (baseline, validation, incertitude).
 
-Nice to have : générateur de données à la place du jeu brut, avec un
-modèle distinct de celui inféré ensuite.
-
-Métier, domaine et stack se remplissent dans `brief/identite.md` (source
-du bandeau README / covers / topics GitHub), pas ici.
+Métier, domaine et stack : `brief/identite.md`.

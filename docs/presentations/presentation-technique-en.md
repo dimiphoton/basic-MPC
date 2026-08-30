@@ -10,12 +10,12 @@ paginate: true
 <!-- Photo: pictures/presentations/photos/hero.png -->
 <!-- ![bg brightness:0.40](../../pictures/presentations/photos/hero.png) -->
 
-# [Research question]
-# as one assertion
+# Can an identifiable RC model
+# drive a heating MPC?
 
-[Role] · [Domain] · [Stack]
+Machine learning · Buildings · Python / NumPy / SciPy
 
-Wallonia · period · data grain
+Instrumented house · 2020 · ~5 min
 
 ---
 

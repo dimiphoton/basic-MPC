@@ -10,13 +10,13 @@ paginate: true
 <!-- Photo : pictures/presentations/photos/hero.png -->
 <!-- ![bg brightness:0.40](../../pictures/presentations/photos/hero.png) -->
 
-# [Question humaine]
-# sur deux ou trois
-# lignes ?
+# Peut-on chauffer
+# une maison
+# en anticipant ?
 
-[Métier] · [Domaine] · [Stack]
+Machine learning · Bâtiment · Python / NumPy / SciPy
 
-Wallonie · période
+Maison instrumentée · 2020 · ~5 min
 
 ---
 

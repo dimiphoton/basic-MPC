@@ -1,7 +1,7 @@
 [project]
 name = "basic-mpc"
 version = "0.1.0"
-description = ""
+description = "Grey-box RC thermal model and heating MPC"
 requires-python = ">=3.11"
 dependencies = []
 

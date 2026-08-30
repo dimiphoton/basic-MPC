@@ -1,30 +1,36 @@
-# Project name
+# Grey-box thermal model and heating MPC
 
 | | |
 |---|---|
-| **Role** | TBD — BI / Data engineering / Machine learning / Geospatial |
-| **Domain** | TBD — Energy / Agriculture / Buildings / Mobility / Public statistics |
-| **Stack** | TBD — e.g. ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) (4–5 badges max) |
-| **Level** | TBD (Beginner / Intermediate / Advanced) |
-| **Status** | TBD |
+| **Role** | Machine learning |
+| **Domain** | Buildings |
+| **Stack** | ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white) |
+| **Level** | Intermediate |
+| **Status** | In progress |
 
-The Role · Domain · Stack line is filled from `brief/identite.md` at kickoff.
+Machine learning · Buildings · Python / NumPy / SciPy
 
 ## Objective
 
-TBD: what problem this project solves, and for whom.
+Infer a credible RC thermal model from real room sensors (explicit sensor
+noise, Kalman filter), compare **R1C1** vs **R2C2**, then use the retained
+model inside a heating MPC. The plant is not given: it is coded separately
+from the identified model so closed-loop tests are not circular.
 
 ## Data
 
-TBD: data source, volume, time period covered.
+Instrumented house, 2020, indoor temperatures ~5 min (per room, plus
+setpoint), outdoor temperature, hydronic heating (water temperature and
+pressure), PV production and electrical load. Heating *power* and
+irradiance are not measured; they are reconstructed as model inputs.
 
 ## Result
 
-TBD: the concrete result, in one or two sentences.
+Work in progress — see `ROADMAP.md`. Target: a documented R1C1/R2C2
+comparison, a Kalman state estimator, and an MPC that beats bang-bang
+on the simulated plant.
 
 ## Reproduce
-
-TBD: how to install dependencies and rerun the pipeline.
 
 ```bash
 pip install -e .
@@ -33,8 +39,15 @@ python -m basic_mpc.cli --help
 
 ## Repo structure
 
-TBD, filled in as the project progresses — see also `ROADMAP.md` and
-`JOURNAL.md` (kept in French, like the rest of the codebase).
+```
+brief/          # identity, objective, thermal briefs
+data/raw/       # sensor CSV (do not edit)
+src/basic_mpc/  # package (data, features, models, CLI)
+tests/
+docs/presentations/   # Marp sources
+```
+
+French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`.
 
 ## Presentations
 
