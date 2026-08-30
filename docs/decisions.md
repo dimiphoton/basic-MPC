@@ -11,3 +11,5 @@
 | 2026-08-30 | Hors v1 : Airflow, S3, MLflow | Suivre le brief phare à la lettre | Dilue le récit Kalman / RC / MPC. Log d'expériences : `experiments/runs.jsonl`. |
 | 2026-08-30 | Interpolation limitée à 10 min sur maille 5 min | Interpoler tous les trous ; ou ne jamais interpoler | Un dt ≈ 600 s est un échantillon sauté. Un trou de 12 h n'est pas de la physique à inventer. |
 | 2026-08-30 | Quantification observée : 0,1 °C salon, 1 °C extérieur | Traiter y comme T_air continue | Les pas du capteur ne sont pas une dynamique RC. |
+| 2026-08-30 | `P = max(T_eau-T_air,0)` seulement si `T_air < consigne` | Écart eau/air seul ; ou consigne seule | Sans appel de zone, l'eau chaude du circuit n'est pas un apport au salon. Pas des watts : le RC absorbe l'échelle. |
+| 2026-08-30 | `S` = somme PV, négatifs à 0 | Load électrique comme gains internes | Le brief demande un proxy solaire. Le load est un autre phénomène (occupants). |

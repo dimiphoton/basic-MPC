@@ -68,6 +68,8 @@ Maison, 2020, une année. Maille nominale 5 min, parfois un point sauté.
 
 Le 21,8 °C du salon n'est pas l'air : le capteur quantifie à 0,1 °C, l'extérieur à 1 °C.
 
+Le chauffage n'est pas en watts : on construit un écart eau / air, seulement si la pièce demande.
+
 ---
 
 <!-- _class: dark -->
