@@ -10,12 +10,12 @@ paginate: true
 <!-- Photo : pictures/presentations/photos/hero.png -->
 <!-- ![bg brightness:0.40](../../pictures/presentations/photos/hero.png) -->
 
-# [Question de recherche]
-# en une assertion
+# Un modèle RC identifiable
+# suffit-il au MPC ?
 
-[Métier] · [Domaine] · [Stack]
+Machine learning · Bâtiment · Python / NumPy / SciPy
 
-Wallonie · période · grain des données
+Maison instrumentée · 2020 · ~5 min
 
 ---
 

@@ -12,21 +12,20 @@ Ce fichier a deux rôles :
 
 ## Ce projet
 
-À remplir dès le cadrage, **avant** la roadmap. Une valeur principale
-par champ. L'agent propose, l'utilisateur valide.
+Validé le 2026-08-30. Une valeur principale par champ.
 
 | Champ | Valeur (FR) | Valeur (EN, pour le README) |
 |---|---|---|
-| **Métier** | _à valider_ | _à valider_ |
-| **Domaine** | _à valider_ | _à valider_ |
-| **Stack courte** | _ex. Python / DuckDB / Streamlit_ (4 outils max) | idem |
-| **Ligne identité** | `_Métier_ · _Domaine_ · _Stack courte_` | `_Role_ · _Domain_ · _Stack_` |
-| **Topics GitHub** | _5 tags max, voir table plus bas_ | |
-| **About GitHub** | _la ligne identité EN, ≤ 80 caractères_ | |
+| **Métier** | Machine learning | Machine learning |
+| **Domaine** | Bâtiment | Buildings |
+| **Stack courte** | Python / NumPy / SciPy | Python / NumPy / SciPy |
+| **Ligne identité** | `Machine learning · Bâtiment · Python / NumPy / SciPy` | `Machine learning · Buildings · Python / NumPy / SciPy` |
+| **Topics GitHub** | `machine-learning`, `buildings`, `python`, `numpy` | |
+| **About GitHub** | Machine learning · Buildings · Python / NumPy / SciPy | |
 
 Période / maille des données (pour la cover, en plus de la ligne) :
 
-- _ex. Wallonie · 2000–2024_
+- Maison instrumentée · 2020 · ~5 min
 
 Une fois validé : recopier dans le tableau du `README.md`, sur la cover
 des 4 présentations, puis `gh repo edit` (description + topics) si le
