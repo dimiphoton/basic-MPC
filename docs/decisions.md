@@ -15,3 +15,5 @@
 | 2026-08-30 | `S` = somme PV, négatifs à 0 | Load électrique comme gains internes | Le brief demande un proxy solaire. Le load est un autre phénomène (occupants). |
 | 2026-08-30 | Plant R2C2 littérature avec `alpha_s_mass` > 0 | Même équations que l'identification ; ou R3C3 | Distingue le plant du modèle interne du MPC. Solaire sur les murs = misspecification volontaire. |
 | 2026-08-30 | Catalogue visuels complet (`docs/visualisations.md`) ; sélection slides plus tard | Couper Bode / phase dès maintenant | Le menu sert à produire ; RH vs technique se choisit au polish. |
+| 2026-08-30 | R1C1 discret : `a`, gain `T_ext = 1-a`, `g_S`, `g_P` ; `σ_v` fixé à 0,05 °C | Identifier R,C séparés ; estimer aussi R de mesure | R et C ne sont pas séparables (P n'est pas en watts). La quantification donne l'ordre de grandeur de `v`. |
+| 2026-08-30 | PEM sur les 50 derniers jours du train, pas toute l'année | Fit sur les 73 k pas de train | Boucle Python du Kalman : 50 jours suffisent et tombent en saison de chauffage. Les RMSE sont sur tout le test. |

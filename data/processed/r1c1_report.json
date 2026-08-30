@@ -1,0 +1,76 @@
+{
+  "model": "r1c1",
+  "split": {
+    "train_fraction": 0.7,
+    "train_start": "2020-05-24 17:15:00+00:00",
+    "train_end": "2021-02-04 06:50:00+00:00",
+    "test_start": "2021-02-04 06:55:00+00:00",
+    "test_end": "2021-05-24 19:35:00+00:00",
+    "n_train": 73604,
+    "n_test": 31545,
+    "n_pem": 14400,
+    "pem_start": "2020-12-16 06:55:00+00:00",
+    "pem_end": "2021-02-04 06:50:00+00:00"
+  },
+  "params": {
+    "a": 0.9991963776387347,
+    "tau_hours": 103.65545882837114,
+    "g_solar": 9.470150194064212e-10,
+    "g_heating": 0.0030707386338280694,
+    "process_noise_std": 0.10476384197120112,
+    "sensor_noise_std": 0.05,
+    "dt_seconds": 300.0
+  },
+  "fit": {
+    "success": false,
+    "message": "Desired error not necessarily achieved due to precision loss.",
+    "nll": -10200.831170856312,
+    "n_iter": 54,
+    "stderr": {
+      "a": 2.428218052576655e-06,
+      "g_solar": 5.8790340547091e-11,
+      "g_heating": 8.41220060277859e-05,
+      "process_noise_std": 0.0005095326030493976,
+      "tau_hours": 0.3133303294965721
+    },
+    "sensor_noise_std_fixed": 0.05
+  },
+  "horizons_test": {
+    "1h": {
+      "rmse": 0.5584741822476368,
+      "mae": 0.3225684387664313,
+      "n": 2609.0
+    },
+    "3h": {
+      "rmse": 1.112086623029808,
+      "mae": 0.697361449831538,
+      "n": 2589.0
+    },
+    "6h": {
+      "rmse": 1.4960709750138517,
+      "mae": 1.0246592879692578,
+      "n": 2559.0
+    },
+    "12h": {
+      "rmse": 1.711379285655255,
+      "mae": 1.2692985516068376,
+      "n": 2499.0
+    },
+    "24h": {
+      "rmse": 1.9617570069845016,
+      "mae": 1.525472352748038,
+      "n": 2379.0
+    }
+  },
+  "innovations_test": {
+    "n": 31412,
+    "mean": 0.0014650303646684055,
+    "std": 0.10392221595879236
+  },
+  "figures": {
+    "i3": "pictures/experiments/i3-innovations-r1c1.png",
+    "i4": "pictures/experiments/i4-params-r1c1.png",
+    "s1": "pictures/experiments/s1-tair-vs-y.png"
+  },
+  "notes": "R1C1 baseline : un état air, T_ext avec gain 1-a. Bruit de capteur fixé à 0.05 °C. PEM sur les derniers 14400 pas du train (saison froide), métriques sur tout le test. S2 (masse) n'a pas de sens ici — pas d'état caché."
+}

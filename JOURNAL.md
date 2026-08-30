@@ -1,5 +1,16 @@
 # Journal de développement
 
+## 2026-08-30 — Identification R1C1 + Kalman
+
+- Kalman linéaire à la main (chemin 1D scalaire). PEM : vraisemblance
+  des innovations. Split temporel 70/30 ; fit sur les 50 derniers jours
+  du train (16 déc. 2020 – 4 fév. 2021), métriques sur fév.–mai 2021.
+- τ ≈ 104 h ; RMSE test 0,56 °C à 1 h et 1,96 °C à 24 h. Gain solaire
+  quasi nul (fenêtre d'hiver). ACF des innovations ~2 h → le R1C1 rate
+  une dynamique, justification du R2C2.
+- Figures I3, I4, S1 dans `pictures/experiments/`. CLI :
+  `python -m basic_mpc identify-r1c1`.
+
 ## 2026-08-30 — Catalogue des visualisations
 
 - Menu complet dans `docs/visualisations.md` (impédance, ident., plant/MPC).
