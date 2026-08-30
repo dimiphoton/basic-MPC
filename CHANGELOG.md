@@ -2,6 +2,8 @@
 
 ## [Non publié]
 
+- Schémas RC/Kalman générés (PNG+PDF) ; comparaison R1C1/R2C2 :
+  RMSE 24 h 1,73 vs 1,93 °C ; le second état n'est pas une masse rapide.
 - Identification R1C1 (PEM + Kalman) : τ ≈ 104 h, RMSE 0,56 °C / 1 h
   et 1,96 °C / 24 h sur le test. Figures I3, I4, S1.
 - Catalogue des figures (`docs/visualisations.md`) ; choix slides plus tard.

@@ -1,0 +1,92 @@
+{
+  "model": "r1c1_vs_r2c2",
+  "params_r1c1": {
+    "a": 0.9989996829779506,
+    "tau_hours": 83.26524958502219,
+    "g_solar": 5.860269832860594e-06,
+    "g_heating": 0.0031639454099347355
+  },
+  "params_r2c2": {
+    "rae": 500000.0,
+    "ram": 124794.92493741839,
+    "cm": 4.268279633562142,
+    "tau_air_hours": 138.88888888888889,
+    "tau_mass_hours": 147.961010133972,
+    "g_solar": 2.061153622438558e-09,
+    "g_heating": 1.0316565835964444e-05,
+    "process_noise_std": 0.10460276442299554
+  },
+  "fit_r1c1": {
+    "loaded": true,
+    "nll": 533951.2406234675
+  },
+  "fit_r2c2": {
+    "success": false,
+    "message": "Maximum number of iterations has been exceeded.",
+    "nll": -10203.488118889823,
+    "n_iter": 120,
+    "sensor_noise_std_fixed": 0.05
+  },
+  "horizons_r1c1": {
+    "1h": {
+      "rmse": 0.5621163468784266,
+      "mae": 0.3275429036602224,
+      "n": 2609.0
+    },
+    "3h": {
+      "rmse": 1.1138071637042826,
+      "mae": 0.6934089428570607,
+      "n": 2589.0
+    },
+    "6h": {
+      "rmse": 1.4811235735171617,
+      "mae": 0.9910851764445335,
+      "n": 2559.0
+    },
+    "12h": {
+      "rmse": 1.6278819098318333,
+      "mae": 1.1620282928311507,
+      "n": 2499.0
+    },
+    "24h": {
+      "rmse": 1.9323884441053172,
+      "mae": 1.3604889535643698,
+      "n": 2379.0
+    }
+  },
+  "horizons_r2c2": {
+    "1h": {
+      "rmse": 0.5563608157258815,
+      "mae": 0.314550058618425,
+      "n": 2609.0
+    },
+    "3h": {
+      "rmse": 1.1002630763674857,
+      "mae": 0.6757298801927091,
+      "n": 2589.0
+    },
+    "6h": {
+      "rmse": 1.4627320502634795,
+      "mae": 0.9734012198560364,
+      "n": 2559.0
+    },
+    "12h": {
+      "rmse": 1.6176018159315515,
+      "mae": 1.1519261993859355,
+      "n": 2499.0
+    },
+    "24h": {
+      "rmse": 1.7318967340252562,
+      "mae": 1.2358820410631666,
+      "n": 2379.0
+    }
+  },
+  "schemas": {
+    "schema-r1c1": "pictures/experiments/schema-r1c1.png",
+    "schema-r2c2": "pictures/experiments/schema-r2c2.png",
+    "schema-plant": "pictures/experiments/schema-plant.png",
+    "schema-kalman": "pictures/experiments/schema-kalman.png",
+    "schema-famille-rc": "pictures/experiments/schema-famille-rc.png"
+  },
+  "notes": "Même fenêtre PEM et même test que le R1C1. C_a = 1. Solaire identifié sur l'air seulement. Plant : alpha_s_mass > 0 (S3)."
+}

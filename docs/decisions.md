@@ -17,3 +17,5 @@
 | 2026-08-30 | Catalogue visuels complet (`docs/visualisations.md`) ; sélection slides plus tard | Couper Bode / phase dès maintenant | Le menu sert à produire ; RH vs technique se choisit au polish. |
 | 2026-08-30 | R1C1 discret : `a`, gain `T_ext = 1-a`, `g_S`, `g_P` ; `σ_v` fixé à 0,05 °C | Identifier R,C séparés ; estimer aussi R de mesure | R et C ne sont pas séparables (P n'est pas en watts). La quantification donne l'ordre de grandeur de `v`. |
 | 2026-08-30 | PEM sur les 50 derniers jours du train, pas toute l'année | Fit sur les 73 k pas de train | Boucle Python du Kalman : 50 jours suffisent et tombent en saison de chauffage. Les RMSE sont sur tout le test. |
+| 2026-08-30 | Schémas RC générés (matplotlib, PNG+PDF) | TikZ / draw.io à la main | Reproductibles, même palette que les graphes, PDF Type 42 pour la publication. |
+| 2026-08-30 | R2C2 : C_a=1, Nelder-Mead, plafond R_ae → τ_air ≤ 139 h | BFGS ; R,C libres | BFGS partait dans des A singulières. Le plafond évite un R_ae infini ; les deux τ restent lentes — le R2C2 n'est pas un air rapide + masse. |

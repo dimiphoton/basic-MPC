@@ -7,6 +7,18 @@ deck, fond crème / transparent).
 
 Noms de fichiers en kebab-case.
 
+Schémas de modèles (générés, pas dessinés à la main) :
+
+| Fichier | Contenu |
+|---|---|
+| `schema-r1c1` | Circuit baseline |
+| `schema-r2c2` | Identification (solaire sur l'air) |
+| `schema-plant` | Littérature (`α_s` aussi sur la masse) |
+| `schema-kalman` | Prédiction / innovation / mise à jour |
+| `schema-famille-rc` | Les trois circuits empilés |
+
+CLI : `python -m basic_mpc draw-schemas` (PNG + PDF).
+
 ---
 
 ## Impédance complexe (R, C) — toujours dans le menu

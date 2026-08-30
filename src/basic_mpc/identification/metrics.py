@@ -156,19 +156,24 @@ def _horizon_errors_nd(
     h: int,
     stride: int,
 ) -> np.ndarray:
-    """Boucle d'état (R2C2)."""
+    """Prédiction h pas : noyau ``Ad^k Bd`` (R2C2), pas une boucle d'état."""
     n = y.size
-    errors: list[float] = []
-    for t in range(0, n - h, stride):
-        if not np.isfinite(x_filt[t]).all():
-            continue
-        if not np.isfinite(y[t + h]):
-            continue
-        if not np.isfinite(u[t : t + h]).all():
-            continue
-        x = x_filt[t].copy()
-        for k in range(h):
-            x = ad @ x + bd @ u[t + k]
-        yhat = float((c @ x).reshape(-1)[0])
-        errors.append(yhat - float(y[t + h]))
-    return np.asarray(errors, dtype=float)
+    n_starts = n - h
+    n_x = ad.shape[0]
+    powers = [np.eye(n_x)]
+    for _ in range(h):
+        powers.append(ad @ powers[-1])
+    adh = powers[h]
+    phi = np.stack([powers[h - 1 - k] @ bd for k in range(h)], axis=0)
+    u_win = sliding_window_view(u, (h, u.shape[1]))[:n_starts, 0, :, :]
+    contrib = np.einsum("kij,tkj->ti", phi, u_win)
+    x_pred = (adh @ x_filt[:n_starts].T).T + contrib
+    yhat = (c @ x_pred.T).ravel()
+    err = yhat - y[h : h + n_starts]
+    idx = np.arange(0, n_starts, stride)
+    ok = (
+        np.isfinite(u_win[idx]).all(axis=(1, 2))
+        & np.isfinite(x_filt[idx]).all(axis=1)
+        & np.isfinite(y[idx + h])
+    )
+    return err[idx][ok]

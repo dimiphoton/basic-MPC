@@ -29,12 +29,14 @@ heating power nor irradiance**. Model inputs are constructed and documented:
 
 ## Result
 
-R1C1 baseline (PEM + Kalman, held-out Feb–May 2021): **RMSE 0.56 °C at 1 h**,
-**2.0 °C at 24 h**. Time constant ~104 h (one slow lump). Solar gain is
-essentially unidentified on the winter PEM window; heating gain is not.
-Innovations stay correlated for ~2 h — a second state (R2C2) is the next
-test. Figures: `pictures/experiments/`. Full comparison vs R2C2 is the
-next roadmap step.
+Held-out Feb–May 2021 (same split for both models):
+
+- **R1C1**: RMSE **0.56 °C at 1 h**, **1.93 °C at 24 h** (one slow lump).
+- **R2C2**: RMSE **0.56 °C at 1 h**, **1.73 °C at 24 h**. Two slow time
+  constants (~139 h and ~148 h); \(R_{ae}\) hits its cap. The extra state
+  barely helps before 12 h. Circuit diagrams: `pictures/experiments/schema-*.png`.
+
+The R2C2 remains the MPC candidate (hidden mass), with that limit stated.
 
 ## Reproduce
 
@@ -44,11 +46,14 @@ python -m basic_mpc preprocess
 python -m basic_mpc build-inputs
 python -m basic_mpc simulate-plant
 python -m basic_mpc identify-r1c1
+python -m basic_mpc draw-schemas
+python -m basic_mpc compare-r1c1-r2c2
 pytest
 ```
 
-`identify-r1c1` fits a one-state RC on a winter slice of the train split
-(Kalman prediction-error), then scores 1–24 h forecasts on the test split.
+`draw-schemas` writes publication RC/Kalman diagrams (PNG + PDF).
+`compare-r1c1-r2c2` fits R2C2 on the same PEM window and scores 1–24 h
+forecasts against R1C1. `identify-r1c1` fits the one-state baseline.
 `simulate-plant` writes a 48 h trajectory on the **literature plant**
 (solar also hits the thermal mass — not the RC we identify).
 

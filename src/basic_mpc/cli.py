@@ -7,8 +7,10 @@ import logging
 from basic_mpc.config import DataConfig
 from basic_mpc.data.pipeline import run_preprocess
 from basic_mpc.features.inputs import run_build_inputs
+from basic_mpc.identification.compare import run_compare_r1c1_r2c2
 from basic_mpc.identification.run import run_identify_r1c1
 from basic_mpc.models.plant import run_simulate_plant
+from basic_mpc.figures.schemas import run_draw_schemas
 
 
 def main() -> None:
@@ -33,6 +35,14 @@ def main() -> None:
     subparsers.add_parser(
         "identify-r1c1",
         help="Identification PEM R1C1 + Kalman (split temporel)",
+    )
+    subparsers.add_parser(
+        "draw-schemas",
+        help="Schémas RC / Kalman (PNG + PDF, pictures/experiments)",
+    )
+    subparsers.add_parser(
+        "compare-r1c1-r2c2",
+        help="Identification R2C2 et comparaison multi-horizon",
     )
 
     arguments = parser.parse_args()
@@ -68,6 +78,24 @@ def main() -> None:
                     "a": rapport["params"]["a"],
                     "horizons_test": rapport["horizons_test"],
                     "nll": rapport["fit"]["nll"],
+                },
+                indent=2,
+                ensure_ascii=False,
+            )
+        )
+    elif arguments.commande == "draw-schemas":
+        ecrits = run_draw_schemas()
+        print(json.dumps(ecrits, indent=2, ensure_ascii=False))
+    elif arguments.commande == "compare-r1c1-r2c2":
+        rapport = run_compare_r1c1_r2c2()
+        print(
+            json.dumps(
+                {
+                    "tau_air_hours": rapport["params_r2c2"]["tau_air_hours"],
+                    "tau_mass_hours": rapport["params_r2c2"]["tau_mass_hours"],
+                    "horizons_r1c1": rapport["horizons_r1c1"],
+                    "horizons_r2c2": rapport["horizons_r2c2"],
+                    "nll_r2c2": rapport["fit_r2c2"]["nll"],
                 },
                 indent=2,
                 ensure_ascii=False,
