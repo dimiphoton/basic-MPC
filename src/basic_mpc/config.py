@@ -33,4 +33,6 @@ class DataConfig:
     max_fill_periods: int = 2
     living_room_file: str = "temperature_livingroom.csv"
     outdoor_file: str = "temperature_outside.csv"
+    heating_file: str = "temperature_heating_system.csv"
+    pv_file: str = "pv_production_load.csv"
     long_gap_seconds: float = 3600.0

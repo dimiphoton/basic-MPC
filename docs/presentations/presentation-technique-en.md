@@ -66,6 +66,8 @@ Living room + outdoor, 5-minute grid. Interpolation capped at 10 minutes.
 
 A 12-hour hole stays NaN. 0.1 °C (indoor) vs 1 °C (outdoor) quantization is the sensor model, not the RC dynamics.
 
+No measured watts: `P` is water–air lift if the zone calls, `S` is PV.
+
 ---
 
 <!-- _class: split -->

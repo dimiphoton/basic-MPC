@@ -87,7 +87,7 @@ def regularize_series(
     return regular.interpolate(method="time", limit=max_fill_periods)
 
 
-def _to_indexed_series(frame: pd.DataFrame, column: str) -> pd.Series:
+def to_indexed_series(frame: pd.DataFrame, column: str) -> pd.Series:
     """Série numérique indexée par le temps."""
     values = pd.to_numeric(frame[column], errors="coerce")
     return pd.Series(values.to_numpy(), index=pd.DatetimeIndex(frame["time"]), name=column)
@@ -128,17 +128,17 @@ def run_preprocess(config: DataConfig | None = None) -> dict:
     )
 
     y_in = regularize_series(
-        _to_indexed_series(living, "current_value"),
+        to_indexed_series(living, "current_value"),
         config.resample_rule,
         config.max_fill_periods,
     )
     setpoint = regularize_series(
-        _to_indexed_series(living, "setpoint"),
+        to_indexed_series(living, "setpoint"),
         config.resample_rule,
         config.max_fill_periods,
     )
     y_out = regularize_series(
-        _to_indexed_series(outdoor, "current_value"),
+        to_indexed_series(outdoor, "current_value"),
         config.resample_rule,
         config.max_fill_periods,
     )

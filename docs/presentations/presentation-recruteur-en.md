@@ -68,6 +68,8 @@ One house, 2020, a full year. Nominal 5-minute samples, sometimes one skipped.
 
 The 21.8 °C indoor reading is not the air: 0.1 °C quantization indoors, 1 °C outdoors.
 
+Heating is not in watts: we build a water–air gap, only when the room asks for heat.
+
 ---
 
 <!-- _class: dark -->

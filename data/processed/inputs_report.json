@@ -1,0 +1,10 @@
+{
+  "heating_formula": "P = max(T_eau - T_air, 0) * 1_{T_air < consigne}  [K, pas des W]",
+  "solar_formula": "S = max(L1_PV,0) + max(L2_PV,0) + max(L3_PV,0)  [proxy, pas des W/m\u00b2]",
+  "n_rows": 105149,
+  "n_nan_P": 661,
+  "n_nan_S": 4651,
+  "fraction_heating_call": 0.060590210082834835,
+  "P_mean_when_positive": 22.219047899335525,
+  "S_max": 4970.6
+}

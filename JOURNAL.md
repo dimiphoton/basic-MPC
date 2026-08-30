@@ -1,5 +1,12 @@
 # Journal de développement
 
+## 2026-08-30 — Entrées chauffage et solaire
+
+- `P = max(T_eau - T_air, 0) * 1_{T_air < consigne}` (kelvin, pas des watts).
+- `S` = somme des 3 phases PV, négatifs à 0 (proxy, pas des W/m²).
+- CLI : `python -m basic_mpc build-inputs`.
+- Sur une année : appel de zone ~6 % du temps ; `P` moyen ≈ 22 K quand > 0.
+
 ## 2026-08-30 — Prétraitement et modèle de capteur
 
 - Maille cible 5 min ; interpolation limitée à 10 min (un point sauté).

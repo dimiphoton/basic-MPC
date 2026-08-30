@@ -66,6 +66,8 @@ Salon + extérieur, maille 5 min. Interpolation limitée à 10 min.
 
 On ne ponte pas un trou de 12 h. Quantification 0,1 °C (salon) vs 1 °C (extérieur) : modèle de capteur, pas de RC.
 
+Pas de watts mesurés : `P` = écart eau/air si la zone demande, `S` = PV.
+
 ---
 
 <!-- _class: split -->

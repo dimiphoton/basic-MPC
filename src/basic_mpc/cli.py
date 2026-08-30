@@ -6,6 +6,7 @@ import logging
 
 from basic_mpc.config import DataConfig
 from basic_mpc.data.pipeline import run_preprocess
+from basic_mpc.features.inputs import run_build_inputs
 
 
 def main() -> None:
@@ -19,6 +20,10 @@ def main() -> None:
         "preprocess",
         help="Maille 5 min + modèle de capteur (salon, extérieur)",
     )
+    subparsers.add_parser(
+        "build-inputs",
+        help="Construit P (chauffage) et S (PV), pas des watts",
+    )
 
     arguments = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -26,6 +31,21 @@ def main() -> None:
     if arguments.commande == "preprocess":
         rapport = run_preprocess(DataConfig())
         print(json.dumps(rapport["sensors"], indent=2, ensure_ascii=False))
+    elif arguments.commande == "build-inputs":
+        rapport = run_build_inputs(DataConfig())
+        print(
+            json.dumps(
+                {
+                    "heating_formula": rapport["heating_formula"],
+                    "solar_formula": rapport["solar_formula"],
+                    "fraction_heating_call": rapport["fraction_heating_call"],
+                    "P_mean_when_positive": rapport["P_mean_when_positive"],
+                    "S_max": rapport["S_max"],
+                },
+                indent=2,
+                ensure_ascii=False,
+            )
+        )
 
 
 if __name__ == "__main__":

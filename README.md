@@ -21,9 +21,11 @@ from the identified model so closed-loop tests are not circular.
 
 Instrumented house, 2020 (May–May), indoor temperatures at a nominal
 **5 min** grid (occasional skipped samples; longest gap ~13 h). Living-room
-sensor quantized at **0.1 °C**, outdoor at **1 °C**. Hydronic heating (water
-temperature and pressure) and PV/load are present; heating *power* and
-irradiance are not measured.
+sensor quantized at **0.1 °C**, outdoor at **1 °C**. There is **no measured
+heating power nor irradiance**. Model inputs are constructed and documented:
+
+- `P = max(T_water - T_air, 0)` when `T_air < setpoint`, else 0 (kelvin, not W)
+- `S` = sum of three PV phases, negatives clipped (proxy, not W/m²)
 
 ## Result
 
@@ -36,11 +38,13 @@ on the simulated plant.
 ```bash
 pip install -e ".[dev]"
 python -m basic_mpc preprocess
+python -m basic_mpc build-inputs
 pytest
 ```
 
-The preprocess step writes `data/processed/livingroom_outdoor_5min.csv`
-(regenerable) and `data/processed/quality_report.json`.
+`preprocess` writes the 5 min temperatures. `build-inputs` adds `P` and `S`
+to `data/processed/identification_5min.csv` (regenerable) plus
+`inputs_report.json`.
 
 ## Repo structure
 
