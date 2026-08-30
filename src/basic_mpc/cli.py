@@ -7,6 +7,7 @@ import logging
 from basic_mpc.config import DataConfig
 from basic_mpc.data.pipeline import run_preprocess
 from basic_mpc.features.inputs import run_build_inputs
+from basic_mpc.identification.run import run_identify_r1c1
 from basic_mpc.models.plant import run_simulate_plant
 
 
@@ -28,6 +29,10 @@ def main() -> None:
     subparsers.add_parser(
         "simulate-plant",
         help="Trajectoire du plant littérature (distinct de l'identification)",
+    )
+    subparsers.add_parser(
+        "identify-r1c1",
+        help="Identification PEM R1C1 + Kalman (split temporel)",
     )
 
     arguments = parser.parse_args()
@@ -54,6 +59,20 @@ def main() -> None:
     elif arguments.commande == "simulate-plant":
         rapport = run_simulate_plant()
         print(json.dumps(rapport, indent=2, ensure_ascii=False))
+    elif arguments.commande == "identify-r1c1":
+        rapport = run_identify_r1c1()
+        print(
+            json.dumps(
+                {
+                    "tau_hours": rapport["params"]["tau_hours"],
+                    "a": rapport["params"]["a"],
+                    "horizons_test": rapport["horizons_test"],
+                    "nll": rapport["fit"]["nll"],
+                },
+                indent=2,
+                ensure_ascii=False,
+            )
+        )
 
 
 if __name__ == "__main__":

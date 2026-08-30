@@ -2,6 +2,8 @@
 
 ## [Non publié]
 
+- Identification R1C1 (PEM + Kalman) : τ ≈ 104 h, RMSE 0,56 °C / 1 h
+  et 1,96 °C / 24 h sur le test. Figures I3, I4, S1.
 - Catalogue des figures (`docs/visualisations.md`) ; choix slides plus tard.
 - Plant simulé : R2C2 littérature + solaire sur la masse, capteur 0,1 °C.
 - Entrées : `P` (écart eau/air × appel de zone) et `S` (PV), pas des grandeurs SI.

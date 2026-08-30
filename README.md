@@ -29,9 +29,12 @@ heating power nor irradiance**. Model inputs are constructed and documented:
 
 ## Result
 
-Work in progress — see `ROADMAP.md`. Target: a documented R1C1/R2C2
-comparison, a Kalman state estimator, and an MPC that beats bang-bang
-on the simulated plant.
+R1C1 baseline (PEM + Kalman, held-out Feb–May 2021): **RMSE 0.56 °C at 1 h**,
+**2.0 °C at 24 h**. Time constant ~104 h (one slow lump). Solar gain is
+essentially unidentified on the winter PEM window; heating gain is not.
+Innovations stay correlated for ~2 h — a second state (R2C2) is the next
+test. Figures: `pictures/experiments/`. Full comparison vs R2C2 is the
+next roadmap step.
 
 ## Reproduce
 
@@ -40,11 +43,14 @@ pip install -e ".[dev]"
 python -m basic_mpc preprocess
 python -m basic_mpc build-inputs
 python -m basic_mpc simulate-plant
+python -m basic_mpc identify-r1c1
 pytest
 ```
 
-`simulate-plant` writes a 48 h synthetic trajectory on the **literature plant**
-(solar also hits the thermal mass — not the RC we will identify).
+`identify-r1c1` fits a one-state RC on a winter slice of the train split
+(Kalman prediction-error), then scores 1–24 h forecasts on the test split.
+`simulate-plant` writes a 48 h trajectory on the **literature plant**
+(solar also hits the thermal mass — not the RC we identify).
 
 ## Repo structure
 
