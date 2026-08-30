@@ -76,11 +76,11 @@ Heating is not in watts: we build a water–air gap, only when the room asks for
 
 # This project is not.
 
-Not [non-goal 1].
+Not a magic thermostat on the same model we just fitted.
 
-Not [non-goal 2].
+Not measured watts.
 
-**[What we aim at instead.]**
+**A coded plant, slightly different on purpose, to test the MPC.**
 
 ---
 

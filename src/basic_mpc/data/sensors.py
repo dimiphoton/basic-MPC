@@ -73,3 +73,24 @@ def infer_resolution(values: np.ndarray, decimals: int = 6) -> float:
         msg = "toutes les valeurs sont identiques après arrondi"
         raise ValueError(msg)
     return float(np.round(positif.min(), decimals))
+
+
+def quantize_measurement(value: float, resolution: float) -> float:
+    """Projette une température vraie sur la grille du capteur.
+
+    Parameters
+    ----------
+    value : float
+        Température physique (avant mesure).
+    resolution : float
+        Pas de quantification (> 0).
+
+    Returns
+    -------
+    float
+        Valeur telle qu'un capteur à pas ``resolution`` l'écrirait.
+    """
+    if resolution <= 0:
+        msg = "la résolution du capteur doit être strictement positive"
+        raise ValueError(msg)
+    return float(np.round(value / resolution) * resolution)

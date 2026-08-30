@@ -1,0 +1,10 @@
+{
+  "distinction": "alpha_s_mass > 0 sur le plant ; le R2C2 identifi\u00e9 n'a le solaire que sur l'air (brief). Param\u00e8tres litt\u00e9rature, pas appris.",
+  "n_steps": 576,
+  "dt_seconds": 300.0,
+  "alpha_s_mass": 0.004,
+  "sensor_resolution": 0.1,
+  "y_min": 10.3,
+  "y_max": 17.5,
+  "tm_minus_ta_mean": 1.0999750302924864
+}

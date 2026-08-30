@@ -7,6 +7,7 @@ import logging
 from basic_mpc.config import DataConfig
 from basic_mpc.data.pipeline import run_preprocess
 from basic_mpc.features.inputs import run_build_inputs
+from basic_mpc.models.plant import run_simulate_plant
 
 
 def main() -> None:
@@ -23,6 +24,10 @@ def main() -> None:
     subparsers.add_parser(
         "build-inputs",
         help="Construit P (chauffage) et S (PV), pas des watts",
+    )
+    subparsers.add_parser(
+        "simulate-plant",
+        help="Trajectoire du plant littérature (distinct de l'identification)",
     )
 
     arguments = parser.parse_args()
@@ -46,6 +51,9 @@ def main() -> None:
                 ensure_ascii=False,
             )
         )
+    elif arguments.commande == "simulate-plant":
+        rapport = run_simulate_plant()
+        print(json.dumps(rapport, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

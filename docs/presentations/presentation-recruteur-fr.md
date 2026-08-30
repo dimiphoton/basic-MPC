@@ -76,11 +76,11 @@ Le chauffage n'est pas en watts : on construit un écart eau / air, seulement si
 
 # Ce projet, ce n'est pas.
 
-Pas [non-objectif 1].
+Pas un thermostat magique sur le même modèle qu'on a appris.
 
-Pas [non-objectif 2].
+Pas des watts mesurés.
 
-**[Ce qu'on vise à la place.]**
+**Un plant simulé, volontairement un peu différent, pour tester le MPC.**
 
 ---
 
