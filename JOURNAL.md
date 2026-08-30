@@ -1,5 +1,10 @@
 # Journal de développement
 
+## 2026-08-30 — Catalogue des visualisations
+
+- Menu complet dans `docs/visualisations.md` (impédance, ident., plant/MPC).
+- Production au fil des features ; sélection des slides au polish.
+
 ## 2026-08-30 — Simulateur plant
 
 - R2C2 littérature avec solaire aussi sur la masse (`alpha_s_mass`) :
