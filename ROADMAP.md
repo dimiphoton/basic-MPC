@@ -1,6 +1,7 @@
 # Roadmap
 
 Grey-box RC, Kalman, plant simulé, MPC vs bang-bang.
+v1.1 : problème de contrôle (`brief/controle-mpc.md`), puis dashboard.
 
 Une case = une branche. Le nom de branche est dans la case ; ne pas
 en inventer un autre. Une seule case par tour d'autopilot.
@@ -17,3 +18,6 @@ Figures : catalogue dans `docs/visualisations.md`. On les génère dans
 - [x] Identification R2C2 et comparaison multi-horizon (`feature/comparaison-r1c1-r2c2`)
 - [x] MPC à horizon glissant vs thermostat bang-bang (`feature/mpc-vs-bang-bang`)
 - [x] Polish portfolio : README, slides, limites (`feature/portfolio-slides`)
+- [x] Cadrage contrôle : consigne, bande n, J euros (`brief/controle-mpc.md`)
+- [ ] MPC : bande n, coût €, baseline hystérésis (`feature/mpc-cout-consigne`)
+- [ ] Dashboard maison + météo pour le recruteur (`feature/dashboard-simulateur`)

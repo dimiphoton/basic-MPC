@@ -26,4 +26,13 @@ Décisions de cadrage (2026-08-30) :
 - Contrôle : le livrable est le MPC ; le métier affiché reste le ML
   (baseline, validation, incertitude).
 
+v1.1 contrôle (2026-08-30), détail dans `brief/controle-mpc.md` :
+
+- Commande = consigne thermostat \(T_{\mathrm{sp}}\), bande
+  proportionnelle \(n = 1\) °C — pas des watts.
+- \(J\) = facture électricité HP/HC (horloge) + inconfort sous
+  \(T_{\mathrm{conf}}(t)\) (20 °C jour / 17 °C nuit).
+- Hors v1.1 : PV dans la facture, fioul, Gurobi. OSQP et Streamlit
+  après que \(J\) existe.
+
 Métier, domaine et stack : `brief/identite.md`.
