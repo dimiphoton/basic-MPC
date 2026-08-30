@@ -1,0 +1,32 @@
+{
+  "model": "mpc_vs_bangbang",
+  "internal": "r2c2 from plant without alpha_s_mass",
+  "plant_alpha_s_mass": 0.004,
+  "p_max": 324.9910716191944,
+  "p_hold_at_t_ext_min": 232.13647972799598,
+  "t_ext_min": 1.4290816217603206,
+  "horizon_hours": 6.0,
+  "block_minutes": 30.0,
+  "comfort": {
+    "t_set": 20.0,
+    "t_min": 19.5,
+    "t_max": 21.0
+  },
+  "mpc": {
+    "hours_outside_band": 0.8333333333333333,
+    "hours_outside_after_2h": 0.0,
+    "P_hours": 9337.081133239466,
+    "ta_mean": 19.976112926696057,
+    "ta_min": 18.225302840297605,
+    "ta_max": 20.089320926320767
+  },
+  "bangbang": {
+    "hours_outside_band": 7.833333333333333,
+    "hours_outside_after_2h": 7.0,
+    "P_hours": 9668.48438067103,
+    "ta_mean": 20.24095344660344,
+    "ta_min": 18.225302840297605,
+    "ta_max": 21.27226933991726
+  },
+  "notes": "Boucle fermée sur le plant littérature (solaire aussi sur la masse). Modèle interne R2C2 sans alpha_s_mass. Prévisions météo parfaites (oracle). P n'est pas des watts."
+}

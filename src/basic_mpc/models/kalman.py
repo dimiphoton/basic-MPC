@@ -302,3 +302,72 @@ def _kalman_nd(
         loglik=float(loglik),
         n_obs=n_obs,
     )
+
+
+class KalmanTracker:
+    """Filtre en ligne, un pas à la fois (boucle de contrôle).
+
+    Mesure = première composante (air). ``u`` agit avant la mise à jour,
+    comme ``run_kalman`` après ``k = 0``.
+    """
+
+    def __init__(
+        self,
+        ad: np.ndarray,
+        bd: np.ndarray,
+        q: np.ndarray,
+        r: np.ndarray,
+        x0: np.ndarray,
+        p0: np.ndarray,
+    ) -> None:
+        """Parameters
+        ----------
+        ad, bd, q, r : ndarray
+            Matrices discrètes. ``r`` scalaire 1×1.
+        x0, p0 : ndarray
+            Prior avant la première mesure.
+        """
+        self.ad = np.asarray(ad, dtype=float)
+        self.bd = np.asarray(bd, dtype=float)
+        self.q = np.asarray(q, dtype=float)
+        n_x = self.ad.shape[0]
+        self.r = float(np.asarray(r, dtype=float).reshape(-1)[0])
+        self.x = np.asarray(x0, dtype=float).reshape(n_x).copy()
+        self.p = np.asarray(p0, dtype=float).reshape(n_x, n_x).copy()
+        self._started = False
+
+    def step(self, y: float, u_prev: np.ndarray | None) -> np.ndarray:
+        """Prédit avec ``u_prev`` (sauf au premier pas), puis met à jour.
+
+        Parameters
+        ----------
+        y : float
+            Mesure air (NaN = prédiction seule).
+        u_prev : ndarray or None
+            Commande appliquée depuis le pas précédent. Ignoré au premier
+            appel.
+
+        Returns
+        -------
+        ndarray
+            ``x_{k|k}``.
+        """
+        if self._started and u_prev is not None:
+            u = np.asarray(u_prev, dtype=float).reshape(-1)
+            if np.isfinite(u).all():
+                self.x = self.ad @ self.x + self.bd @ u
+                self.p = self.ad @ self.p @ self.ad.T + self.q
+        self._started = True
+
+        s_var = float(self.p[0, 0] + self.r)
+        if s_var <= 0.0:
+            s_var = 1e-12
+        if np.isfinite(y):
+            err = float(y) - float(self.x[0])
+            gain = self.p[:, 0] / s_var
+            self.x = self.x + gain * err
+            # (I - K C) P avec C = [1, 0] : même convention que le Kalman 2D
+            row0 = self.p[0, :].copy()
+            self.p = self.p - np.outer(gain, row0)
+        return self.x.copy()
+

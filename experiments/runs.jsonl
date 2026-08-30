@@ -1,2 +1,3 @@
 {"time": "2026-08-30T16:42:00+00:00", "model": "r1c1", "tau_hours": 103.66, "nll_train": -10200.83, "rmse_1h": 0.558, "rmse_24h": 1.962}
 {"time": "2026-08-30T17:29:33+00:00", "model": "r2c2", "tau_air_hours": 138.89, "tau_mass_hours": 147.96, "nll_train": -10203.49, "rmse_1h": 0.556, "rmse_24h": 1.732, "rmse_24h_r1c1": 1.932}
+{"time": "2026-08-30T17:48:38+00:00", "model": "mpc_vs_bangbang", "mpc_hours_outside": 0.833, "bb_hours_outside": 7.833, "mpc_P_hours": 9337.08, "bb_P_hours": 9668.48}
