@@ -1,63 +1,49 @@
-Building MPC ULG project
-==============================
+# Project name
 
+| | |
+|---|---|
+| **Role** | TBD — BI / Data engineering / Machine learning / Geospatial |
+| **Domain** | TBD — Energy / Agriculture / Buildings / Mobility / Public statistics |
+| **Stack** | TBD — e.g. ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) (4–5 badges max) |
+| **Level** | TBD (Beginner / Intermediate / Advanced) |
+| **Status** | TBD |
 
-# the goal
+The Role · Domain · Stack line is filled from `brief/identite.md` at kickoff.
 
-the goal is to practice statistical inference and later to learn model predictive control.
+## Objective
 
-# the project
+TBD: what problem this project solves, and for whom.
 
-## what is given
+## Data
 
-a data set of a house temperature behaviour given time, heater command.
+TBD: data source, volume, time period covered.
 
-## what is expected
+## Result
 
-EVERYTHING IS PIPELINED FROM THE START
+TBD: the concrete result, in one or two sentences.
 
-### building thermal response
+## Reproduce
 
-a building response model should be proposed:
+TBD: how to install dependencies and rerun the pipeline.
 
-- base model
-- model with single room or all the rooms
-- the sensor themselves have a reading model
+```bash
+pip install -e .
+python -m basic_mpc.cli --help
+```
 
-### statistical inference model
+## Repo structure
 
-- write a full statistical inference pipeline with model, optimizer, bayesian modeling
+TBD, filled in as the project progresses — see also `ROADMAP.md` and
+`JOURNAL.md` (kept in French, like the rest of the codebase).
 
-### vizualisation
+## Presentations
 
-- propose a simple vizualisation (I think the phase plot is good)
-- set up a little dashboard
+Two audiences × two languages (Marp theme `portfolio`, HTML on GitHub Pages).
+The recruiter deck is a ~6-minute pitch; the technical deck is a ~12-minute
+deep dive. They may diverge a lot — the bar is attractive and informative
+for each audience, not a mirrored pair of slides.
 
-### model predictive control
-
-- build a little simulator
-- given the price of fuel and a metric of confort, use pyzo to optimize the mpc given a 24h weather/occupancy etc forecast
-- try to think about uncertainty
-- compare the concumption to a binary command
-
-# How this project should be done
-
-## code
-
-This project should not be some notebooks, but a good quality code with documentation, modularity,
-
-## teaching
-
-This project should leave a how-to manual on organizing a project: which classes to create, are decorators of any use, is cookiecutter useful, how to copy code from tutorials, how to keep trace of the project structure, how prototyping and mlops differ, how to use vscode to code faster.
-
-In a nutshell, which questions should the modeler asks himself and how and how long time to do it.
-
-## nice to have
-
-- get rid of the data and build a data generator with a model (different from the later infered)
-
-# what was done/tried
-
-- the source code is in the [/old folder](old/src)
-- my first attempt lead to big classes either [with arrays](old/src/models/model_On_Array2.py) or [with networkX graphs]([old/src/models/Model_On_G.py])
-
+- [Recruiter overview (EN)](docs/slides/presentation-recruteur-en.html)
+- [Technical deep dive (EN)](docs/slides/presentation-technique-en.html)
+- [Présentation grand public (FR)](docs/slides/presentation-recruteur-fr.html)
+- [Présentation technique (FR)](docs/slides/presentation-technique-fr.html)
