@@ -64,9 +64,9 @@ Maison instrumentée · 2020 · ~5 min
 # [Comment on
 # lit les chiffres.]
 
-D'où ça vient. À quelle maille.
+Maison, 2020, une année. Maille nominale 5 min, parfois un point sauté.
 
-Ce qu'on transforme pour que le chiffre veuille dire quelque chose.
+Le 21,8 °C du salon n'est pas l'air : le capteur quantifie à 0,1 °C, l'extérieur à 1 °C.
 
 ---
 

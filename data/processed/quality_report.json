@@ -1,0 +1,45 @@
+{
+  "resample_rule": "5min",
+  "max_fill_periods": 2,
+  "n_rows_processed": 105149,
+  "n_nan_livingroom": 660,
+  "n_nan_outdoor": 660,
+  "livingroom_raw": {
+    "n_rows": 102686,
+    "t_start": "2020-05-24T17:15:03+00:00",
+    "t_end": "2021-05-24T17:10:03+00:00",
+    "dt_seconds_median": 300.0,
+    "dt_seconds_max": 46499.0,
+    "n_long_gaps": 14,
+    "n_missing_values": 0,
+    "value_min": 14.1,
+    "value_max": 28.5,
+    "resolution": 0.1,
+    "n_unique": 140
+  },
+  "outdoor_raw": {
+    "n_rows": 102693,
+    "t_start": "2020-05-24T19:40:03+00:00",
+    "t_end": "2021-05-24T19:35:04+00:00",
+    "dt_seconds_median": 300.0,
+    "dt_seconds_max": 46499.0,
+    "n_long_gaps": 14,
+    "n_missing_values": 0,
+    "value_min": -9.0,
+    "value_max": 34.0,
+    "resolution": 1.0,
+    "n_unique": 44
+  },
+  "sensors": {
+    "livingroom": {
+      "resolution": 0.1,
+      "unit": "celsius",
+      "equation": "y = T_air + v  (quantification 0.1 celsius)"
+    },
+    "outdoor": {
+      "resolution": 1.0,
+      "unit": "celsius",
+      "equation": "y = T_air + v  (quantification 1 celsius)"
+    }
+  }
+}

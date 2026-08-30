@@ -62,9 +62,9 @@ Le livrable : [indicateur, vue, reco], pas un rapport.
 # [Logique du
 # traitement.]
 
-Sources. Grain. Unités. Jointures.
+Salon + extérieur, maille 5 min. Interpolation limitée à 10 min.
 
-Ce qu'on agrège, ce qu'on ne mélange pas.
+On ne ponte pas un trou de 12 h. Quantification 0,1 °C (salon) vs 1 °C (extérieur) : modèle de capteur, pas de RC.
 
 ---
 

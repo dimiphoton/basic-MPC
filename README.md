@@ -19,10 +19,11 @@ from the identified model so closed-loop tests are not circular.
 
 ## Data
 
-Instrumented house, 2020, indoor temperatures ~5 min (per room, plus
-setpoint), outdoor temperature, hydronic heating (water temperature and
-pressure), PV production and electrical load. Heating *power* and
-irradiance are not measured; they are reconstructed as model inputs.
+Instrumented house, 2020 (May–May), indoor temperatures at a nominal
+**5 min** grid (occasional skipped samples; longest gap ~13 h). Living-room
+sensor quantized at **0.1 °C**, outdoor at **1 °C**. Hydronic heating (water
+temperature and pressure) and PV/load are present; heating *power* and
+irradiance are not measured.
 
 ## Result
 
@@ -33,9 +34,13 @@ on the simulated plant.
 ## Reproduce
 
 ```bash
-pip install -e .
-python -m basic_mpc.cli --help
+pip install -e ".[dev]"
+python -m basic_mpc preprocess
+pytest
 ```
+
+The preprocess step writes `data/processed/livingroom_outdoor_5min.csv`
+(regenerable) and `data/processed/quality_report.json`.
 
 ## Repo structure
 
