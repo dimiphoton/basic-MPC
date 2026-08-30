@@ -1,5 +1,15 @@
 # Journal de développement
 
+## 2026-08-30 — R2C2 vs R1C1 et schémas de publication
+
+- Schémas matplotlib (PNG + PDF) : R1C1, R2C2, plant (`α_s,mass`), Kalman,
+  planche famille. CLI : `python -m basic_mpc draw-schemas`.
+- R2C2 identifié (PEM Nelder-Mead, même fenêtre que le R1C1). RMSE test
+  0,56 °C / 1 h (égal) et 1,73 °C / 24 h contre 1,93 °C pour le R1C1.
+  Les deux τ (~139 h et ~148 h) sont lentes ; `R_ae` sature. Le 2e état
+  n'est pas une masse rapide clairement séparée.
+- Figures I1, I2, Z1, Z2, S2, S3, I5. CLI : `compare-r1c1-r2c2`.
+
 ## 2026-08-30 — Identification R1C1 + Kalman
 
 - Kalman linéaire à la main (chemin 1D scalaire). PEM : vraisemblance
