@@ -13,3 +13,4 @@
 | 2026-08-30 | Quantification observée : 0,1 °C salon, 1 °C extérieur | Traiter y comme T_air continue | Les pas du capteur ne sont pas une dynamique RC. |
 | 2026-08-30 | `P = max(T_eau-T_air,0)` seulement si `T_air < consigne` | Écart eau/air seul ; ou consigne seule | Sans appel de zone, l'eau chaude du circuit n'est pas un apport au salon. Pas des watts : le RC absorbe l'échelle. |
 | 2026-08-30 | `S` = somme PV, négatifs à 0 | Load électrique comme gains internes | Le brief demande un proxy solaire. Le load est un autre phénomène (occupants). |
+| 2026-08-30 | Plant R2C2 littérature avec `alpha_s_mass` > 0 | Même équations que l'identification ; ou R3C3 | Distingue le plant du modèle interne du MPC. Solaire sur les murs = misspecification volontaire. |

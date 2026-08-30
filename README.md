@@ -39,12 +39,12 @@ on the simulated plant.
 pip install -e ".[dev]"
 python -m basic_mpc preprocess
 python -m basic_mpc build-inputs
+python -m basic_mpc simulate-plant
 pytest
 ```
 
-`preprocess` writes the 5 min temperatures. `build-inputs` adds `P` and `S`
-to `data/processed/identification_5min.csv` (regenerable) plus
-`inputs_report.json`.
+`simulate-plant` writes a 48 h synthetic trajectory on the **literature plant**
+(solar also hits the thermal mass — not the RC we will identify).
 
 ## Repo structure
 

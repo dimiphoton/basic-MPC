@@ -86,9 +86,9 @@ Pas [ce qu'on ne prétend pas].
 
 # Périmètre.
 
-On fait [orientation : diagnostic / identifiability / décision].
+On identifie un RC sur capteurs réels. On teste le MPC sur un plant littérature.
 
-On n'est pas [scénario 2050 / modèle tape-à-l'œil / carte sans fond].
+On n'est pas une validation en maison réelle : le solaire du plant tape aussi les murs.
 
 ---
 

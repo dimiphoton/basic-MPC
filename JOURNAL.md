@@ -1,5 +1,13 @@
 # Journal de développement
 
+## 2026-08-30 — Simulateur plant
+
+- R2C2 littérature avec solaire aussi sur la masse (`alpha_s_mass`) :
+  distinct du R2C2 d'identification (solaire sur l'air seulement).
+- Capteur : bruit puis quantification 0,1 °C. État vrai `T_masse` caché.
+- CLI : `python -m basic_mpc simulate-plant`.
+- Scénario 48 h : y entre 10,3 et 17,5 °C ; masse ~1 K au-dessus de l'air.
+
 ## 2026-08-30 — Entrées chauffage et solaire
 
 - `P = max(T_eau - T_air, 0) * 1_{T_air < consigne}` (kelvin, pas des watts).

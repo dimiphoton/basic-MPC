@@ -86,9 +86,9 @@ Not [what we are not claiming].
 
 # Scope.
 
-We do [orientation: diagnosis / identifiability / decision].
+We identify an RC on real sensors. We test the MPC on a literature plant.
 
-We are not [2050 scenario / flashy model / a map with no GIS].
+Not a live house: plant solar also hits the walls, unlike the fitted R2C2.
 
 ---
 
