@@ -76,3 +76,10 @@ d'interpolation d'un trou de 12 h pour le rendu.
 
 - Travail : `pictures/experiments/<id>-<nom>.png`
 - Slides : copie choisie dans `pictures/presentations/` (suffixe `-fr` / `-en` seulement si le titre est *dans* l'image)
+
+Choix v1 (3 graphes max par récit, titres Marp au-dessus) :
+
+| Deck | Graphes |
+|---|---|
+| Recruteur | S6 confort/conso, S4 \(T_\mathrm{air}\) 48 h |
+| Technique | schéma Kalman, I1 RMSE vs horizon, S5 commande \(P\) |

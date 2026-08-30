@@ -7,14 +7,13 @@ paginate: true
 <!-- _class: cover -->
 <!-- _paginate: false -->
 
-<!-- Photo: pictures/presentations/photos/hero.png -->
-<!-- ![bg brightness:0.40](../../pictures/presentations/photos/hero.png) -->
+![bg brightness:0.40](../../pictures/presentations/photos/hero.jpg)
 
 # Can we heat
 # a house
 # by looking ahead?
 
-Machine learning · Buildings · Python / NumPy / SciPy
+Machine learning · Buildings
 
 Instrumented house · 2020 · ~5 min
 
@@ -22,53 +21,54 @@ Instrumented house · 2020 · ~5 min
 
 <!-- _class: split -->
 
-<!-- ![bg left:46%](../../pictures/presentations/photos/motivation.png) -->
+![bg left:46%](../../pictures/presentations/photos/action.jpg)
 
-# [Why this
-# matters now.]
+# Comfort is lost
+# at night.
 
-[Human or economic stake, in one sentence.]
+A thermostat turns on too late, too hard, then too long.
 
-**[What happens if nobody acts.]**
+**You pay for heat. You also sit in the cold.**
 
 ---
 
 <!-- _class: split -->
 
-<!-- ![bg left:46%](../../pictures/presentations/photos/hero.png) -->
+![bg left:46%](../../pictures/presentations/photos/cta.jpg)
 
-# [Who would
-# use this.]
+# Who has
+# a call to make.
 
-[Agency / public body]. [Firm / operator]. [Other actor].
+Consultancies. Building operators. Flexibility aggregators.
 
-**[The decision they have to make.]**
+**Heat on a threshold, or with a model that sees the night coming.**
 
 ---
 
 <!-- _class: full -->
 
-<!-- ![bg brightness:0.38](../../pictures/presentations/photos/physique.png) -->
+![bg brightness:0.38](../../pictures/presentations/photos/cta.jpg)
 
-# [The physics
-# in plain words.]
+# Air heats fast.
+# Walls remember.
 
-[Real-world mechanism, no equation: too much rain, too much heat, an evening gap…]
+Two rooms at 20 °C do not share the same tomorrow
+if one has cold walls.
 
 ---
 
 <!-- _class: split -->
 
-<!-- ![bg left:46%](../../pictures/presentations/photos/motivation.png) -->
+![bg left:46%](../../pictures/presentations/photos/action.jpg)
 
-# [How we read
-# the numbers.]
+# How we read
+# the numbers.
 
-One house, 2020, a full year. Nominal 5-minute samples, sometimes one skipped.
+One house, 2020, a 5-minute grid — sometimes one sample skipped.
 
-The 21.8 °C indoor reading is not the air: 0.1 °C quantization indoors, 1 °C outdoors.
+The 21.8 °C indoor reading is not the air: the sensor steps by 0.1 °C.
 
-Heating is not in watts: we build a water–air gap, only when the room asks for heat.
+Heating is not in watts: we build a water–air gap, only when the room asks.
 
 ---
 
@@ -78,60 +78,73 @@ Heating is not in watts: we build a water–air gap, only when the room asks for
 
 Not a magic thermostat on the same model we just fitted.
 
-Not measured watts.
+Not measured watts, and not a live-house trial.
 
-**A coded plant, slightly different on purpose, to test the MPC.**
+**A coded plant, slightly different on purpose, to test the controller.**
 
 ---
 
 <!-- _class: full -->
 
-<!-- ![bg brightness:0.38](../../pictures/presentations/photos/physique.png) -->
+![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# [Punchline.]
-# [One number.]
+# Zero hours
+# outside comfort.
+
+The thermostat: seven.
 
 ---
 
 <!-- _class: chart -->
 
-[Sentence headline: the chart *this* audience should remember.]
+## Same weather: comfort moves, the bill barely does.
 
-<!-- ![w:980](../../pictures/presentations/key-chart-en.png) -->
+![w:980](../../pictures/presentations/s6-confort-conso.png)
+
+---
+
+<!-- _class: chart -->
+
+## The thermostat hunts. Looking ahead holds 20 °C.
+
+![w:980](../../pictures/presentations/s4-mpc-vs-bang-bang.png)
 
 ---
 
 <!-- _class: split -->
 
-<!-- ![bg left:40%](../../pictures/presentations/photos/hero.png) -->
+![bg left:40%](../../pictures/presentations/photos/hero.jpg)
 
-# [This is not
-# an artefact.]
+# This is not
+# a drawing trick.
 
-<!-- ![w:480](../../pictures/presentations/map-or-robustness-en.png) -->
+We did not replay the controller on the model it learned.
+
+The simulated house lets the sun hit the walls too.
+That is not the house we identified.
 
 ---
 
 <!-- _class: actions -->
 
-<!-- ![bg right:38%](../../pictures/presentations/photos/action.png) -->
+![bg right:38%](../../pictures/presentations/photos/action.jpg)
 
 # Monday.
 
-**[Target A]** — [concrete move].
+**Operator** — keep the thermostat, but count hours outside the band.
 
-**[Target B]** — [concrete move].
+**Consultancy** — a small model is enough to look ahead; the win is not a big saving.
 
-Not causation. A bundle of clues.
+Not a product. A method, with the limits on the slide.
 
 ---
 
 <!-- _class: cta -->
 
-<!-- ![bg brightness:0.30](../../pictures/presentations/photos/cta.png) -->
+![bg brightness:0.30](../../pictures/presentations/photos/cta.jpg)
 
 # Your turn.
 
-[Open the dashboard](../explore-en.html)
+[Open the slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-recruteur-en.html)
 
 [Source code](https://github.com/dimiphoton/basic-MPC)

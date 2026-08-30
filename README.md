@@ -6,7 +6,7 @@
 | **Domain** | Buildings |
 | **Stack** | ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white) |
 | **Level** | Intermediate |
-| **Status** | In progress |
+| **Status** | v1.0 |
 
 Machine learning · Buildings · Python / NumPy / SciPy
 
@@ -52,6 +52,17 @@ Closed loop, 48 h, comfort band 19.5–21 °C, perfect weather forecasts:
 
 Oracle forecasts and the proxy `P` are limitations, not a field trial.
 
+![MPC vs bang-bang: comfort hours and proxy use](pictures/readme/s6-confort-conso.png)
+
+## Limits
+
+- Identification is one living room, one year, winter PEM window. The fitted
+  R2C2 has two slow time constants (~140 h); it is not fast air plus mass.
+- Closed-loop tests use a **literature plant** (solar also on the mass), not
+  the house. Weather forecasts given to the MPC are perfect (oracle).
+- `P` and `S` are constructed proxies, not watts or W/m². No Docker / Airflow
+  / MLflow in v1.
+
 ## Reproduce
 
 ```bash
@@ -91,10 +102,9 @@ French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`,
 
 Two audiences × two languages (Marp theme `portfolio`, HTML on GitHub Pages).
 The recruiter deck is a ~6-minute pitch; the technical deck is a ~12-minute
-deep dive. They may diverge a lot — the bar is attractive and informative
-for each audience, not a mirrored pair of slides.
+deep dive. They diverge on purpose.
 
-- [Recruiter overview (EN)](docs/slides/presentation-recruteur-en.html)
-- [Technical deep dive (EN)](docs/slides/presentation-technique-en.html)
-- [Présentation grand public (FR)](docs/slides/presentation-recruteur-fr.html)
-- [Présentation technique (FR)](docs/slides/presentation-technique-fr.html)
+- [Recruiter overview (EN)](https://dimiphoton.github.io/basic-MPC/slides/presentation-recruteur-en.html)
+- [Technical deep dive (EN)](https://dimiphoton.github.io/basic-MPC/slides/presentation-technique-en.html)
+- [Présentation grand public (FR)](https://dimiphoton.github.io/basic-MPC/slides/presentation-recruteur-fr.html)
+- [Présentation technique (FR)](https://dimiphoton.github.io/basic-MPC/slides/presentation-technique-fr.html)
