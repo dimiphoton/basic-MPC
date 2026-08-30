@@ -18,6 +18,7 @@ Schémas de modèles (générés, pas dessinés à la main) :
 | `schema-famille-rc` | Les trois circuits empilés |
 
 CLI : `python -m basic_mpc draw-schemas` (PNG + PDF).
+MPC : `python -m basic_mpc mpc-vs-bang-bang` (S4–S6, plant littérature).
 
 ---
 

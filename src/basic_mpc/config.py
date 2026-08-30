@@ -36,3 +36,36 @@ class DataConfig:
     heating_file: str = "temperature_heating_system.csv"
     pv_file: str = "pv_production_load.csv"
     long_gap_seconds: float = 3600.0
+
+
+@dataclass(frozen=True)
+class ControlConfig:
+    """Réglages du MPC et du bang-bang (pas dans le code métier).
+
+    Parameters
+    ----------
+    t_set, t_min, t_max : float
+        Consigne et bande de confort (°C).
+    horizon_hours, block_minutes : float
+        Horizon de prédiction et durée d'un mouvement (move blocking).
+    q_track, q_band, r_rel : float
+        Poids : suivi de consigne, hors-bande, effort (relatif à P_max²).
+    n_hours : float
+        Durée de la comparaison en boucle fermée.
+    p_max_margin : float
+        ``P_max`` = marge × puissance de maintien au T_ext le plus froid.
+    seed : int
+        Bruit du plant (même graine pour les deux contrôleurs).
+    """
+
+    t_set: float = 20.0
+    t_min: float = 19.5
+    t_max: float = 21.0
+    horizon_hours: float = 6.0
+    block_minutes: float = 30.0
+    q_track: float = 1.0
+    q_band: float = 20.0
+    r_rel: float = 0.04
+    n_hours: float = 48.0
+    p_max_margin: float = 1.4
+    seed: int = 0

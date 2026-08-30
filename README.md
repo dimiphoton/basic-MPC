@@ -36,7 +36,21 @@ Held-out Feb–May 2021 (same split for both models):
   constants (~139 h and ~148 h); \(R_{ae}\) hits its cap. The extra state
   barely helps before 12 h. Circuit diagrams: `pictures/experiments/schema-*.png`.
 
-The R2C2 remains the MPC candidate (hidden mass), with that limit stated.
+The R2C2 remains the grey-box candidate (hidden mass), with that limit
+stated. Closed-loop control uses a **separate** internal R2C2: same
+equations as identification (solar on air only), RC gains taken from the
+literature plant **without** `α_s,mass`. The real-house fit is not used
+as the controller model (140 h time constants vs ~3 h / ~11 h on the
+plant).
+
+Closed loop, 48 h, comfort band 19.5–21 °C, perfect weather forecasts:
+
+- **MPC**: **0 h** outside the band after the 2 h heat-up; `P` modulated.
+- **Bang-bang** (hysteresis on `y` only): **7 h** outside; on/off at `P_max`.
+- Proxy consumption **−3 %** for the MPC. Figures: `s4`–`s6` in
+  `pictures/experiments/`.
+
+Oracle forecasts and the proxy `P` are limitations, not a field trial.
 
 ## Reproduce
 
@@ -48,21 +62,24 @@ python -m basic_mpc simulate-plant
 python -m basic_mpc identify-r1c1
 python -m basic_mpc draw-schemas
 python -m basic_mpc compare-r1c1-r2c2
+python -m basic_mpc mpc-vs-bang-bang
 pytest
 ```
 
-`draw-schemas` writes publication RC/Kalman diagrams (PNG + PDF).
-`compare-r1c1-r2c2` fits R2C2 on the same PEM window and scores 1–24 h
-forecasts against R1C1. `identify-r1c1` fits the one-state baseline.
-`simulate-plant` writes a 48 h trajectory on the **literature plant**
-(solar also hits the thermal mass — not the RC we identify).
+`mpc-vs-bang-bang` runs the receding-horizon controller against a
+hysteresis thermostat on the literature plant (not on the identified
+house model). `draw-schemas` writes publication RC/Kalman diagrams
+(PNG + PDF). `compare-r1c1-r2c2` fits R2C2 on the same PEM window and
+scores 1–24 h forecasts against R1C1. `identify-r1c1` fits the one-state
+baseline. `simulate-plant` writes a 48 h trajectory on the **literature
+plant** (solar also hits the thermal mass — not the RC we identify).
 
 ## Repo structure
 
 ```
 brief/          # identity, objective, thermal briefs
 data/raw/       # sensor CSV (do not edit)
-src/basic_mpc/  # package (data, features, models, CLI)
+src/basic_mpc/  # package (data, features, models, control, CLI)
 tests/
 docs/presentations/   # Marp sources
 ```

@@ -5,12 +5,13 @@ import json
 import logging
 
 from basic_mpc.config import DataConfig
+from basic_mpc.control.closed_loop import run_mpc_vs_bangbang
 from basic_mpc.data.pipeline import run_preprocess
 from basic_mpc.features.inputs import run_build_inputs
+from basic_mpc.figures.schemas import run_draw_schemas
 from basic_mpc.identification.compare import run_compare_r1c1_r2c2
 from basic_mpc.identification.run import run_identify_r1c1
 from basic_mpc.models.plant import run_simulate_plant
-from basic_mpc.figures.schemas import run_draw_schemas
 
 
 def main() -> None:
@@ -43,6 +44,10 @@ def main() -> None:
     subparsers.add_parser(
         "compare-r1c1-r2c2",
         help="Identification R2C2 et comparaison multi-horizon",
+    )
+    subparsers.add_parser(
+        "mpc-vs-bang-bang",
+        help="MPC horizon glissant vs thermostat, plant littérature",
     )
 
     arguments = parser.parse_args()
@@ -96,6 +101,19 @@ def main() -> None:
                     "horizons_r1c1": rapport["horizons_r1c1"],
                     "horizons_r2c2": rapport["horizons_r2c2"],
                     "nll_r2c2": rapport["fit_r2c2"]["nll"],
+                },
+                indent=2,
+                ensure_ascii=False,
+            )
+        )
+    elif arguments.commande == "mpc-vs-bang-bang":
+        rapport = run_mpc_vs_bangbang()
+        print(
+            json.dumps(
+                {
+                    "p_max": rapport["p_max"],
+                    "mpc": rapport["mpc"],
+                    "bangbang": rapport["bangbang"],
                 },
                 indent=2,
                 ensure_ascii=False,

@@ -2,6 +2,9 @@
 
 ## [Non publié]
 
+- MPC vs bang-bang (48 h, plant littérature) : 0 h hors bande après 2 h
+  contre 7 h pour le thermostat ; proxy conso −3 %. CLI
+  `mpc-vs-bang-bang`. Le modèle interne n'est pas le R2C2 maison.
 - Schémas RC/Kalman générés (PNG+PDF) ; comparaison R1C1/R2C2 :
   RMSE 24 h 1,73 vs 1,93 °C ; le second état n'est pas une masse rapide.
 - Identification R1C1 (PEM + Kalman) : τ ≈ 104 h, RMSE 0,56 °C / 1 h

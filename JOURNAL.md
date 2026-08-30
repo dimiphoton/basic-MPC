@@ -1,5 +1,14 @@
 # Journal de développement
 
+## 2026-08-30 — MPC vs bang-bang
+
+- Boucle fermée 48 h sur le plant littérature (`α_s,mass` > 0). Modèle interne
+  R2C2 sans solaire sur la masse (pas le R2C2 maison : τ incompatibles).
+- MPC : horizon 6 h, move blocking 30 min, QP condensé SciPy, Kalman en ligne.
+  Bang-bang : hystérésis 19,5 / 21 °C. Prévisions météo parfaites (oracle).
+- Après le transitoire : **0 h** hors bande (MPC) vs **7 h** (thermostat).
+  Proxy conso −3 %. Figures S4–S6. CLI : `python -m basic_mpc mpc-vs-bang-bang`.
+
 ## 2026-08-30 — R2C2 vs R1C1 et schémas de publication
 
 - Schémas matplotlib (PNG + PDF) : R1C1, R2C2, plant (`α_s,mass`), Kalman,
