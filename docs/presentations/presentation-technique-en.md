@@ -62,9 +62,9 @@ The deliverable: [indicator, view, recommendation], not a report.
 # [Data-processing
 # logic.]
 
-Sources. Grain. Units. Joins.
+Living room + outdoor, 5-minute grid. Interpolation capped at 10 minutes.
 
-What we aggregate, what we refuse to mix.
+A 12-hour hole stays NaN. 0.1 °C (indoor) vs 1 °C (outdoor) quantization is the sensor model, not the RC dynamics.
 
 ---
 

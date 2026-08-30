@@ -64,9 +64,9 @@ Instrumented house · 2020 · ~5 min
 # [How we read
 # the numbers.]
 
-Where they come from. At what grain.
+One house, 2020, a full year. Nominal 5-minute samples, sometimes one skipped.
 
-What we transform so the figure actually means something.
+The 21.8 °C indoor reading is not the air: 0.1 °C quantization indoors, 1 °C outdoors.
 
 ---
 

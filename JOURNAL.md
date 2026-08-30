@@ -1,5 +1,13 @@
 # Journal de développement
 
+## 2026-08-30 — Prétraitement et modèle de capteur
+
+- Maille cible 5 min ; interpolation limitée à 10 min (un point sauté).
+- Salon : quantification 0,1 °C. Extérieur : 1 °C. Équation `y = T_air + v`.
+- CLI : `python -m basic_mpc preprocess`.
+- 14 longs trous (> 1 h) côté brut ; 660 NaN restants après maille 5 min
+  (dont décalage de début salon / extérieur). Les longs trous restent NaN.
+
 ## 2026-08-30 — Cadrage
 
 - Identité : Machine learning · Bâtiment · Python / NumPy / SciPy.

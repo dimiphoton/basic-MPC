@@ -1,5 +1,6 @@
 __pycache__/
 *.py[cod]
+*.egg-info/
 .venv/
 venv/
 .env
@@ -14,6 +15,9 @@ venv/
 # Données brutes : pas de commit (taille/licence), on garde juste la structure
 data/raw/*
 !data/raw/.gitkeep
+
+# Séries régénérables (le JSON qualité peut être versionné)
+data/processed/*.csv
 
 # Décommente si les modèles deviennent trop volumineux pour git classique
 # models/*.pkl

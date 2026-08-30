@@ -9,3 +9,5 @@
 | 2026-08-30 | Plant **codé**, distinct du modèle identifié | Rejouer le MPC sur le RC appris | Circularité : le contrôleur se prédit lui-même. Le brief phare l'interdit comme validation. |
 | 2026-08-30 | Kalman à la main | `filterpy` / `pykalman` | Preuve de compréhension ; test unitaire sur cas synthétique. |
 | 2026-08-30 | Hors v1 : Airflow, S3, MLflow | Suivre le brief phare à la lettre | Dilue le récit Kalman / RC / MPC. Log d'expériences : `experiments/runs.jsonl`. |
+| 2026-08-30 | Interpolation limitée à 10 min sur maille 5 min | Interpoler tous les trous ; ou ne jamais interpoler | Un dt ≈ 600 s est un échantillon sauté. Un trou de 12 h n'est pas de la physique à inventer. |
+| 2026-08-30 | Quantification observée : 0,1 °C salon, 1 °C extérieur | Traiter y comme T_air continue | Les pas du capteur ne sont pas une dynamique RC. |
