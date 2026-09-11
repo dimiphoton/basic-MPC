@@ -18,7 +18,8 @@ Schémas de modèles (générés, pas dessinés à la main) :
 | `schema-famille-rc` | Les trois circuits empilés |
 
 CLI : `python -m basic_mpc draw-schemas` (PNG + PDF).
-MPC : `python -m basic_mpc mpc-vs-bang-bang` (S4–S6, plant littérature).
+MPC v1 : `python -m basic_mpc mpc-vs-bang-bang`.
+MPC v1.1 (€, T_sp) : `python -m basic_mpc mpc-cout-consigne` (S4–S6).
 
 ---
 
@@ -59,16 +60,18 @@ Ici l'état vrai existe.
 | S1 | \(T_\mathrm{air}\) vraie vs \(y\) quantifiée (0,1 °C), une journée | Plant / Kalman | Technique |
 | S2 | \(\hat T_\mathrm{masse}\) Kalman vs \(T_\mathrm{masse}\) plant | Identification sur plant | Technique |
 | S3 | Même \(u\) : \(y_\mathrm{plant}\) vs \(y\) du R2C2 identifié | Après ident. | Technique (anti-circularité) |
-| S4 | MPC vs bang-bang, 48 h : \(T_\mathrm{air}\) + bande de confort | MPC | RH + technique |
-| S5 | Même 48 h : commande \(P\) (dosée vs tout-ou-rien) | MPC | Technique |
-| S6 | Cumul de \(P\) (proxy conso) + heures hors bande (confort) | MPC | RH (graphe clé) |
+| S4 | MPC vs hystérésis, 48 h : \(T_\mathrm{air}\) + \(T_{\mathrm{conf}}(t)\) + HP/HC | MPC € | RH + technique |
+| S5 | Même 48 h : consigne \(T_{\mathrm{sp}}\) et \(P\) via bande \(n\) | MPC € | Technique |
+| S6 | Facture proxy € + heures sous \(T_{\mathrm{conf}}\) (> 0,1 °C) | MPC € | RH (graphe clé) |
 
 ---
 
 ## Hors menu
 
-Pas de dashboard Streamlit en v1. Pas de matrice \(A\) en slide. Pas
-d'interpolation d'un trou de 12 h pour le rendu.
+Pas de matrice \(A\) en slide. Pas d'interpolation d'un trou de 12 h
+pour le rendu. Le simulateur visiteur (Pages + Streamlit) est l'étape
+`feature/dashboard-simulateur` : pédagogie RC / déphasage, vecteur
+\(Z(j\omega)\) des fits, comparaison de stratégies.
 
 ---
 

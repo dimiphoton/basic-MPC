@@ -2,6 +2,10 @@
 
 ## [Non publié]
 
+- MPC v1.1 : consigne thermostat, bande n = 1 °C, J = facture HP/HC +
+  inconfort. 48 h : **1,8 h** sous T_conf vs **19,8 h** (hystérésis),
+  facture ~16 € des deux côtés. CLI `mpc-cout-consigne`. Heures d'inconfort
+  au-delà de 0,1 °C (capteur).
 - Polish portfolio : 4 decks Marp, README v1.0, limites, liens GitHub Pages.
 - MPC vs bang-bang (48 h, plant littérature) : 0 h hors bande après 2 h
   contre 7 h pour le thermostat ; proxy conso −3 %. CLI

@@ -88,16 +88,16 @@ Pas des watts mesurés, ni un essai dans la vraie maison.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# Zéro heure
-# hors confort.
+# 2 h trop froid.
+# Le thermostat : 20.
 
-Le thermostat, lui : sept.
+Même facture. Le gain est le confort, pas l'euro.
 
 ---
 
 <!-- _class: chart -->
 
-## Même météo : le confort change, pas la facture.
+## Même facture. Vingt heures de froid en moins.
 
 ![w:980](../../pictures/presentations/s6-confort-conso.png)
 
@@ -105,7 +105,7 @@ Le thermostat, lui : sept.
 
 <!-- _class: chart -->
 
-## Le thermostat oscille. L'anticipation tient 20 °C.
+## Le thermostat oscille. Le MPC préchauffe en heures creuses.
 
 ![w:980](../../pictures/presentations/s4-mpc-vs-bang-bang.png)
 
@@ -131,9 +131,9 @@ Ce n'est pas celle qu'on a identifiée.
 
 # Lundi.
 
-**Exploitant** — garder le thermostat, mais mesurer les heures hors bande.
+**Exploitant** — garder le thermostat, mais compter les heures sous la consigne de confort.
 
-**Bureau d'études** — un modèle simple suffit pour anticiper ; le gain n'est pas une grosse économie.
+**Bureau d'études** — un modèle simple suffit pour anticiper ; la facture bouge peu, le froid disparaît.
 
 Pas un produit. Une preuve de méthode.
 

@@ -35,3 +35,18 @@ def bangbang_step(
     elif y <= t_low:
         heating_on = True
     return (p_max if heating_on else 0.0), heating_on
+
+
+def hysteresis_comfort_step(
+    y: float,
+    heating_on: bool,
+    t_conf: float,
+    n_band: float,
+    p_max: float,
+) -> tuple[float, bool]:
+    """Baseline v1.1 : hystérésis autour de ``T_conf(t)``, sans modèle.
+
+    Allume sous ``T_conf - n/2``, éteint au-dessus de ``T_conf + n/2``.
+    """
+    half = 0.5 * n_band
+    return bangbang_step(y, heating_on, t_conf - half, t_conf + half, p_max)
