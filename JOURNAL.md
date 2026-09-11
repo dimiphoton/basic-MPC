@@ -1,5 +1,12 @@
 # Journal de développement
 
+## 2026-09-12 — Split d'identification
+
+- Note `docs/identification-split.md` : PEM sur une trajectoire continue
+  (50 j d'hiver), pas de shuffle de semaines, pas de RC ouvré / week-end.
+- Si biais calendaire : le mettre dans \(u\) (occupation), pas dans
+  \(\theta\). Le trou actuel est hiver→printemps, pas le mélange.
+
 ## 2026-09-11 — Labo dynamique
 
 - Streamlit : durée 2–7 j, météo tirée (jours non identiques), T_conf

@@ -2,6 +2,9 @@
 
 ## [Non publié]
 
+- Note de méthode : split d'identification chronologique, pas de
+  semaines mélangées ni RC ouvré / week-end
+  (`docs/identification-split.md`).
 - Labo Streamlit dynamique : météo multi-jours tirée, burn-in 24 h
   (maison habitée), une stratégie, graphes datetime (air / murs /
   consigne / P / facture). Pages = leçon RC (équilibre + corrélation
