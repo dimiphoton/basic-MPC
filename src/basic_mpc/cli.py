@@ -6,6 +6,7 @@ import logging
 
 from basic_mpc.config import DataConfig
 from basic_mpc.control.closed_loop import run_mpc_vs_bangbang
+from basic_mpc.control.cout import run_mpc_cout_consigne
 from basic_mpc.data.pipeline import run_preprocess
 from basic_mpc.features.inputs import run_build_inputs
 from basic_mpc.figures.schemas import run_draw_schemas
@@ -47,7 +48,11 @@ def main() -> None:
     )
     subparsers.add_parser(
         "mpc-vs-bang-bang",
-        help="MPC horizon glissant vs thermostat, plant littérature",
+        help="MPC v1 (poids SciPy) vs thermostat, plant littérature",
+    )
+    subparsers.add_parser(
+        "mpc-cout-consigne",
+        help="MPC v1.1 : consigne, bande n, facture HP/HC vs hystérésis",
     )
 
     arguments = parser.parse_args()
@@ -114,6 +119,20 @@ def main() -> None:
                     "p_max": rapport["p_max"],
                     "mpc": rapport["mpc"],
                     "bangbang": rapport["bangbang"],
+                },
+                indent=2,
+                ensure_ascii=False,
+            )
+        )
+    elif arguments.commande == "mpc-cout-consigne":
+        rapport = run_mpc_cout_consigne()
+        print(
+            json.dumps(
+                {
+                    "p_max": rapport["p_max"],
+                    "n_band": rapport["n_band"],
+                    "mpc": rapport["mpc"],
+                    "hysteresis": rapport["hysteresis"],
                 },
                 indent=2,
                 ensure_ascii=False,

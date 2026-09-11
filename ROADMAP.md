@@ -19,5 +19,6 @@ Figures : catalogue dans `docs/visualisations.md`. On les génère dans
 - [x] MPC à horizon glissant vs thermostat bang-bang (`feature/mpc-vs-bang-bang`)
 - [x] Polish portfolio : README, slides, limites (`feature/portfolio-slides`)
 - [x] Cadrage contrôle : consigne, bande n, J euros (`brief/controle-mpc.md`)
-- [ ] MPC : bande n, coût €, baseline hystérésis (`feature/mpc-cout-consigne`)
-- [ ] Dashboard maison + météo pour le recruteur (`feature/dashboard-simulateur`)
+- [x] MPC : bande n, coût €, baseline hystérésis (`feature/mpc-cout-consigne`)
+- [ ] Simulateur visiteur : RC + déphasage, vecteur \(Z\) fitté, stratégies
+  ludiques — GitHub Pages **et** Streamlit (`feature/dashboard-simulateur`)

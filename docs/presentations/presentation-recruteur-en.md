@@ -88,16 +88,16 @@ Not measured watts, and not a live-house trial.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# Zero hours
-# outside comfort.
+# 2 h too cold.
+# The thermostat: 20.
 
-The thermostat: seven.
+Same bill. The win is comfort, not the euro.
 
 ---
 
 <!-- _class: chart -->
 
-## Same weather: comfort moves, the bill barely does.
+## Same bill. Twenty fewer cold hours.
 
 ![w:980](../../pictures/presentations/s6-confort-conso.png)
 
@@ -105,7 +105,7 @@ The thermostat: seven.
 
 <!-- _class: chart -->
 
-## The thermostat hunts. Looking ahead holds 20 °C.
+## The thermostat hunts. The MPC preheats on the cheap night rate.
 
 ![w:980](../../pictures/presentations/s4-mpc-vs-bang-bang.png)
 
@@ -131,9 +131,9 @@ That is not the house we identified.
 
 # Monday.
 
-**Operator** — keep the thermostat, but count hours outside the band.
+**Operator** — keep the thermostat, but count hours below the comfort schedule.
 
-**Consultancy** — a small model is enough to look ahead; the win is not a big saving.
+**Consultancy** — a small model is enough to look ahead; the bill barely moves, the cold does.
 
 Not a product. A method, with the limits on the slide.
 

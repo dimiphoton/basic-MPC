@@ -32,7 +32,11 @@ v1.1 contrôle (2026-08-30), détail dans `brief/controle-mpc.md` :
   proportionnelle \(n = 1\) °C — pas des watts.
 - \(J\) = facture électricité HP/HC (horloge) + inconfort sous
   \(T_{\mathrm{conf}}(t)\) (20 °C jour / 17 °C nuit).
-- Hors v1.1 : PV dans la facture, fioul, Gurobi. OSQP et Streamlit
-  après que \(J\) existe.
+- Hors v1.1 : PV dans la facture, fioul, Gurobi. OSQP après que \(J\)
+  existe.
+- Visiteur (après le coût €) : expliquer le modèle RC et l'utilité du
+  déphasage, tracer \(Z(j\omega)\) des paramètres fittés (vecteur
+  complexe), simulateur de stratégies **ludique** — page GitHub Pages
+  (sans installer Python) **et** app Streamlit en démo locale.
 
 Métier, domaine et stack : `brief/identite.md`.

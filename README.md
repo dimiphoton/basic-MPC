@@ -6,7 +6,7 @@
 | **Domain** | Buildings |
 | **Stack** | ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white) |
 | **Level** | Intermediate |
-| **Status** | v1.0 |
+| **Status** | v1.1 |
 
 Machine learning · Buildings · Python / NumPy / SciPy
 
@@ -43,16 +43,19 @@ literature plant **without** `α_s,mass`. The real-house fit is not used
 as the controller model (140 h time constants vs ~3 h / ~11 h on the
 plant).
 
-Closed loop, 48 h, comfort band 19.5–21 °C, perfect weather forecasts:
+Closed loop, 48 h from 18:00 local, comfort 20 °C day / 17 °C night,
+peak/off-peak electricity (0.40 / 0.20 €/kWh), command = thermostat
+setpoint through a 1 °C proportional band:
 
-- **MPC**: **0 h** outside the band after the 2 h heat-up; `P` modulated.
-- **Bang-bang** (hysteresis on `y` only): **7 h** outside; on/off at `P_max`.
-- Proxy consumption **−3 %** for the MPC. Figures: `s4`–`s6` in
-  `pictures/experiments/`.
+- **MPC**: **1.8 h** below comfort (> 0.1 °C); bill **€16.19**.
+- **Hysteresis** (setpoint = comfort schedule, no model): **19.8 h**
+  below; bill **€16.35**.
+- The bill barely moves (**−1 %**). The win is not sitting cold. Figures
+  `s4`–`s6` in `pictures/experiments/` (and README).
 
 Oracle forecasts and the proxy `P` are limitations, not a field trial.
 
-![MPC vs bang-bang: comfort hours and proxy use](pictures/readme/s6-confort-conso.png)
+![MPC vs hysteresis: bill and hours below comfort](pictures/readme/s6-confort-conso.png)
 
 ## Limits
 
@@ -73,13 +76,14 @@ python -m basic_mpc simulate-plant
 python -m basic_mpc identify-r1c1
 python -m basic_mpc draw-schemas
 python -m basic_mpc compare-r1c1-r2c2
-python -m basic_mpc mpc-vs-bang-bang
+python -m basic_mpc mpc-cout-consigne
 pytest
 ```
 
-`mpc-vs-bang-bang` runs the receding-horizon controller against a
-hysteresis thermostat on the literature plant (not on the identified
-house model). `draw-schemas` writes publication RC/Kalman diagrams
+`mpc-cout-consigne` runs the receding-horizon controller (thermostat
+setpoint, peak/off-peak bill + discomfort) against a hysteresis
+thermostat on the literature plant. `mpc-vs-bang-bang` keeps the older
+v1 comparison (magic weights, no euros). `draw-schemas` writes publication RC/Kalman diagrams
 (PNG + PDF). `compare-r1c1-r2c2` fits R2C2 on the same PEM window and
 scores 1–24 h forecasts against R1C1. `identify-r1c1` fits the one-state
 baseline. `simulate-plant` writes a 48 h trajectory on the **literature

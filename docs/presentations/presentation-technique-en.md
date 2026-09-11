@@ -115,16 +115,16 @@ Plant solar also hits the mass. This is not a live-house trial.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# 0 h outside the band
-# after a 2 h heat-up.
+# 2 h below T_conf
+# after the cold start.
 
-Bang-bang: 7 h. Same weather, same plant, same seed.
+Hysteresis: 20 h. Bill ~€16 either way. Thermostat setpoint, band n, peak/off-peak.
 
 ---
 
 <!-- _class: chart -->
 
-## On/off versus a 6-hour receding move.
+## Setpoint T_sp: the MPC preheats; hysteresis waits for 7 a.m.
 
 ![w:980](../../pictures/presentations/s5-commande-p.png)
 
@@ -138,7 +138,7 @@ Bang-bang: 7 h. Same weather, same plant, same seed.
 
 Six hours ahead. Piecewise-constant moves of 30 minutes.
 
-Kalman at every step. SciPy, not cvxpy. Future weather is known (oracle).
+Kalman at every step. SciPy, not cvxpy. J = peak/off-peak bill + discomfort. Weather is an oracle.
 
 ---
 
@@ -187,7 +187,7 @@ One house, one winter fit, not a stock of buildings.
 [Slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-technique-en.html)
 [Repo](https://github.com/dimiphoton/basic-MPC)
 
-`python -m basic_mpc mpc-vs-bang-bang`
+`python -m basic_mpc mpc-cout-consigne`
 
 `pytest`
 

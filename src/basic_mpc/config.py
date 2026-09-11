@@ -56,6 +56,20 @@ class ControlConfig:
         ``P_max`` = marge × puissance de maintien au T_ext le plus froid.
     seed : int
         Bruit du plant (même graine pour les deux contrôleurs).
+    n_band : float
+        Bande proportionnelle (°C) : P = P_max sat((T_sp − T_air)/n).
+    t_sp_min, t_sp_max : float
+        Bornes de la consigne thermostat (°C).
+    t_conf_occupied, t_conf_setback : float
+        Programmation de confort jour / nuit (°C).
+    occupied_start_hour, occupied_end_hour : float
+        Fenêtre occupée (heure locale Bruxelles), aussi heures pleines.
+    pi_hp, pi_hc : float
+        Prix électricité €/kWh (horloge, pas un scraping fournisseur).
+    lambda_comfort : float
+        Poids inconfort (€·K⁻²·h⁻¹).
+    start_local : str
+        Début ISO du scénario (naive = Europe/Brussels).
     """
 
     t_set: float = 20.0
@@ -69,3 +83,15 @@ class ControlConfig:
     n_hours: float = 48.0
     p_max_margin: float = 1.4
     seed: int = 0
+    # v1.1 : consigne thermostat, bande n, J en euros (brief/controle-mpc.md)
+    n_band: float = 1.0
+    t_sp_min: float = 16.0
+    t_sp_max: float = 22.0
+    t_conf_occupied: float = 20.0
+    t_conf_setback: float = 17.0
+    occupied_start_hour: float = 7.0
+    occupied_end_hour: float = 22.0
+    pi_hp: float = 0.40
+    pi_hc: float = 0.20
+    lambda_comfort: float = 1.0
+    start_local: str = "2021-01-15T18:00:00"

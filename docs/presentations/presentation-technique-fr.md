@@ -115,16 +115,16 @@ Le solaire du plant tape aussi les murs. Ce n'est pas une validation en maison.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# 0 h hors bande
-# après 2 h de montée.
+# 2 h sous T_conf
+# après le départ froid.
 
-Bang-bang : 7 h. Même météo, même plant, même graine.
+Hystérésis : 20 h. Facture ~16 € des deux côtés. Consigne thermostat, bande n, HP/HC.
 
 ---
 
 <!-- _class: chart -->
 
-## Tout-ou-rien contre une commande dosée sur 6 h.
+## Consigne T_sp : le MPC préchauffe ; l'hystérésis attend 7 h.
 
 ![w:980](../../pictures/presentations/s5-commande-p.png)
 
@@ -138,7 +138,7 @@ Bang-bang : 7 h. Même météo, même plant, même graine.
 
 Six heures d'avance. Commande constante par blocs de 30 min.
 
-Kalman à chaque pas. SciPy, pas cvxpy. Météo future connue (oracle).
+Kalman à chaque pas. SciPy, pas cvxpy. J = facture HP/HC + inconfort. Météo oracle.
 
 ---
 
@@ -187,7 +187,7 @@ Une maison, un hiver de fit, pas un parc.
 [Slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-technique-fr.html)
 [Repo](https://github.com/dimiphoton/basic-MPC)
 
-`python -m basic_mpc mpc-vs-bang-bang`
+`python -m basic_mpc mpc-cout-consigne`
 
 `pytest`
 

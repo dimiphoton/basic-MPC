@@ -1,5 +1,15 @@
 # Journal de développement
 
+## 2026-09-11 — MPC consigne et coût €
+
+- Commande = T_sp, bande n = 1 °C, J = facture HP/HC + inconfort sous T_conf
+  (20/17 °C, 0,40/0,20 €/kWh). Baseline : hystérésis autour de T_conf.
+- 48 h dès 18 h : MPC **1,8 h** sous confort vs **19,8 h** ; facture 16,19 €
+  vs 16,35 €. Heures comptées au-delà de 0,1 °C. CLI `mpc-cout-consigne`.
+- T_sp rafraîchi chaque pas pour réaliser le P du bloc (sinon la bande n
+  coupe trop tôt). S4–S6 et slides mis à jour.
+- Suite : simulateur visiteur (RC, déphasage, vecteur Z, Pages + Streamlit).
+
 ## 2026-08-30 — Polish portfolio
 
 - Quatre decks Marp remplis (RH ≠ technique). RH : 0 h vs 7 h, graphes S6 et S4.

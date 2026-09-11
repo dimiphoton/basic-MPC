@@ -1,0 +1,43 @@
+{
+  "model": "mpc_cout_consigne",
+  "internal": "r2c2 from plant without alpha_s_mass",
+  "plant_alpha_s_mass": 0.004,
+  "p_max": 411.3979366550642,
+  "p_hold_at_t_ext_min": 293.8556690393316,
+  "t_ext_min": -3.5084535231465295,
+  "horizon_hours": 6.0,
+  "block_minutes": 30.0,
+  "n_band": 1.0,
+  "beta": 1.111111111111111e-06,
+  "lambda_comfort": 1.0,
+  "start_local": "2021-01-15T18:00:00",
+  "comfort": {
+    "occupied": 20.0,
+    "setback": 17.0
+  },
+  "tariff": {
+    "hp": 0.4,
+    "hc": 0.2
+  },
+  "mpc": {
+    "bill_eur": 16.188145088401313,
+    "energy_kwh": 47.83605843174204,
+    "hours_under_conf": 1.75,
+    "hours_under_after_2h": 0.9166666666666666,
+    "discomfort_eur": 0.7167477500545086,
+    "ta_mean": 18.932066393102467,
+    "ta_min": 16.873010378257717,
+    "ta_max": 20.068244850815244
+  },
+  "hysteresis": {
+    "bill_eur": 16.346211349761212,
+    "energy_kwh": 47.44789536088406,
+    "hours_under_conf": 19.833333333333332,
+    "hours_under_after_2h": 18.916666666666664,
+    "discomfort_eur": 9.232122927802878,
+    "ta_mean": 18.844152910480815,
+    "ta_min": 16.14296971834974,
+    "ta_max": 20.807534116155697
+  },
+  "notes": "Commande = T_sp, bande n, J = facture HP/HC + inconfort. Plant littérature (α_s,mass). Prévisions oracle. β convertit le proxy P en kWh, pas un compteur."
+}
