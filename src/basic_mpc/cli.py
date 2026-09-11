@@ -7,6 +7,7 @@ import logging
 from basic_mpc.config import DataConfig
 from basic_mpc.control.closed_loop import run_mpc_vs_bangbang
 from basic_mpc.control.cout import run_mpc_cout_consigne
+from basic_mpc.sim.export import run_export_simulator
 from basic_mpc.data.pipeline import run_preprocess
 from basic_mpc.features.inputs import run_build_inputs
 from basic_mpc.figures.schemas import run_draw_schemas
@@ -51,8 +52,8 @@ def main() -> None:
         help="MPC v1 (poids SciPy) vs thermostat, plant littérature",
     )
     subparsers.add_parser(
-        "mpc-cout-consigne",
-        help="MPC v1.1 : consigne, bande n, facture HP/HC vs hystérésis",
+        "export-simulator",
+        help="JSON + figures Z pour le simulateur visiteur (Pages / Streamlit)",
     )
 
     arguments = parser.parse_args()
@@ -138,6 +139,9 @@ def main() -> None:
                 ensure_ascii=False,
             )
         )
+    elif arguments.commande == "export-simulator":
+        rapport = run_export_simulator()
+        print(json.dumps(rapport, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

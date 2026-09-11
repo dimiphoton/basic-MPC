@@ -147,4 +147,6 @@ Pas un produit. Une preuve de méthode.
 
 [Voir les slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-recruteur-fr.html)
 
+[Jouer le simulateur](https://dimiphoton.github.io/basic-MPC/simulator/)
+
 [Code source](https://github.com/dimiphoton/basic-MPC)

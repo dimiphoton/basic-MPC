@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chauffer avant — simulateur RC / MPC</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="nav" id="nav"></p>
+      <h1 id="title"></h1>
+      <p class="lede" id="lede"></p>
+    </div>
+    <button class="lang" id="langBtn" type="button">EN</button>
+  </header>
+  <main>
+    <section class="card" id="rc">
+      <h2 id="rcTitle"></h2>
+      <p id="rcBody"></p>
+      <p class="eq">R = isolation (fuite vers l’extérieur) · C = masse (murs, dalle)</p>
+      <p class="hint" id="rcHint"></p>
+    </section>
+
+    <section class="card" id="phase">
+      <h2 id="phaseTitle"></h2>
+      <p id="phaseBody"></p>
+      <label id="massLabel" for="mass"></label>
+      <input id="mass" type="range" min="0.25" max="4" step="0.05" value="1" />
+      <p class="delay" id="delayReadout">—</p>
+      <div id="phaseChart" class="chart"></div>
+    </section>
+
+    <div class="row">
+      <section class="card">
+        <h2 id="zTitle"></h2>
+        <p id="zBody"></p>
+        <div id="zChart" class="chart chart-sm"></div>
+      </section>
+      <section class="card">
+        <h2 id="bodeTitle"></h2>
+        <p id="bodeBody"></p>
+        <div id="bodeChart" class="chart chart-sm"></div>
+      </section>
+    </div>
+
+    <section class="card" id="arena">
+      <h2 id="arenaTitle"></h2>
+      <p id="arenaBody"></p>
+      <div class="cards-strat" id="stratBtns"></div>
+      <div class="score" id="scoreboard"></div>
+      <div id="arenaChart" class="chart"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

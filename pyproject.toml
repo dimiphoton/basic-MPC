@@ -12,6 +12,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+sim = ["streamlit>=1.32"]
 
 [project.scripts]
 basic-mpc = "basic_mpc.cli:main"

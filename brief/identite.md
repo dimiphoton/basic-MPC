@@ -18,9 +18,9 @@ Validé le 2026-08-30. Une valeur principale par champ.
 |---|---|---|
 | **Métier** | Machine learning | Machine learning |
 | **Domaine** | Bâtiment | Buildings |
-| **Stack courte** | Python / NumPy / SciPy | Python / NumPy / SciPy |
-| **Ligne identité** | `Machine learning · Bâtiment · Python / NumPy / SciPy` | `Machine learning · Buildings · Python / NumPy / SciPy` |
-| **Topics GitHub** | `machine-learning`, `buildings`, `python`, `numpy` | |
+| **Stack courte** | Python / NumPy / SciPy / Streamlit | Python / NumPy / SciPy / Streamlit |
+| **Ligne identité** | `Machine learning · Bâtiment · Python / NumPy / SciPy / Streamlit` | `Machine learning · Buildings · Python / NumPy / SciPy / Streamlit` |
+| **Topics GitHub** | `machine-learning`, `buildings`, `python`, `streamlit` | |
 | **About GitHub** | Machine learning · Buildings · Python / NumPy / SciPy | |
 
 Période / maille des données (pour la cover, en plus de la ligne) :

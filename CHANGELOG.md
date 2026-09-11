@@ -2,6 +2,8 @@
 
 ## [Non publié]
 
+- Simulateur visiteur (Pages + Streamlit) : RC, déphasage, vecteur Z
+  fitté, arène de stratégies. CLI `export-simulator`.
 - MPC v1.1 : consigne thermostat, bande n = 1 °C, J = facture HP/HC +
   inconfort. 48 h : **1,8 h** sous T_conf vs **19,8 h** (hystérésis),
   facture ~16 € des deux côtés. CLI `mpc-cout-consigne`. Heures d'inconfort
