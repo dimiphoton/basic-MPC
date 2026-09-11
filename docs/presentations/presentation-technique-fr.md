@@ -189,9 +189,9 @@ Une maison, un hiver de fit, pas un parc.
 
 `python -m basic_mpc mpc-cout-consigne`
 
-`python -m basic_mpc export-simulator`
+`streamlit run webapp/app.py`
 
-[Simulateur](https://dimiphoton.github.io/basic-MPC/simulator/)
+[Leçon RC](https://dimiphoton.github.io/basic-MPC/simulator/)
 
 `pytest`
 

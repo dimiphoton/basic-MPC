@@ -2,6 +2,10 @@
 
 ## [Non publié]
 
+- Labo Streamlit dynamique : météo multi-jours tirée, burn-in 24 h
+  (maison habitée), une stratégie, graphes datetime (air / murs /
+  consigne / P / facture). Pages = leçon RC (équilibre + corrélation
+  croisée), plus d'arène figée.
 - Simulateur visiteur (Pages + Streamlit) : RC, déphasage, vecteur Z
   fitté, arène de stratégies. CLI `export-simulator`.
 - MPC v1.1 : consigne thermostat, bande n = 1 °C, J = facture HP/HC +

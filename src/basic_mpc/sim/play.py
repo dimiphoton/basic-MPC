@@ -1,4 +1,8 @@
-"""Trois lois de chauffe sur le même plant, pour le simulateur."""
+"""Trois lois de chauffe sur le même plant (arène figée, CI magiques).
+
+Le labo visiteur est ``basic_mpc.sim.dynamic`` (météo tirée, burn-in).
+Ce module reste pour les exports historiques, pas pour le Streamlit.
+"""
 
 from __future__ import annotations
 

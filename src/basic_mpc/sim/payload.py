@@ -91,7 +91,8 @@ def plant_for_js() -> dict:
         "tau_mass_hours": plant.ram * plant.cm / 3600.0,
         "ad": ad.tolist(),
         "bd": bd.tolist(),
-        "x0": [18.0, 16.0],
+        "n_lab_days": 5.0,
+        "discard_hours": 24.0,
     }
 
 

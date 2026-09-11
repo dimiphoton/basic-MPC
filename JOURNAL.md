@@ -1,5 +1,12 @@
 # Journal de développement
 
+## 2026-09-11 — Labo dynamique
+
+- Streamlit : durée 2–7 j, météo tirée (jours non identiques), T_conf
+  jour/nuit, une stratégie. Burn-in 24 h d'hystérésis, scores ensuite.
+- Pages : leçon RC seulement (départ à T_ext, retard = xcorr). Plus
+  d'arène JSON. CLI `export-simulator` n'écrit plus les trajectoires QP.
+
 ## 2026-09-11 — GitHub Pages
 
 - Cause du 404 `/simulator/` : Pages n'était pas allumé (`has_pages: false`).

@@ -52,8 +52,12 @@ def main() -> None:
         help="MPC v1 (poids SciPy) vs thermostat, plant littérature",
     )
     subparsers.add_parser(
+        "mpc-cout-consigne",
+        help="MPC v1.1 : consigne thermostat, facture HP/HC, hystérésis",
+    )
+    subparsers.add_parser(
         "export-simulator",
-        help="JSON + figures Z pour le simulateur visiteur (Pages / Streamlit)",
+        help="JSON + figures Z pour la leçon RC (GitHub Pages)",
     )
 
     arguments = parser.parse_args()

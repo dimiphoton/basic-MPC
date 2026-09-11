@@ -189,9 +189,9 @@ One house, one winter fit, not a stock of buildings.
 
 `python -m basic_mpc mpc-cout-consigne`
 
-`python -m basic_mpc export-simulator`
+`streamlit run webapp/app.py`
 
-[Simulator](https://dimiphoton.github.io/basic-MPC/simulator/)
+[RC lesson](https://dimiphoton.github.io/basic-MPC/simulator/)
 
 `pytest`
 
