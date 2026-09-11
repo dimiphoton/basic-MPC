@@ -1,5 +1,11 @@
 # Journal de développement
 
+## 2026-09-11 — GitHub Pages
+
+- Cause du 404 `/simulator/` : Pages n'était pas allumé (`has_pages: false`).
+- Source : branche `main`, dossier `/docs`. Fichier `docs/.nojekyll` pour
+  servir le JS/JSON sans build Jekyll.
+
 ## 2026-09-11 — Simulateur visiteur
 
 - Page GitHub Pages (`docs/simulator/`) : leçon RC, labo d'inertie (C des
