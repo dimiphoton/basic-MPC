@@ -1,54 +1,40 @@
 const I18N = {
   fr: {
     nav: "Machine learning · Bâtiment · <a href='../slides/presentation-recruteur-fr.html'>slides</a> · <a href='https://github.com/dimiphoton/basic-MPC'>code</a>",
-    title: "Peux-tu chauffer avant que la maison ait froid ?",
-    lede: "Un mur, c’est un condensateur. Tourne l’inertie, vois le déphasage, puis affronte le thermostat.",
+    title: "Un mur, c’est un condensateur",
+    lede: "Le capteur ne voit que l’air. Tourne l’inertie : le pic intérieur retarde. Pour comparer des stratégies de chauffe, lance le labo Streamlit (météo tirée, maison déjà habitée).",
     rcTitle: "Le modèle RC, en une phrase",
     rcBody: "R dit à quelle vitesse la chaleur fuit vers l’extérieur. C dit combien les murs encaissent avant que l’air bouge. Le capteur ne voit que l’air — la masse est cachée.",
     rcHint: "R1C1 = un seul seau. R2C2 = air + murs. C’est pour ça qu’un thermostat « trop tard, trop fort » existe.",
     phaseTitle: "À quoi sert le déphasage",
-    phaseBody: "Le soleil et le chauffage d’aujourd’hui n’arrivent au confort que plus tard. Plus les murs sont lourds, plus le retard grandit. On préchauffe en heures creuses parce que 7 h, c’est déjà trop tard.",
+    phaseBody: "Sans chauffage, l’air suit l’extérieur en retard. On jette 24 h de transitoire ; le retard est une corrélation croisée, pas le premier pic. On préchauffe en heures creuses parce que 7 h, c’est déjà trop tard.",
     massLabel: "Inertie des murs (× capacité C)",
     zTitle: "Vecteur Z des fits (24 h)",
-    zBody: "Chaque flèche est Z(jω) / Z(0) du modèle identifié sur la maison. L’angle, c’est le retard.",
+    zBody: "Chaque flèche est Z(jω)/Z(0) du modèle identifié. L’angle, c’est le retard à 24 h — lecture DS, pas le labo de stratégies.",
     bodeTitle: "Phase vs période",
     bodeBody: "Vers 24 h, la phase plonge : la journée thermique n’est pas synchrone de l’apport.",
-    arenaTitle: "Arène : trois stratégies, même maison",
-    arenaBody: "Clique pour superposer. Le score, c’est la facture HP/HC et les heures vraiment trop froides (> 0,1 °C).",
-    delay: (h) => `Retard ≈ ${h.toFixed(1)} h entre le pic extérieur et l’air`,
-    strat: {
-      hysteresis: { t: "Hystérésis", p: "Le thermostat. Il attend." },
-      preheat: { t: "Préchauffage 2 h", p: "Règle bête : allumer à 5 h." },
-      mpc: { t: "MPC", p: "Modèle + facture + confort." },
-    },
-    bill: "facture",
-    cold: "h trop froid",
+    labTitle: "Labo de stratégies : Streamlit",
+    labBody: "Ici on n’enchaîne pas une arène figée. En local : météo au hasard, 2–7 jours, burn-in 24 h, une stratégie (hystérésis / préchauffage / MPC).",
+    delay: (h) => `Retard ≈ ${h.toFixed(1)} h (corrélation T_ext → air, après 24 h)`,
     lang: "EN",
   },
   en: {
     nav: "Machine learning · Buildings · <a href='../slides/presentation-recruteur-en.html'>slides</a> · <a href='https://github.com/dimiphoton/basic-MPC'>code</a>",
-    title: "Can you heat before the house feels cold?",
-    lede: "A wall is a capacitor. Crank the mass, watch the lag, then take on the thermostat.",
+    title: "A wall is a capacitor",
+    lede: "The sensor only sees air. Crank the mass: indoor peaks lag. Strategy comparison lives in the Streamlit lab (drawn weather, a house already lived in).",
     rcTitle: "The RC model, in one line",
     rcBody: "R is how fast heat leaks outdoors. C is how much the walls soak up before the air moves. The sensor only sees air — mass is hidden.",
     rcHint: "R1C1 = one bucket. R2C2 = air + walls. That is why a thermostat is always late, then too hard.",
     phaseTitle: "Why phase lag matters",
-    phaseBody: "Today’s sun and heating show up later as comfort. Heavier walls, longer delay. We preheat on the cheap night rate because 7 a.m. is already too late.",
+    phaseBody: "With no heating, air follows outdoor with delay. We drop 24 h of transient; lag is a cross-correlation, not the first peak. We preheat on the night rate because 7 a.m. is already too late.",
     massLabel: "Wall inertia (× capacitance C)",
     zTitle: "Fitted Z vector (24 h)",
-    zBody: "Each arrow is Z(jω) / Z(0) of the model fitted on the house. The angle is the delay.",
+    zBody: "Each arrow is Z(jω)/Z(0) of the identified model. The angle is the 24 h delay — a DS readout, not the strategy lab.",
     bodeTitle: "Phase vs period",
     bodeBody: "Around 24 h the phase drops: the thermal day is not in sync with the input.",
-    arenaTitle: "Arena: three strategies, same house",
-    arenaBody: "Click to overlay. Score = peak/off-peak bill and hours actually too cold (> 0.1 °C).",
-    delay: (h) => `Lag ≈ ${h.toFixed(1)} h from outdoor peak to indoor air`,
-    strat: {
-      hysteresis: { t: "Hysteresis", p: "The thermostat. It waits." },
-      preheat: { t: "2 h preheat", p: "Dumb rule: turn on at 5 a.m." },
-      mpc: { t: "MPC", p: "Model + bill + comfort." },
-    },
-    bill: "bill",
-    cold: "h too cold",
+    labTitle: "Strategy lab: Streamlit",
+    labBody: "This page is not a frozen arena. Locally: random weather, 2–7 days, 24 h burn-in, one strategy (hysteresis / preheat / MPC).",
+    delay: (h) => `Lag ≈ ${h.toFixed(1)} h (T_ext → air correlation, after 24 h)`,
     lang: "FR",
   },
 };
@@ -63,7 +49,6 @@ const PALETTE = {
 
 let DATA = null;
 let LANG = "fr";
-let ON = { hysteresis: true, preheat: true, mpc: true };
 
 function t() {
   return I18N[LANG];
@@ -84,11 +69,9 @@ function applyCopy() {
   document.getElementById("zBody").textContent = c.zBody;
   document.getElementById("bodeTitle").textContent = c.bodeTitle;
   document.getElementById("bodeBody").textContent = c.bodeBody;
-  document.getElementById("arenaTitle").textContent = c.arenaTitle;
-  document.getElementById("arenaBody").textContent = c.arenaBody;
+  document.getElementById("labTitle").textContent = c.labTitle;
+  document.getElementById("labBody").textContent = c.labBody;
   document.getElementById("langBtn").textContent = c.lang;
-  renderStratBtns();
-  renderScore();
 }
 
 function layout() {
@@ -101,47 +84,106 @@ function layout() {
   };
 }
 
-function peakLagHours(hours, outdoor, indoor) {
-  const iOut = outdoor.indexOf(Math.max(...outdoor));
-  const iIn = indoor.indexOf(Math.max(...indoor));
-  return Math.abs(hours[iIn] - hours[iOut]);
+function mean(arr) {
+  let s = 0;
+  for (let i = 0; i < arr.length; i += 1) s += arr[i];
+  return s / arr.length;
+}
+
+function lagHoursXcorr(outdoor, indoor, dtHours, discardHours) {
+  const skip = Math.round(discardHours / dtHours);
+  const x = outdoor.slice(skip);
+  const y = indoor.slice(skip);
+  if (x.length < 8) return 0;
+  const mx = mean(x);
+  const my = mean(y);
+  const xc = x.map((v) => v - mx);
+  const yc = y.map((v) => v - my);
+  const maxLag = Math.round(18 / dtHours);
+  const minOverlap = Math.max(8, Math.round(12 / dtHours));
+  let bestLag = 0;
+  let bestC = -Infinity;
+  const n = xc.length;
+  for (let lag = 0; lag <= maxLag; lag += 1) {
+    if (n - lag < minOverlap) break;
+    let dot = 0;
+    let na = 0;
+    let nb = 0;
+    for (let i = 0; i < n - lag; i += 1) {
+      const a = xc[i];
+      const b = yc[i + lag];
+      dot += a * b;
+      na += a * a;
+      nb += b * b;
+    }
+    const c = dot / (Math.sqrt(na * nb) + 1e-12);
+    if (c > bestC) {
+      bestC = c;
+      bestLag = lag;
+    }
+  }
+  return bestLag * dtHours;
 }
 
 function runLab(cmScale) {
   const p = DATA.plant;
   const dt = p.dt_seconds;
-  const n = Math.round((48 * 3600) / dt);
+  const nDays = p.n_lab_days || 5;
+  const discard = p.discard_hours || 24;
+  const n = Math.round((nDays * 24 * 3600) / dt);
   const hours = [];
   const text = [];
   const ta = [];
   const tm = [];
-  let xTa = 12;
-  let xTm = 12;
+  const tExt0 = 5 + 6 * Math.sin((2 * Math.PI * (0 - 9)) / 24);
+  let xTa = tExt0;
+  let xTm = tExt0;
   const ca = p.ca;
   const cm = p.cm * cmScale;
   for (let k = 0; k < n; k += 1) {
     const h = (k * dt) / 3600;
     const hod = h % 24;
     const tExt = 5 + 6 * Math.sin((2 * Math.PI * (hod - 9)) / 24);
-    const dTa =
-      (xTm - xTa) / (p.ram * ca) + (tExt - xTa) / (p.rae * ca);
+    const dTa = (xTm - xTa) / (p.ram * ca) + (tExt - xTa) / (p.rae * ca);
     const dTm = (xTa - xTm) / (p.ram * cm);
     xTa += dt * dTa;
     xTm += dt * dTm;
-    if (k % 2 === 0) {
-      hours.push(h);
-      text.push(tExt);
-      ta.push(xTa);
-      tm.push(xTm);
-    }
+    hours.push(h);
+    text.push(tExt);
+    ta.push(xTa);
+    tm.push(xTm);
   }
-  return { hours, text, ta, tm, lag: peakLagHours(hours, text, ta) };
+  const dtHours = dt / 3600;
+  const lag = lagHoursXcorr(text, ta, dtHours, discard);
+  const stride = 4;
+  return {
+    hours: hours.filter((_, i) => i % stride === 0),
+    text: text.filter((_, i) => i % stride === 0),
+    ta: ta.filter((_, i) => i % stride === 0),
+    tm: tm.filter((_, i) => i % stride === 0),
+    lag,
+    discard,
+  };
 }
 
 function drawLab() {
   const scale = Number(document.getElementById("mass").value);
   const sim = runLab(scale);
   document.getElementById("delayReadout").textContent = t().delay(sim.lag);
+  const shapes = [
+    {
+      type: "rect",
+      xref: "x",
+      yref: "paper",
+      x0: 0,
+      x1: sim.discard,
+      y0: 0,
+      y1: 1,
+      fillcolor: PALETTE.ink,
+      opacity: 0.06,
+      line: { width: 0 },
+    },
+  ];
   Plotly.react(
     "phaseChart",
     [
@@ -149,7 +191,12 @@ function drawLab() {
       { x: sim.hours, y: sim.ta, name: LANG === "fr" ? "air" : "air", line: { color: PALETTE.mpc, width: 2.4 } },
       { x: sim.hours, y: sim.tm, name: LANG === "fr" ? "murs" : "walls", line: { color: PALETTE.preheat, width: 1.6, dash: "dot" } },
     ],
-    { ...layout(), xaxis: { title: LANG === "fr" ? "heures" : "hours" }, yaxis: { title: "°C" } },
+    {
+      ...layout(),
+      xaxis: { title: LANG === "fr" ? "heures (bande = transitoire jeté)" : "hours (band = dropped transient)" },
+      yaxis: { title: "°C" },
+      shapes,
+    },
     { responsive: true, displaylogo: false },
   );
 }
@@ -199,78 +246,13 @@ function drawBode() {
   );
 }
 
-function renderStratBtns() {
-  const box = document.getElementById("stratBtns");
-  box.innerHTML = "";
-  const names = Object.keys(DATA.arena.strategies);
-  names.forEach((key) => {
-    const meta = t().strat[key];
-    const btn = document.createElement("button");
-    btn.className = `strat${ON[key] ? " on" : ""}`;
-    btn.type = "button";
-    btn.innerHTML = `<h3>${meta.t}</h3><p>${meta.p}</p>`;
-    btn.addEventListener("click", () => {
-      ON[key] = !ON[key];
-      drawArena();
-      renderStratBtns();
-      renderScore();
-    });
-    box.appendChild(btn);
-  });
-}
-
-function renderScore() {
-  const board = document.getElementById("scoreboard");
-  board.innerHTML = "";
-  Object.entries(DATA.arena.strategies).forEach(([key, strat]) => {
-    if (!ON[key]) return;
-    const m = strat.metrics;
-    const el = document.createElement("div");
-    el.className = "pill";
-    el.innerHTML = `<strong>${t().strat[key].t}</strong> · ${m.bill_eur.toFixed(2)} € ${t().bill} · ${m.hours_under_conf.toFixed(1)} ${t().cold}`;
-    board.appendChild(el);
-  });
-}
-
-function drawArena() {
-  const traces = [
-    {
-      x: DATA.arena.hours,
-      y: DATA.arena.t_conf,
-      name: "T_conf",
-      line: { color: PALETTE.ink, width: 1.4, dash: "dash" },
-    },
-  ];
-  Object.entries(DATA.arena.strategies).forEach(([key, strat]) => {
-    if (!ON[key]) return;
-    traces.push({
-      x: strat.hours,
-      y: strat.ta,
-      name: t().strat[key].t,
-      line: { color: PALETTE[key] || PALETTE.mpc, width: 2.2 },
-    });
-  });
-  Plotly.react(
-    "arenaChart",
-    traces,
-    {
-      ...layout(),
-      xaxis: { title: LANG === "fr" ? "heures depuis 18 h" : "hours from 6 p.m." },
-      yaxis: { title: "°C" },
-    },
-    { responsive: true, displaylogo: false },
-  );
-}
-
 async function main() {
   const res = await fetch("data.json");
   DATA = await res.json();
-  if (!DATA.arena.strategies.mpc) ON.mpc = false;
   applyCopy();
   drawLab();
   drawZ();
   drawBode();
-  drawArena();
   document.getElementById("mass").addEventListener("input", drawLab);
   document.getElementById("langBtn").addEventListener("click", () => {
     LANG = LANG === "fr" ? "en" : "fr";
@@ -278,7 +260,6 @@ async function main() {
     drawLab();
     drawZ();
     drawBode();
-    drawArena();
   });
 }
 

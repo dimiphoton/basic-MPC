@@ -10,7 +10,7 @@ from basic_mpc.models.impedance import omega_period_hours, z_r1c1, z_snapshot
 from basic_mpc.models.r1c1 import R1C1Params
 from basic_mpc.sim.export import run_export_simulator
 from basic_mpc.sim.payload import vector_at_24h
-from basic_mpc.sim.play import run_arena, run_hysteresis, run_preheat, scenario_bundle
+from basic_mpc.sim.play import run_hysteresis, run_preheat, scenario_bundle
 
 
 def test_dephasage_r1c1_positif() -> None:
@@ -49,20 +49,13 @@ def test_prechauffage_avant_7h() -> None:
 
 
 def test_export_json_et_z1(tmp_path: Path) -> None:
-    """JSON Pages + flèches Z, sans MPC (trop long pour un test)."""
-    cfg = replace(ControlConfig(), n_hours=6.0, horizon_hours=2.0, block_minutes=20.0)
+    """JSON Pages (leçon RC) + flèches Z, sans arène."""
     rapport = run_export_simulator(
         out_dir=tmp_path / "sim",
         pictures_dir=tmp_path / "pic",
-        cfg=cfg,
-        include_mpc=False,
     )
     json_path = Path(rapport["json_path"])
     assert json_path.is_file()
     assert (tmp_path / "pic" / "z1-impedance-24h.png").is_file()
     assert (tmp_path / "pic" / "z3-bode-phase.png").is_file()
-    arena = run_arena(cfg, include_mpc=False)
-    assert "hysteresis" in arena["strategies"]
-    assert "preheat" in arena["strategies"]
-    assert "mpc" not in arena["strategies"]
-    assert arena["strategies"]["hysteresis"]["metrics"]["bill_eur"] >= 0.0
+    assert "arena" not in json_path.read_text(encoding="utf-8")

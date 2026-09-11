@@ -81,8 +81,8 @@ python -m basic_mpc export-simulator
 pytest
 ```
 
-`export-simulator` writes `docs/simulator/data.json` (RC lab, fitted Z
-vectors, 48 h arena). Open the page on GitHub Pages or run Streamlit:
+`export-simulator` writes `docs/simulator/data.json` (RC lab constants and
+fitted \(Z\)). The **strategy lab** is Streamlit, not a frozen JSON arena:
 
 ```bash
 pip install -e ".[sim]"
@@ -113,11 +113,15 @@ French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`,
 
 ## Simulator
 
-Interactive page (no Python):
-[Play the heating arena](https://dimiphoton.github.io/basic-MPC/simulator/).
+RC lesson (no Python, phase lag on GitHub Pages):
+[Open the RC lesson](https://dimiphoton.github.io/basic-MPC/simulator/).
 
-RC model, phase lag (turn the wall capacitance), fitted \(Z(j\omega)\)
-arrows, then hysteresis vs 2 h preheat vs MPC on the same house.
+Strategy lab (drawn weather, 24 h burn-in, one controller):
+
+```bash
+pip install -e ".[sim]"
+streamlit run webapp/app.py
+```
 
 ## Presentations
 

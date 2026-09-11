@@ -22,3 +22,5 @@ Figures : catalogue dans `docs/visualisations.md`. On les génère dans
 - [x] MPC : bande n, coût €, baseline hystérésis (`feature/mpc-cout-consigne`)
 - [x] Simulateur visiteur : RC + déphasage, vecteur \(Z\) fitté, stratégies
   ludiques — GitHub Pages **et** Streamlit (`feature/dashboard-simulateur`)
+- [x] Labo dynamique : météo tirée, burn-in, Streamlit ; Pages = leçon RC
+  (`feature/sim-dynamique`)

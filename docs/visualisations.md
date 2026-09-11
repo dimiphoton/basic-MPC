@@ -32,7 +32,7 @@ dans l'imaginaire.
 |---|---|---|---|
 | Z1 | Vecteur \(Z(j\omega_{24h})\) : une flèche R1C1, une R2C2 | Après identification | RH + technique |
 | Z2 | Lieu de Nyquist \(Z(j\omega)\) (5 min → plusieurs jours) | Après R1C1 vs R2C2 | Technique |
-| Z3 | Bode phase vs période (déphasage) | `export-simulator` | Technique + visiteur |
+| Z3 | Bode phase vs période (déphasage) | `export-simulator` | Technique + leçon Pages |
 
 Superposer le plant littérature sur Z2 si ça clarifie l'écart volontaire
 (`alpha_s_mass`).
@@ -63,6 +63,7 @@ Ici l'état vrai existe.
 | S4 | MPC vs hystérésis, 48 h : \(T_\mathrm{air}\) + \(T_{\mathrm{conf}}(t)\) + HP/HC | MPC € | RH + technique |
 | S5 | Même 48 h : consigne \(T_{\mathrm{sp}}\) et \(P\) via bande \(n\) | MPC € | Technique |
 | S6 | Facture proxy € + heures sous \(T_{\mathrm{conf}}\) (> 0,1 °C) | MPC € | RH (graphe clé) |
+| Lab | Streamlit : \(T_{\mathrm{ext}}\), air, murs, \(T_{\mathrm{sp}}\), P, € cumulés (datetime) | `feature/sim-dynamique` | Visiteur (labo) |
 
 ---
 

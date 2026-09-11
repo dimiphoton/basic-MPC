@@ -1,1 +1,1 @@
-"""Moteur du simulateur visiteur : stratégies, impédance, export Pages."""
+"""Simulateur : labo dynamique (Streamlit), leçon RC (Pages), impédance."""

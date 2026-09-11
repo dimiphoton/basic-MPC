@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chauffer avant — simulateur RC / MPC</title>
+  <title>Chauffer avant — leçon RC</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
@@ -33,6 +33,13 @@
       <div id="phaseChart" class="chart"></div>
     </section>
 
+    <section class="card" id="lab">
+      <h2 id="labTitle"></h2>
+      <p id="labBody"></p>
+      <pre class="eq">pip install -e ".[sim]"
+streamlit run webapp/app.py</pre>
+    </section>
+
     <div class="row">
       <section class="card">
         <h2 id="zTitle"></h2>
@@ -45,14 +52,6 @@
         <div id="bodeChart" class="chart chart-sm"></div>
       </section>
     </div>
-
-    <section class="card" id="arena">
-      <h2 id="arenaTitle"></h2>
-      <p id="arenaBody"></p>
-      <div class="cards-strat" id="stratBtns"></div>
-      <div class="score" id="scoreboard"></div>
-      <div id="arenaChart" class="chart"></div>
-    </section>
   </main>
   <script src="app.js"></script>
 </body>
