@@ -193,6 +193,8 @@ Une maison, un hiver de fit, pas un parc.
 
 [Leçon RC](https://dimiphoton.github.io/basic-MPC/simulator/)
 
+`docs/lecon-rc-kalman.md` · `notebooks/`
+
 `pytest`
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)

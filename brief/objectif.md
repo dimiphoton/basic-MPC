@@ -39,5 +39,7 @@ v1.1 contrôle (2026-08-30), détail dans `brief/controle-mpc.md` :
   **dynamique** en Streamlit : météo tirée, burn-in 24 h (maison
   habitée), une stratégie (hystérésis / préchauffage / MPC), graphes
   datetime. Pas d'arène JSON figée ni de \(x_0 = (18, 16)\).
+  Leçon scolaire (R1C1/R2C2, capteur, Kalman) : `docs/lecon-rc-kalman.md`
+  et `notebooks/`.
 
 Métier, domaine et stack : `brief/identite.md`.

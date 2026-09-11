@@ -17,7 +17,9 @@ Schémas de modèles (générés, pas dessinés à la main) :
 | `schema-kalman` | Prédiction / innovation / mise à jour |
 | `schema-famille-rc` | Les trois circuits empilés |
 
-CLI : `python -m basic_mpc draw-schemas` (PNG + PDF).
+CLI : `python -m basic_mpc draw-schemas` (PNG + PDF, copie Pages
+`docs/simulator/img/`).
+Texte scolaire : `docs/lecon-rc-kalman.md`. Notebooks : `notebooks/`.
 MPC v1 : `python -m basic_mpc mpc-vs-bang-bang`.
 MPC v1.1 (€, T_sp) : `python -m basic_mpc mpc-cout-consigne` (S4–S6).
 

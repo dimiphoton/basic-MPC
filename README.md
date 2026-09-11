@@ -105,11 +105,17 @@ brief/          # identity, objective, thermal briefs
 data/raw/       # sensor CSV (do not edit)
 src/basic_mpc/  # package (data, features, models, control, CLI)
 tests/
+notebooks/      # leçon : RC, capteur, Kalman (appellent src/)
 docs/presentations/   # Marp sources
 ```
 
 French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`,
-`docs/visualisations.md`.
+`docs/visualisations.md`, `docs/lecon-rc-kalman.md`.
+
+Course notes (FR) and experiment notebooks:
+
+- [RC, sensor, Kalman](docs/lecon-rc-kalman.md)
+- `notebooks/README.md` — eight short labs that call `src/`, they do not reimplement the filter.
 
 ## Simulator
 

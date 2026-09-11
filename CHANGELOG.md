@@ -2,6 +2,8 @@
 
 ## [Non publié]
 
+- Leçon scolaire : schémas R1C1 / R2C2 / plant / Kalman sur Pages,
+  `docs/lecon-rc-kalman.md`, huit notebooks d'expérience (`notebooks/`).
 - Labo Streamlit dynamique : météo multi-jours tirée, burn-in 24 h
   (maison habitée), une stratégie, graphes datetime (air / murs /
   consigne / P / facture). Pages = leçon RC (équilibre + corrélation

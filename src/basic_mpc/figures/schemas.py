@@ -323,4 +323,14 @@ def run_draw_schemas(pictures_dir: Path | None = None) -> dict[str, str]:
     for stem, factory in jobs.items():
         paths = save_figure(factory(), out / f"{stem}.png")
         written[stem] = paths[0].as_posix()
+    # Pages sert /docs : copie pour la leçon HTML.
+    if pictures_dir is None:
+        import shutil
+
+        pages_img = REPO_ROOT / "docs" / "simulator" / "img"
+        pages_img.mkdir(parents=True, exist_ok=True)
+        for stem in jobs:
+            src = out / f"{stem}.png"
+            if src.is_file():
+                shutil.copy2(src, pages_img / f"{stem}.png")
     return written

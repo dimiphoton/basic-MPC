@@ -6,6 +6,18 @@ const I18N = {
     rcTitle: "Le modèle RC, en une phrase",
     rcBody: "R dit à quelle vitesse la chaleur fuit vers l’extérieur. C dit combien les murs encaissent avant que l’air bouge. Le capteur ne voit que l’air — la masse est cachée.",
     rcHint: "R1C1 = un seul seau. R2C2 = air + murs. C’est pour ça qu’un thermostat « trop tard, trop fort » existe.",
+    famTitle: "R1C1, R2C2, plant — trois circuits",
+    famBody: "Même langage : R en zigzag, C vers la masse, capteur à part. Le R2C2 identifié n’a le solaire que sur l’air. Le plant, lui, chauffe aussi les murs — on ne valide pas le MPC sur le modèle appris.",
+    capR1: "R1C1 — baseline. Un état, une constante de temps.",
+    capR2: "R2C2 identifié. Masse cachée ; y ne voit que l’air.",
+    capPlant: "Plant littérature. α_s aussi sur la masse (misspecification volontaire).",
+    sensorTitle: "Le capteur n’est pas l’état",
+    sensorBody: "y = T_air + v. Ici v, c’est le bruit et la quantification : le salon marche par 0,1 °C, l’extérieur par 1 °C. Un 21,8 °C lu n’est pas une dynamique de mur. Un trou de 12 h reste un trou.",
+    sensorHint: "Notebook : notebooks/02-modele-capteur.ipynb — et docs/lecon-rc-kalman.md",
+    kalmanTitle: "Kalman : prédire, innover, corriger",
+    kalmanBody: "À la main, pas filterpy. Le RC prédit avec u. L’innovation e = y − C x̂ compare à l’air seulement (C = [1, 0]). La mise à jour infère la masse, jamais mesurée. Si y est NaN : on prédit, on n’invente pas de mesure.",
+    capKalman: "Prédiction → innovation → mise à jour. L’état part ensuite au MPC.",
+    kalmanHint: "Notebooks 03 (R1C1), 04 (masse cachée), 06 (innovations / NLL).",
     phaseTitle: "À quoi sert le déphasage",
     phaseBody: "Sans chauffage, l’air suit l’extérieur en retard. On jette 24 h de transitoire ; le retard est une corrélation croisée, pas le premier pic. On préchauffe en heures creuses parce que 7 h, c’est déjà trop tard.",
     massLabel: "Inertie des murs (× capacité C)",
@@ -25,6 +37,18 @@ const I18N = {
     rcTitle: "The RC model, in one line",
     rcBody: "R is how fast heat leaks outdoors. C is how much the walls soak up before the air moves. The sensor only sees air — mass is hidden.",
     rcHint: "R1C1 = one bucket. R2C2 = air + walls. That is why a thermostat is always late, then too hard.",
+    famTitle: "R1C1, R2C2, plant — three circuits",
+    famBody: "Same visual language: zigzag R, C to ground, sensor aside. The identified R2C2 puts solar on air only. The plant also heats the mass — we do not validate the MPC on the learned model.",
+    capR1: "R1C1 — baseline. One state, one time scale.",
+    capR2: "Identified R2C2. Hidden mass; y sees air only.",
+    capPlant: "Literature plant. α_s on the mass too (deliberate misspecification).",
+    sensorTitle: "The sensor is not the state",
+    sensorBody: "y = T_air + v. Here v is noise and quantization: living room steps of 0.1 °C, outdoor 1 °C. A displayed 21.8 °C is not wall dynamics. A 12 h gap stays a gap.",
+    sensorHint: "Notebook: notebooks/02-modele-capteur.ipynb — and docs/lecon-rc-kalman.md",
+    kalmanTitle: "Kalman: predict, innovate, correct",
+    kalmanBody: "By hand, no filterpy. The RC predicts with u. Innovation e = y − C x̂ compares to air only (C = [1, 0]). The update infers mass, never measured. If y is NaN: predict, do not invent a sample.",
+    capKalman: "Predict → innovate → update. The state then feeds the MPC.",
+    kalmanHint: "Notebooks 03 (R1C1), 04 (hidden mass), 06 (innovations / NLL).",
     phaseTitle: "Why phase lag matters",
     phaseBody: "With no heating, air follows outdoor with delay. We drop 24 h of transient; lag is a cross-correlation, not the first peak. We preheat on the night rate because 7 a.m. is already too late.",
     massLabel: "Wall inertia (× capacitance C)",
@@ -62,6 +86,18 @@ function applyCopy() {
   document.getElementById("rcTitle").textContent = c.rcTitle;
   document.getElementById("rcBody").textContent = c.rcBody;
   document.getElementById("rcHint").textContent = c.rcHint;
+  document.getElementById("famTitle").textContent = c.famTitle;
+  document.getElementById("famBody").textContent = c.famBody;
+  document.getElementById("capR1").textContent = c.capR1;
+  document.getElementById("capR2").textContent = c.capR2;
+  document.getElementById("capPlant").textContent = c.capPlant;
+  document.getElementById("sensorTitle").textContent = c.sensorTitle;
+  document.getElementById("sensorBody").textContent = c.sensorBody;
+  document.getElementById("sensorHint").textContent = c.sensorHint;
+  document.getElementById("kalmanTitle").textContent = c.kalmanTitle;
+  document.getElementById("kalmanBody").textContent = c.kalmanBody;
+  document.getElementById("capKalman").textContent = c.capKalman;
+  document.getElementById("kalmanHint").textContent = c.kalmanHint;
   document.getElementById("phaseTitle").textContent = c.phaseTitle;
   document.getElementById("phaseBody").textContent = c.phaseBody;
   document.getElementById("massLabel").textContent = c.massLabel;

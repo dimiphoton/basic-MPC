@@ -1,5 +1,11 @@
 # Journal de développement
 
+## 2026-09-11 — Leçon RC / capteur / Kalman
+
+- `docs/lecon-rc-kalman.md` : R1C1, R2C2, plant, \(y=T+v\), Kalman à la main.
+- Pages : schémas (`docs/simulator/img/`). Huit notebooks dans `notebooks/`
+  qui appellent `src/` (pas de filtre recopié).
+
 ## 2026-09-11 — Labo dynamique
 
 - Streamlit : durée 2–7 j, météo tirée (jours non identiques), T_conf

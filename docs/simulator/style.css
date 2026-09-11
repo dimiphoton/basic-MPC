@@ -101,9 +101,13 @@ a { color: var(--accent-2); }
 .chart { width: 100%; height: 340px; }
 .chart-sm { height: 300px; }
 .nav { font-size: 0.92rem; color: var(--muted); }
-.delay {
-  font-size: 2rem;
-  font-family: Georgia, serif;
-  color: var(--accent);
-  margin: 8px 0 0;
+figure img {
+  width: 100%;
+  height: auto;
+  background: var(--card);
+  border-radius: 12px;
 }
+figure { margin: 12px 0 18px; }
+figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+pre.eq { white-space: pre-wrap; }
+

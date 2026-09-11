@@ -24,3 +24,5 @@ Figures : catalogue dans `docs/visualisations.md`. On les génère dans
   ludiques — GitHub Pages **et** Streamlit (`feature/dashboard-simulateur`)
 - [x] Labo dynamique : météo tirée, burn-in, Streamlit ; Pages = leçon RC
   (`feature/sim-dynamique`)
+- [x] Leçon scolaire : schémas R1C1/R2C2, capteur, Kalman, notebooks
+  (`feature/lecon-notebooks`)
