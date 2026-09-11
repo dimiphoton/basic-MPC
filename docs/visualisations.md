@@ -32,7 +32,7 @@ dans l'imaginaire.
 |---|---|---|---|
 | Z1 | Vecteur \(Z(j\omega_{24h})\) : une flèche R1C1, une R2C2 | Après identification | RH + technique |
 | Z2 | Lieu de Nyquist \(Z(j\omega)\) (5 min → plusieurs jours) | Après R1C1 vs R2C2 | Technique |
-| Z3 | Bode \|Z\| et phase vs fréquence | Après R1C1 vs R2C2 | Technique (option) |
+| Z3 | Bode phase vs période (déphasage) | `export-simulator` | Technique + visiteur |
 
 Superposer le plant littérature sur Z2 si ça clarifie l'écart volontaire
 (`alpha_s_mass`).
@@ -69,9 +69,7 @@ Ici l'état vrai existe.
 ## Hors menu
 
 Pas de matrice \(A\) en slide. Pas d'interpolation d'un trou de 12 h
-pour le rendu. Le simulateur visiteur (Pages + Streamlit) est l'étape
-`feature/dashboard-simulateur` : pédagogie RC / déphasage, vecteur
-\(Z(j\omega)\) des fits, comparaison de stratégies.
+pour le rendu.
 
 ---
 

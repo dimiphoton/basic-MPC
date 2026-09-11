@@ -46,3 +46,38 @@ def nyquist_omegas(dt_seconds: float = 300.0, n: int = 80) -> np.ndarray:
     w_slow = omega_period_hours(7.0 * 24.0)
     w_fast = 2.0 * np.pi / dt_seconds
     return np.logspace(np.log10(w_slow), np.log10(w_fast), n)
+
+
+def z_snapshot(z: complex | np.ndarray, period_hours: float) -> dict:
+    """Partie réelle / imaginaire, phase et retard d'une impédance.
+
+    Parameters
+    ----------
+    z : complex
+        Z(jω) à la période donnée.
+    period_hours : float
+        Période (h), souvent 24.
+
+    Returns
+    -------
+    dict
+        ``re``, ``im``, ``mag``, ``phase_deg``, ``delay_hours``.
+        Un ``delay_hours`` positif = l'air **retarde** sur l'apport.
+    """
+    zc = complex(np.ravel(z)[0])
+    phase_rad = float(np.angle(zc))
+    return {
+        "re": float(np.real(zc)),
+        "im": float(np.imag(zc)),
+        "mag": float(np.abs(zc)),
+        "phase_deg": float(np.degrees(phase_rad)),
+        "delay_hours": float(-phase_rad / (2.0 * np.pi) * period_hours),
+    }
+
+
+def z_normalized(z: np.ndarray, z0: np.ndarray) -> np.ndarray:
+    """Z / Z(0) pour comparer des échelles (P n'est pas en watts)."""
+    z_dc = complex(np.ravel(z0)[0])
+    if abs(z_dc) < 1e-18:
+        return np.asarray(z, dtype=complex)
+    return np.asarray(z, dtype=complex) / z_dc

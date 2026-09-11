@@ -20,5 +20,5 @@ Figures : catalogue dans `docs/visualisations.md`. On les génère dans
 - [x] Polish portfolio : README, slides, limites (`feature/portfolio-slides`)
 - [x] Cadrage contrôle : consigne, bande n, J euros (`brief/controle-mpc.md`)
 - [x] MPC : bande n, coût €, baseline hystérésis (`feature/mpc-cout-consigne`)
-- [ ] Simulateur visiteur : RC + déphasage, vecteur \(Z\) fitté, stratégies
+- [x] Simulateur visiteur : RC + déphasage, vecteur \(Z\) fitté, stratégies
   ludiques — GitHub Pages **et** Streamlit (`feature/dashboard-simulateur`)

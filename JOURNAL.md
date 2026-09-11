@@ -1,5 +1,13 @@
 # Journal de développement
 
+## 2026-09-11 — Simulateur visiteur
+
+- Page GitHub Pages (`docs/simulator/`) : leçon RC, labo d'inertie (C des
+  murs), vecteurs Z fittés (~5,8 h de retard à 24 h), arène hystérésis /
+  préchauffage 2 h / MPC.
+- Streamlit local : `streamlit run webapp/app.py` (extra `[sim]`).
+- Z1 corrigé (vraies flèches). CLI `export-simulator`.
+
 ## 2026-09-11 — MPC consigne et coût €
 
 - Commande = T_sp, bande n = 1 °C, J = facture HP/HC + inconfort sous T_conf

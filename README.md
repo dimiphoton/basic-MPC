@@ -4,11 +4,11 @@
 |---|---|
 | **Role** | Machine learning |
 | **Domain** | Buildings |
-| **Stack** | ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white) |
+| **Stack** | ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white) |
 | **Level** | Intermediate |
 | **Status** | v1.1 |
 
-Machine learning · Buildings · Python / NumPy / SciPy
+Machine learning · Buildings · Python / NumPy / SciPy / Streamlit
 
 ## Objective
 
@@ -77,7 +77,16 @@ python -m basic_mpc identify-r1c1
 python -m basic_mpc draw-schemas
 python -m basic_mpc compare-r1c1-r2c2
 python -m basic_mpc mpc-cout-consigne
+python -m basic_mpc export-simulator
 pytest
+```
+
+`export-simulator` writes `docs/simulator/data.json` (RC lab, fitted Z
+vectors, 48 h arena). Open the page on GitHub Pages or run Streamlit:
+
+```bash
+pip install -e ".[sim]"
+streamlit run webapp/app.py
 ```
 
 `mpc-cout-consigne` runs the receding-horizon controller (thermostat
@@ -101,6 +110,14 @@ docs/presentations/   # Marp sources
 
 French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`,
 `docs/visualisations.md`.
+
+## Simulator
+
+Interactive page (no Python):
+[Play the heating arena](https://dimiphoton.github.io/basic-MPC/simulator/).
+
+RC model, phase lag (turn the wall capacitance), fitted \(Z(j\omega)\)
+arrows, then hysteresis vs 2 h preheat vs MPC on the same house.
 
 ## Presentations
 

@@ -7,9 +7,18 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
+from matplotlib.patches import FancyArrowPatch
+
 from basic_mpc.figures.style import ACCENT, ACCENT_2, BG, INK, MUTED
 from basic_mpc.figures.style import apply_publication_rc, save_figure
-from basic_mpc.models.impedance import nyquist_omegas, omega_period_hours, z_r1c1, z_r2c2
+from basic_mpc.models.impedance import (
+    nyquist_omegas,
+    omega_period_hours,
+    z_normalized,
+    z_r1c1,
+    z_r2c2,
+    z_snapshot,
+)
 from basic_mpc.models.r1c1 import R1C1Params
 from basic_mpc.models.r2c2 import R2C2Params
 
@@ -74,43 +83,50 @@ def plot_z1_vectors(
     params_r2: R2C2Params,
     path: Path,
 ) -> None:
-    """Z1 : Z(jω_24h) / Z(0), une flèche par modèle."""
+    """Z1 : vecteurs Z(jω_24h)/Z(0) des modèles fittés."""
     apply_publication_rc()
     w = omega_period_hours(24.0)
-    z1 = z_r1c1(params_r1, np.array([w]))
-    z2 = z_r2c2(params_r2, np.array([w]))
-    z1n = np.ravel(z1 / z_r1c1(params_r1, np.array([1e-12])))[0]
-    z2n = np.ravel(z2 / z_r2c2(params_r2, np.array([1e-12])))[0]
-    fig, ax = plt.subplots(figsize=(5.6, 5.2))
+    w0 = np.array([1e-12])
+    z1n = z_normalized(z_r1c1(params_r1, np.array([w])), z_r1c1(params_r1, w0))
+    z2n = z_normalized(z_r2c2(params_r2, np.array([w])), z_r2c2(params_r2, w0))
+    s1 = z_snapshot(z1n, 24.0)
+    s2 = z_snapshot(z2n, 24.0)
+    fig, ax = plt.subplots(figsize=(5.8, 5.4))
     fig.patch.set_facecolor(BG)
     ax.axhline(0, color=MUTED, lw=0.6)
     ax.axvline(0, color=MUTED, lw=0.6)
-    ax.arrow(
-        0,
-        0,
-        float(np.real(z1n)),
-        float(np.imag(z1n)),
-        color=MUTED,
-        width=0.004,
-        head_width=0.03,
-        length_includes_head=True,
-        label="R1C1",
-    )
-    ax.arrow(
-        0,
-        0,
-        float(np.real(z2n)),
-        float(np.imag(z2n)),
-        color=ACCENT,
-        width=0.004,
-        head_width=0.03,
-        length_includes_head=True,
-        label="R2C2",
-    )
+    for snap, color, name in (
+        (s1, MUTED, "R1C1"),
+        (s2, ACCENT, "R2C2"),
+    ):
+        ax.add_patch(
+            FancyArrowPatch(
+                (0.0, 0.0),
+                (snap["re"], snap["im"]),
+                arrowstyle="-|>",
+                mutation_scale=16,
+                lw=2.2,
+                color=color,
+                label=name,
+            )
+        )
+        ax.scatter([snap["re"]], [snap["im"]], color=color, s=28, zorder=3)
     ax.set_xlabel(r"$\mathrm{Re}\,Z(j\omega_{24h})/Z(0)$")
     ax.set_ylabel(r"$\mathrm{Im}\,Z(j\omega_{24h})/Z(0)$")
-    ax.set_title("À 24 h, le R2C2 n'est pas un R1C1 renommé")
+    ax.set_title(
+        f"À 24 h, retard {s1['delay_hours']:.1f} h (R1C1) vs "
+        f"{s2['delay_hours']:.1f} h (R2C2)"
+    )
     ax.set_aspect("equal")
+    span = max(
+        abs(s1["re"]),
+        abs(s1["im"]),
+        abs(s2["re"]),
+        abs(s2["im"]),
+        0.02,
+    )
+    ax.set_xlim(-0.15 * span, 1.25 * span)
+    ax.set_ylim(-1.25 * span, 0.15 * span)
     ax.legend(frameon=False)
     _axes_ink(ax)
     save_figure(fig, path)
@@ -124,8 +140,8 @@ def plot_nyquist(
     """Z2 : lieu de Nyquist, Z/Z(0)."""
     apply_publication_rc()
     w = nyquist_omegas()
-    z1 = z_r1c1(params_r1, w) / z_r1c1(params_r1, np.array([1e-12]))
-    z2 = z_r2c2(params_r2, w) / z_r2c2(params_r2, np.array([1e-12]))
+    z1 = z_normalized(z_r1c1(params_r1, w), z_r1c1(params_r1, np.array([1e-12])))
+    z2 = z_normalized(z_r2c2(params_r2, w), z_r2c2(params_r2, np.array([1e-12])))
     fig, ax = plt.subplots(figsize=(5.6, 5.2))
     fig.patch.set_facecolor(BG)
     ax.plot(z1.real, z1.imag, color=MUTED, lw=1.6, label="R1C1")
@@ -136,6 +152,30 @@ def plot_nyquist(
     ax.set_ylabel(r"$\mathrm{Im}\,Z/Z(0)$")
     ax.set_title("Nyquist : 5 min → 7 jours")
     ax.set_aspect("equal")
+    ax.legend(frameon=False)
+    _axes_ink(ax)
+    save_figure(fig, path)
+
+
+def plot_bode_phase(
+    params_r1: R1C1Params,
+    params_r2: R2C2Params,
+    path: Path,
+) -> None:
+    """Z3 : phase (déphasage) vs période."""
+    apply_publication_rc()
+    periods = np.logspace(np.log10(1.0), np.log10(7.0 * 24.0), 60)
+    omegas = np.array([omega_period_hours(float(p)) for p in periods])
+    z1 = z_normalized(z_r1c1(params_r1, omegas), z_r1c1(params_r1, np.array([1e-12])))
+    z2 = z_normalized(z_r2c2(params_r2, omegas), z_r2c2(params_r2, np.array([1e-12])))
+    fig, ax = plt.subplots(figsize=(7.2, 3.8))
+    fig.patch.set_facecolor(BG)
+    ax.semilogx(periods, np.degrees(np.angle(z1)), color=MUTED, lw=1.8, label="R1C1")
+    ax.semilogx(periods, np.degrees(np.angle(z2)), color=ACCENT, lw=1.8, label="R2C2")
+    ax.axvline(24.0, color=INK, lw=0.7, ls="--")
+    ax.set_xlabel("période (h)")
+    ax.set_ylabel("phase (°)")
+    ax.set_title("Déphasage : à 24 h, la chaleur arrive avec des heures de retard")
     ax.legend(frameon=False)
     _axes_ink(ax)
     save_figure(fig, path)

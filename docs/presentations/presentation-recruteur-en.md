@@ -147,4 +147,6 @@ Not a product. A method, with the limits on the slide.
 
 [Open the slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-recruteur-en.html)
 
+[Play the simulator](https://dimiphoton.github.io/basic-MPC/simulator/)
+
 [Source code](https://github.com/dimiphoton/basic-MPC)
