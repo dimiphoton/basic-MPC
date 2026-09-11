@@ -109,7 +109,7 @@ docs/presentations/   # Marp sources
 ```
 
 French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`,
-`docs/visualisations.md`.
+`docs/visualisations.md`, `docs/identification-split.md`.
 
 ## Simulator
 
