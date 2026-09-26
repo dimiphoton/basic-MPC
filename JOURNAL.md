@@ -1,5 +1,16 @@
 # Journal de développement
 
+## 2026-09-26 — Notebooks d'expériences
+
+- Quatre notebooks (`00` schémas / plant / \(Z\), `01` R1C1, `02`
+  comparaison, `03` MPC €) : appellent `src/`, `RECOMPUTE` pour
+  réécrire les PNG dans `pictures/experiments/`.
+- Devoir : `04-devoir-approfondi` + CLI `homework-pngs` (H1–H10).
+  Pareto λ : plus de confort coûte peu d'euros ; T_ext retardé 6 h
+  casse l'oracle (1,5 h → 7,9 h sous T_conf sur 16 h).
+- L'app Streamlit n'est plus le livrable : stack README = Python /
+  NumPy / SciPy. Extra `[nb]` (ipykernel).
+
 ## 2026-09-12 — Split d'identification
 
 - Note `docs/identification-split.md` : PEM sur une trajectoire continue

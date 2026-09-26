@@ -1,9 +1,11 @@
 # Catalogue des visualisations
 
-Menu complet. On **produit** les figures au fil des features
-(`pictures/experiments/`). On **sélectionne** lesquelles vont dans les
-slides RH / technique à `feature/portfolio-slides` (3 graphes max par
-deck, fond crème / transparent).
+Menu complet. On **produit** les figures depuis les notebooks
+(`notebooks/00`…`03`, `RECOMPUTE = True`) ou le CLI équivalent.
+Sortie : `pictures/experiments/` (PNG, parfois PDF). On **sélectionne**
+lesquelles vont dans les slides RH / technique (3 graphes max par deck,
+fond crème / transparent). L'app Streamlit n'est **pas** le registre
+des expériences.
 
 Noms de fichiers en kebab-case.
 
@@ -17,9 +19,8 @@ Schémas de modèles (générés, pas dessinés à la main) :
 | `schema-kalman` | Prédiction / innovation / mise à jour |
 | `schema-famille-rc` | Les trois circuits empilés |
 
-CLI : `python -m basic_mpc draw-schemas` (PNG + PDF).
-MPC v1 : `python -m basic_mpc mpc-vs-bang-bang`.
-MPC v1.1 (€, T_sp) : `python -m basic_mpc mpc-cout-consigne` (S4–S6).
+Notebook `00-schemas-impedance` / CLI `draw-schemas` (PNG + PDF).
+MPC v1.1 (€, T_sp) : notebook `03` / CLI `mpc-cout-consigne` (S4–S6).
 
 ---
 
@@ -63,7 +64,26 @@ Ici l'état vrai existe.
 | S4 | MPC vs hystérésis, 48 h : \(T_\mathrm{air}\) + \(T_{\mathrm{conf}}(t)\) + HP/HC | MPC € | RH + technique |
 | S5 | Même 48 h : consigne \(T_{\mathrm{sp}}\) et \(P\) via bande \(n\) | MPC € | Technique |
 | S6 | Facture proxy € + heures sous \(T_{\mathrm{conf}}\) (> 0,1 °C) | MPC € | RH (graphe clé) |
-| Lab | Streamlit : \(T_{\mathrm{ext}}\), air, murs, \(T_{\mathrm{sp}}\), P, € cumulés (datetime) | `feature/sim-dynamique` | Visiteur (labo) |
+| Lab | Streamlit (optionnel) : météo tirée, une stratégie | hors livrable principal | Visiteur |
+
+---
+
+## Devoir approfondi (H1–H10)
+
+Notebook `04-devoir-approfondi` / CLI `homework-pngs`. Pas de refit PEM.
+
+| Id | Figure | Question que ça pose |
+|---|---|---|
+| H1 | Loi bande \(n\) : \(P/P_{\max}\) vs \(T_{\mathrm{sp}}-y\) | Qu'est-ce qu'on commande ? |
+| H2 | Réponse indicielle plant : air vs masse | Pourquoi un 2e état ? |
+| H3 | Bode \(\lvert Z/Z(0)\rvert\) plant vs fits | Les échelles sont-elles les mêmes ? |
+| H4 | QQ-plot des innovations Kalman (plant) | Le bruit est-il gaussien ? |
+| H5 | Trou de 4 h : \(\hat T_{\mathrm{masse}}\) sans \(y\) | Kalman ≠ interpolation |
+| H6 | Split train / fenêtre PEM / test | Pourquoi pas de shuffle ? |
+| H7 | MAE vs horizon R1C1 / R2C2 | Le RMSE I1 n'est pas tout |
+| H8 | Pareto \(\lambda\) : facture vs heures sous \(T_{\mathrm{conf}}\) | Que minimise \(J\) ? |
+| H9 | MPC oracle vs \(T_{\mathrm{ext}}\) retardé 6 h | Limite de l'oracle |
+| H10 | Quantification 0,1 °C (plant, 24 h) | Capteur ≠ état |
 
 ---
 

@@ -57,8 +57,9 @@ def run_export_simulator(
                 "c'est le déphasage. On chauffe avant 7 h, pas à 7 h."
             ),
             "lab": (
-                "Le labo de stratégies (météo tirée, burn-in, MPC) tourne "
-                "en local : streamlit run webapp/app.py"
+                "Les figures (schémas, Z, MPC) sont dans pictures/"
+                "experiments/ via les notebooks. Labo Streamlit "
+                "optionnel : streamlit run webapp/app.py"
             ),
         },
     }

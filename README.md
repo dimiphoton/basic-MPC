@@ -4,11 +4,11 @@
 |---|---|
 | **Role** | Machine learning |
 | **Domain** | Buildings |
-| **Stack** | ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white) |
+| **Stack** | ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white) |
 | **Level** | Intermediate |
 | **Status** | v1.1 |
 
-Machine learning · Buildings · Python / NumPy / SciPy / Streamlit
+Machine learning · Buildings · Python / NumPy / SciPy
 
 ## Objective
 
@@ -66,6 +66,22 @@ Oracle forecasts and the proxy `P` are limitations, not a field trial.
 - `P` and `S` are constructed proxies, not watts or W/m². No Docker / Airflow
   / MLflow in v1.
 
+## Experiments
+
+Logic lives in `src/basic_mpc/` (tested). Notebooks **call** it and
+record figures as PNG in `pictures/experiments/` (`RECOMPUTE = True`
+to regenerate). Kernel: `pip install -e ".[nb]"`.
+
+| Notebook | Figures |
+|---|---|
+| `notebooks/00-schemas-impedance.ipynb` | RC/Kalman diagrams, plant sensor (S1), \(Z(j\omega)\) Z1/Z3 |
+| `notebooks/01-identification-r1c1.ipynb` | I3, I4, S1 |
+| `notebooks/02-comparaison-r1c1-r2c2.ipynb` | I1–I5, Z1–Z2, S2–S3 |
+| `notebooks/03-mpc-cout-consigne.ipynb` | S4–S6 (bill € vs hours below comfort) |
+| `notebooks/04-devoir-approfondi.ipynb` | H1–H10 (band *n*, step, Bode, Kalman gap, Pareto λ, delayed weather) |
+
+The CLI is the same entry points without a kernel (`python -m basic_mpc …`).
+
 ## Reproduce
 
 ```bash
@@ -78,45 +94,43 @@ python -m basic_mpc draw-schemas
 python -m basic_mpc compare-r1c1-r2c2
 python -m basic_mpc mpc-cout-consigne
 python -m basic_mpc export-simulator
+python -m basic_mpc homework-pngs
 pytest
-```
-
-`export-simulator` writes `docs/simulator/data.json` (RC lab constants and
-fitted \(Z\)). The **strategy lab** is Streamlit, not a frozen JSON arena:
-
-```bash
-pip install -e ".[sim]"
-streamlit run webapp/app.py
 ```
 
 `mpc-cout-consigne` runs the receding-horizon controller (thermostat
 setpoint, peak/off-peak bill + discomfort) against a hysteresis
-thermostat on the literature plant. `mpc-vs-bang-bang` keeps the older
-v1 comparison (magic weights, no euros). `draw-schemas` writes publication RC/Kalman diagrams
-(PNG + PDF). `compare-r1c1-r2c2` fits R2C2 on the same PEM window and
-scores 1–24 h forecasts against R1C1. `identify-r1c1` fits the one-state
-baseline. `simulate-plant` writes a 48 h trajectory on the **literature
-plant** (solar also hits the thermal mass — not the RC we identify).
+thermostat on the literature plant. `draw-schemas` writes publication
+RC/Kalman diagrams (PNG + PDF). `compare-r1c1-r2c2` fits R2C2 on the
+same PEM window and scores 1–24 h forecasts. `identify-r1c1` fits the
+one-state baseline. `simulate-plant` writes a 48 h trajectory on the
+**literature plant** (solar also hits the thermal mass).
+`export-simulator` writes `docs/simulator/data.json` and Z1/Z3 for the
+optional RC lesson on Pages. `homework-pngs` writes the in-depth
+assignment figures (H1–H10).
 
 ## Repo structure
 
 ```
-brief/          # identity, objective, thermal briefs
-data/raw/       # sensor CSV (do not edit)
-src/basic_mpc/  # package (data, features, models, control, CLI)
+brief/                 # identity, objective, thermal briefs
+data/raw/              # sensor CSV (do not edit)
+src/basic_mpc/         # package (tested)
+notebooks/             # experiments → pictures/experiments/*.png
+pictures/experiments/  # recorded figures
 tests/
-docs/presentations/   # Marp sources
+webapp/                # optional Streamlit lab
+docs/presentations/    # Marp sources
 ```
 
 French notes: `ROADMAP.md`, `JOURNAL.md`, `docs/decisions.md`,
 `docs/visualisations.md`, `docs/identification-split.md`.
 
-## Simulator
+## Optional demos
 
-RC lesson (no Python, phase lag on GitHub Pages):
+RC lesson (no Python, GitHub Pages):
 [Open the RC lesson](https://dimiphoton.github.io/basic-MPC/simulator/).
 
-Strategy lab (drawn weather, 24 h burn-in, one controller):
+Strategy lab (local Streamlit, not the main deliverable):
 
 ```bash
 pip install -e ".[sim]"

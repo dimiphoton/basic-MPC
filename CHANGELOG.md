@@ -2,6 +2,13 @@
 
 ## [Non publié]
 
+- Cœur du repo : `src/` + notebooks d'expériences qui enregistrent
+  les PNG (`pictures/experiments/`). Streamlit / Pages restent des
+  démos optionnelles. Extra `[nb]` pour le kernel.
+- Devoir approfondi : figures H1–H10 (bande n, échelon, Bode module,
+  QQ Kalman, trou de mesure, split, MAE, Pareto λ, météo retardée).
+  CLI `homework-pngs`, notebook `04-devoir-approfondi`.
+
 - Note de méthode : split d'identification chronologique, pas de
   semaines mélangées ni RC ouvré / week-end
   (`docs/identification-split.md`).

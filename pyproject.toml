@@ -12,6 +12,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+nb = ["ipykernel>=6"]
 sim = ["streamlit>=1.32"]
 
 [project.scripts]

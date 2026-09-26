@@ -12,7 +12,7 @@ paginate: true
 # Can we close the loop
 # without cheating?
 
-Machine learning · Buildings · Python / NumPy / SciPy / Streamlit
+Machine learning · Buildings · Python / NumPy / SciPy
 
 Instrumented house · 2020 · ~5 min
 
@@ -187,15 +187,12 @@ One house, one winter fit, not a stock of buildings.
 [Slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-technique-en.html)
 [Repo](https://github.com/dimiphoton/basic-MPC)
 
-`python -m basic_mpc mpc-cout-consigne`
-
-`streamlit run webapp/app.py`
-
-[RC lesson](https://dimiphoton.github.io/basic-MPC/simulator/)
+`notebooks/03-mpc-cout-consigne.ipynb`
 
 `pytest`
+
+[RC lesson](https://dimiphoton.github.io/basic-MPC/simulator/)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
 ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?logo=scipy&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)

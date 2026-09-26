@@ -1,7 +1,7 @@
 # Roadmap
 
 Grey-box RC, Kalman, plant simulé, MPC vs bang-bang.
-v1.1 : problème de contrôle (`brief/controle-mpc.md`), puis dashboard.
+Expériences : notebooks + PNG. L'app (Streamlit / Pages) est secondaire.
 
 Une case = une branche. Le nom de branche est dans la case ; ne pas
 en inventer un autre. Une seule case par tour d'autopilot.
@@ -24,3 +24,6 @@ Figures : catalogue dans `docs/visualisations.md`. On les génère dans
   ludiques — GitHub Pages **et** Streamlit (`feature/dashboard-simulateur`)
 - [x] Labo dynamique : météo tirée, burn-in, Streamlit ; Pages = leçon RC
   (`feature/sim-dynamique`)
+- [x] Notebooks d'expériences : PNG dans `pictures/experiments/`
+  (`feature/notebooks-experiences`)
+  + devoir H1–H10 (`homework-pngs`, notebook `04`)

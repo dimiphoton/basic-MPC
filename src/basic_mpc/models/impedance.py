@@ -33,12 +33,36 @@ def z_r1c1(params: R1C1Params, omega: np.ndarray) -> np.ndarray:
     return tau / (1.0 + 1j * w * tau)
 
 
+def z_rc_network(
+    rae: float,
+    ram: float,
+    ca: float,
+    cm: float,
+    omega: np.ndarray,
+) -> np.ndarray:
+    """Z(jω) = T_air / Q_air, T_ext = 0, réseau 2R2C.
+
+    Parameters
+    ----------
+    rae, ram, ca, cm : float
+        Résistances et capacités (SI ou C_a=1).
+    omega : ndarray
+        Pulsations (rad/s).
+
+    Returns
+    -------
+    ndarray
+        Impédance complexe.
+    """
+    w = np.asarray(omega, dtype=float)
+    ya = 1.0 / ram + 1.0 / rae + 1j * w * ca
+    ym = 1.0 / ram + 1j * w * cm
+    return ym / (ya * ym - (1.0 / ram) ** 2)
+
+
 def z_r2c2(params: R2C2Params, omega: np.ndarray) -> np.ndarray:
     """Z(jω) vue du nœud air, T_ext = 0 (réseau RC, pas le gain proxy)."""
-    w = np.asarray(omega, dtype=float)
-    ya = 1.0 / params.ram + 1.0 / params.rae + 1j * w * params.ca
-    ym = 1.0 / params.ram + 1j * w * params.cm
-    return ym / (ya * ym - (1.0 / params.ram) ** 2)
+    return z_rc_network(params.rae, params.ram, params.ca, params.cm, omega)
 
 
 def nyquist_omegas(dt_seconds: float = 300.0, n: int = 80) -> np.ndarray:

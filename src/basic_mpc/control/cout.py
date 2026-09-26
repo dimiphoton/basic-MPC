@@ -116,9 +116,18 @@ def _simulate_mpc_setpoint(
     cfg: ControlConfig,
     dt_seconds: float,
     beta: float,
+    t_ext_forecast: np.ndarray | None = None,
 ) -> pd.DataFrame:
-    """Horizon glissant : Kalman + QP euros, T_sp tenu par bloc, bande n."""
+    """Horizon glissant : Kalman + QP euros, T_sp tenu par bloc, bande n.
+
+    ``t_ext_forecast`` : ce que le MPC croit (oracle = ``t_ext``). Le plant
+    reçoit toujours ``t_ext`` vrai.
+    """
     n = len(t_ext)
+    t_fc_full = t_ext if t_ext_forecast is None else np.asarray(t_ext_forecast, dtype=float)
+    if t_fc_full.shape[0] != n:
+        msg = "t_ext_forecast doit avoir la même longueur que t_ext"
+        raise ValueError(msg)
     n_pred = max(1, int(round(cfg.horizon_hours * 3600.0 / dt_seconds)))
     block_len = max(1, int(round(cfg.block_minutes * 60.0 / dt_seconds)))
     y0 = plant.observe()
@@ -145,7 +154,7 @@ def _simulate_mpc_setpoint(
     for k in range(n):
         if steps_left <= 0:
             end = min(n, k + n_pred)
-            t_fc = t_ext[k:end]
+            t_fc = t_fc_full[k:end]
             s_fc = solar[k:end]
             conf_fc = t_conf[k:end]
             pi_fc = pi[k:end]
@@ -209,6 +218,99 @@ def _simulate_mpc_setpoint(
     )
 
 
+def euro_closed_loop_pair(
+    cfg: ControlConfig | None = None,
+    t_ext_forecast: np.ndarray | None = None,
+) -> dict:
+    """Même plant, même météo : MPC vs hystérésis, sans écrire de figure.
+
+    Parameters
+    ----------
+    cfg : ControlConfig, optional
+        Durée, λ, bande n.
+    t_ext_forecast : ndarray, optional
+        Prévision d'extérieur pour le QP (défaut : oracle).
+
+    Returns
+    -------
+    dict
+        Trajectoires, métriques, ``t_conf``, ``pi``, ``hours``.
+    """
+    cfg = cfg or ControlConfig()
+    plant_p = literature_plant_params()
+    internal = r2c2_internal_from_plant(plant_p)
+    ad, bd = discretize_r2(internal)
+    q = np.diag([internal.process_noise_std**2, internal.process_noise_std_mass**2])
+    r = np.array([[internal.sensor_noise_std**2]])
+    beta = beta_kwh_per_p_second(plant_p.alpha_h)
+    n_steps = int(cfg.n_hours * 3600.0 / plant_p.dt_seconds)
+    index = scenario_index(parse_start_local(cfg), n_steps, plant_p.dt_seconds)
+    weather = winter_weather(index, seed=cfg.seed + 1)
+    t_ext = weather["t_ext"].to_numpy()
+    solar = weather["S"].to_numpy()
+    t_conf = comfort_setpoint(index, cfg)
+    pi = energy_price(index, cfg)
+    t_ext_min = float(np.min(t_ext))
+    p_max = cfg.p_max_margin * p_to_hold(plant_p, cfg.t_conf_occupied, t_ext_min)
+    x0 = np.array([18.0, 16.0])
+    plant_bb = ThermalPlant(params=plant_p, x0=x0, seed=cfg.seed)
+    traj_bb = _simulate_hysteresis(
+        plant_bb, t_ext, solar, t_conf, cfg.n_band, p_max
+    )
+    plant_mpc = ThermalPlant(params=plant_p, x0=x0, seed=cfg.seed)
+    traj_mpc = _simulate_mpc_setpoint(
+        plant_mpc,
+        t_ext,
+        solar,
+        t_conf,
+        pi,
+        ad,
+        bd,
+        q,
+        r,
+        p_max,
+        cfg,
+        plant_p.dt_seconds,
+        beta,
+        t_ext_forecast=t_ext_forecast,
+    )
+    dt_hours = plant_p.dt_seconds / 3600.0
+    hours = np.arange(n_steps) * dt_hours
+    m_bb = euro_metrics(
+        traj_bb["ta_true"].to_numpy(),
+        traj_bb["P"].to_numpy(),
+        t_conf,
+        pi,
+        beta,
+        plant_p.dt_seconds,
+        cfg.lambda_comfort,
+    )
+    m_mpc = euro_metrics(
+        traj_mpc["ta_true"].to_numpy(),
+        traj_mpc["P"].to_numpy(),
+        t_conf,
+        pi,
+        beta,
+        plant_p.dt_seconds,
+        cfg.lambda_comfort,
+    )
+    return {
+        "cfg": cfg,
+        "plant": plant_p,
+        "t_ext": t_ext,
+        "t_conf": t_conf,
+        "pi": pi,
+        "hours": hours,
+        "p_max": p_max,
+        "traj_mpc": traj_mpc,
+        "traj_bb": traj_bb,
+        "mpc": m_mpc,
+        "hysteresis": m_bb,
+        "beta": beta,
+        "dt_seconds": plant_p.dt_seconds,
+    }
+
+
 def run_mpc_cout_consigne(
     cfg: ControlConfig | None = None,
     pictures_dir: Path | None = None,
@@ -236,66 +338,19 @@ def run_mpc_cout_consigne(
     pictures_dir.mkdir(parents=True, exist_ok=True)
     processed_dir.mkdir(parents=True, exist_ok=True)
 
-    plant_p = literature_plant_params()
-    internal = r2c2_internal_from_plant(plant_p)
-    ad, bd = discretize_r2(internal)
-    q = np.diag([internal.process_noise_std**2, internal.process_noise_std_mass**2])
-    r = np.array([[internal.sensor_noise_std**2]])
-    beta = beta_kwh_per_p_second(plant_p.alpha_h)
-
-    n_steps = int(cfg.n_hours * 3600.0 / plant_p.dt_seconds)
-    index = scenario_index(parse_start_local(cfg), n_steps, plant_p.dt_seconds)
-    weather = winter_weather(index, seed=cfg.seed + 1)
-    t_ext = weather["t_ext"].to_numpy()
-    solar = weather["S"].to_numpy()
-    t_conf = comfort_setpoint(index, cfg)
-    pi = energy_price(index, cfg)
-    t_ext_min = float(np.min(t_ext))
+    pair = euro_closed_loop_pair(cfg)
+    plant_p = pair["plant"]
+    hours = pair["hours"]
+    traj_mpc = pair["traj_mpc"]
+    traj_bb = pair["traj_bb"]
+    t_conf = pair["t_conf"]
+    pi = pair["pi"]
+    m_bb = pair["hysteresis"]
+    m_mpc = pair["mpc"]
+    p_max = pair["p_max"]
+    beta = pair["beta"]
+    t_ext_min = float(np.min(pair["t_ext"]))
     p_hold = p_to_hold(plant_p, cfg.t_conf_occupied, t_ext_min)
-    p_max = cfg.p_max_margin * p_hold
-    x0 = np.array([18.0, 16.0])
-
-    plant_bb = ThermalPlant(params=plant_p, x0=x0, seed=cfg.seed)
-    traj_bb = _simulate_hysteresis(
-        plant_bb, t_ext, solar, t_conf, cfg.n_band, p_max
-    )
-    plant_mpc = ThermalPlant(params=plant_p, x0=x0, seed=cfg.seed)
-    traj_mpc = _simulate_mpc_setpoint(
-        plant_mpc,
-        t_ext,
-        solar,
-        t_conf,
-        pi,
-        ad,
-        bd,
-        q,
-        r,
-        p_max,
-        cfg,
-        plant_p.dt_seconds,
-        beta,
-    )
-
-    dt_hours = plant_p.dt_seconds / 3600.0
-    hours = np.arange(n_steps) * dt_hours
-    m_bb = euro_metrics(
-        traj_bb["ta_true"].to_numpy(),
-        traj_bb["P"].to_numpy(),
-        t_conf,
-        pi,
-        beta,
-        plant_p.dt_seconds,
-        cfg.lambda_comfort,
-    )
-    m_mpc = euro_metrics(
-        traj_mpc["ta_true"].to_numpy(),
-        traj_mpc["P"].to_numpy(),
-        t_conf,
-        pi,
-        beta,
-        plant_p.dt_seconds,
-        cfg.lambda_comfort,
-    )
 
     plot_s4_confort(
         hours,

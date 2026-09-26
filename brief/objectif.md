@@ -34,10 +34,10 @@ v1.1 contrôle (2026-08-30), détail dans `brief/controle-mpc.md` :
   \(T_{\mathrm{conf}}(t)\) (20 °C jour / 17 °C nuit).
 - Hors v1.1 : PV dans la facture, fioul, Gurobi. OSQP après que \(J\)
   existe.
-- Visiteur (après le coût €) : leçon RC / déphasage / \(Z(j\omega)\)
-  fitté sur **GitHub Pages** (sans Python). Labo de stratégies
-  **dynamique** en Streamlit : météo tirée, burn-in 24 h (maison
-  habitée), une stratégie (hystérésis / préchauffage / MPC), graphes
-  datetime. Pas d'arène JSON figée ni de \(x_0 = (18, 16)\).
+- **Livrable expérimental** : `src/` testé + notebooks qui appellent
+  ce code et **enregistrent des PNG** (`pictures/experiments/`) :
+  schémas, \(Z(j\omega)\), identification, boucle fermée, devoir
+  H1–H10 (bande n, Pareto λ, oracle cassé). Le CLI reste un raccourci.
+  Streamlit / Pages = démo optionnelle, pas le cœur du repo.
 
 Métier, domaine et stack : `brief/identite.md`.

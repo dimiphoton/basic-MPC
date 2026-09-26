@@ -7,6 +7,7 @@ import logging
 from basic_mpc.config import DataConfig
 from basic_mpc.control.closed_loop import run_mpc_vs_bangbang
 from basic_mpc.control.cout import run_mpc_cout_consigne
+from basic_mpc.homework.run import run_homework_pngs
 from basic_mpc.sim.export import run_export_simulator
 from basic_mpc.data.pipeline import run_preprocess
 from basic_mpc.features.inputs import run_build_inputs
@@ -58,6 +59,10 @@ def main() -> None:
     subparsers.add_parser(
         "export-simulator",
         help="JSON + figures Z pour la leçon RC (GitHub Pages)",
+    )
+    subparsers.add_parser(
+        "homework-pngs",
+        help="PNG de devoir (bande n, échelon, Bode, Kalman, Pareto λ)",
     )
 
     arguments = parser.parse_args()
@@ -145,6 +150,9 @@ def main() -> None:
         )
     elif arguments.commande == "export-simulator":
         rapport = run_export_simulator()
+        print(json.dumps(rapport, indent=2, ensure_ascii=False))
+    elif arguments.commande == "homework-pngs":
+        rapport = run_homework_pngs()
         print(json.dumps(rapport, indent=2, ensure_ascii=False))
 
 
