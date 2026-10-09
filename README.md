@@ -29,19 +29,19 @@ heating power nor irradiance**. Model inputs are constructed and documented:
 
 ## Result
 
-Held-out Feb–May 2021 (same split for both models):
+Held-out 4 Feb–24 May 2021 (same split for both models):
 
-- **R1C1**: RMSE **0.56 °C at 1 h**, **1.93 °C at 24 h** (one slow lump).
-- **R2C2**: RMSE **0.56 °C at 1 h**, **1.73 °C at 24 h**. Two slow time
-  constants (~139 h and ~148 h); \(R_{ae}\) hits its cap. The extra state
-  barely helps before 12 h. Circuit diagrams: `pictures/experiments/schema-*.png`.
+- **One state**: RMSE **0.56 °C at 1 h**, **1.93 °C at 24 h**. Effective
+  time constant **83 h** (the room as a single lump).
+- **Two states**, inside a room box (air 0.5–6 h, walls 8–72 h, process
+  noise fixed): RMSE **0.63 °C at 1 h**, **1.95 °C at 24 h**. The fit
+  sits on the box: **τ_air = 6 h**, **τ_walls = 8 h**, **C_walls/C_air = 25**.
+  The extra state does not reduce the error. Diagrams:
+  `pictures/experiments/schema-*.png`.
 
-The R2C2 remains the grey-box candidate (hidden mass), with that limit
-stated. Closed-loop control uses a **separate** internal R2C2: same
-equations as identification (solar on air only), RC gains taken from the
-literature plant **without** `α_s,mass`. The real-house fit is not used
-as the controller model (140 h time constants vs ~3 h / ~11 h on the
-plant).
+Closed-loop control uses a **separate** internal model: the literature
+plant **without** `α_s,mass` (air ~3 h, walls ~11 h). The living-room
+fit is not the controller. The test house is not the fitted house.
 
 Closed loop, 48 h from 18:00 local, comfort 20 °C day / 17 °C night,
 peak/off-peak electricity (0.40 / 0.20 €/kWh), command = thermostat
@@ -50,8 +50,9 @@ setpoint through a 1 °C proportional band:
 - **MPC**: **1.8 h** below comfort (> 0.1 °C); bill **€16.19**.
 - **Hysteresis** (setpoint = comfort schedule, no model): **19.8 h**
   below; bill **€16.35**.
-- The bill barely moves (**−1 %**). The win is not sitting cold. Figures
-  `s4`–`s6` in `pictures/experiments/` (and README).
+- Gap: **18 h** less time below comfort. The bill barely moves (**−1 %**).
+  Part of the thermostat's 19.8 h is its ±0.5 °C cycle around the setpoint.
+  Figures `s4`–`s6` in `pictures/experiments/` (and README).
 
 Oracle forecasts and the proxy `P` are limitations, not a field trial.
 
@@ -59,8 +60,9 @@ Oracle forecasts and the proxy `P` are limitations, not a field trial.
 
 ## Limits
 
-- Identification is one living room, one year, winter PEM window. The fitted
-  R2C2 has two slow time constants (~140 h); it is not fast air plus mass.
+- Identification is one living room, one year, winter PEM window. Inside a
+  room box the two-state fit sits on the boundary (6 h and 8 h) and does
+  not beat the one-state model.
 - Closed-loop tests use a **literature plant** (solar also on the mass), not
   the house. Weather forecasts given to the MPC are perfect (oracle).
 - `P` and `S` are constructed proxies, not watts or W/m². No Docker / Airflow

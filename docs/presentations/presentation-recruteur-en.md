@@ -45,30 +45,26 @@ Consultancies. Building operators. Flexibility aggregators.
 
 ---
 
-<!-- _class: full -->
+<!-- _class: chart -->
 
-![bg brightness:0.38](../../pictures/presentations/photos/cta.jpg)
+## Simulated house: air moves first, the walls follow.
 
-# Air heats fast.
-# Walls remember.
-
-Two rooms at 20 °C do not share the same tomorrow
-if one has cold walls.
+![w:980](../../pictures/presentations/h2-reponse-indicielle.png)
 
 ---
 
 <!-- _class: split -->
 
-![bg left:46%](../../pictures/presentations/photos/action.jpg)
+![bg left:46%](../../pictures/presentations/photos/physique.jpg)
 
 # How we read
 # the numbers.
 
-One house, 2020, a 5-minute grid — sometimes one sample skipped.
+One house, 2020, a reading every five minutes.
 
-The 21.8 °C indoor reading is not the air: the sensor steps by 0.1 °C.
+The 21.8 °C indoor figure is not the air: the sensor steps by tenths of a degree.
 
-Heating is not in watts: we build a water–air gap, only when the room asks.
+Heating is not measured in watts. We rebuild it from water and air, only when the room asks.
 
 ---
 
@@ -76,11 +72,11 @@ Heating is not in watts: we build a water–air gap, only when the room asks.
 
 # This project is not.
 
-Not a magic thermostat on the same model we just fitted.
+Not a magic thermostat fitted on the same model it then controls.
 
-Not measured watts, and not a live-house trial.
+Not a live-house trial.
 
-**A coded plant, slightly different on purpose, to test the controller.**
+**A coded house, slightly different on purpose, to test the controller.**
 
 ---
 
@@ -88,16 +84,16 @@ Not measured watts, and not a live-house trial.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# 2 h too cold.
-# The thermostat: 20.
+# 1.8 h below comfort.
+# The thermostat: 19.8 h.
 
-Same bill. The win is comfort, not the euro.
+48 simulated hours. 18 h less time in the cold. Proxy bill ~€16 either way.
 
 ---
 
 <!-- _class: chart -->
 
-## Same bill. Twenty fewer cold hours.
+## 48 simulated hours: 18 h less time in the cold, same proxy bill.
 
 ![w:980](../../pictures/presentations/s6-confort-conso.png)
 
@@ -105,23 +101,17 @@ Same bill. The win is comfort, not the euro.
 
 <!-- _class: chart -->
 
-## The thermostat hunts. The MPC preheats on the cheap night rate.
+## The controller is already rising before 7 a.m. The thermostat waits.
 
 ![w:980](../../pictures/presentations/s4-mpc-vs-bang-bang.png)
 
 ---
 
-<!-- _class: split -->
+<!-- _class: chart -->
 
-![bg left:40%](../../pictures/presentations/photos/hero.jpg)
+## We did not replay the controller on the model it learned.
 
-# This is not
-# a drawing trick.
-
-We did not replay the controller on the model it learned.
-
-The simulated house lets the sun hit the walls too.
-That is not the house we identified.
+![w:980](../../pictures/presentations/s3-plant-vs-r2c2.png)
 
 ---
 
@@ -131,7 +121,7 @@ That is not the house we identified.
 
 # Monday.
 
-**Operator** — keep the thermostat, but count hours below the comfort schedule.
+**Operator** — keep the thermostat, but count hours too cold.
 
 **Consultancy** — a small model is enough to look ahead; the bill barely moves, the cold does.
 
@@ -147,6 +137,6 @@ Not a product. A method, with the limits on the slide.
 
 [Open the slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-recruteur-en.html)
 
-[Open the RC lesson](https://dimiphoton.github.io/basic-MPC/simulator/)
+[Open the lesson](https://dimiphoton.github.io/basic-MPC/simulator/)
 
 [Source code](https://github.com/dimiphoton/basic-MPC)

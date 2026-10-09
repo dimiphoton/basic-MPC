@@ -45,30 +45,26 @@ Bureaux d'études. Exploitants. Agrégateurs de flexibilité.
 
 ---
 
-<!-- _class: full -->
+<!-- _class: chart -->
 
-![bg brightness:0.38](../../pictures/presentations/photos/cta.jpg)
+## Maison simulée : l'air part, les murs suivent.
 
-# L'air chauffe vite.
-# Les murs s'en souviennent.
-
-Deux pièces à 20 °C n'ont pas le même lendemain
-si l'une a des murs froids.
+![w:980](../../pictures/presentations/h2-reponse-indicielle.png)
 
 ---
 
 <!-- _class: split -->
 
-![bg left:46%](../../pictures/presentations/photos/action.jpg)
+![bg left:46%](../../pictures/presentations/photos/physique.jpg)
 
 # Comment on
 # lit les chiffres.
 
-Une maison, 2020, maille 5 min — parfois un point sauté.
+Une maison, 2020, un point toutes les cinq minutes.
 
-Le 21,8 °C du salon n'est pas l'air : le capteur marche par 0,1 °C.
+Le 21,8 °C du salon n'est pas l'air : le capteur marche par dixièmes de degré.
 
-Le chauffage n'est pas en watts : on construit un écart eau / air, seulement si la pièce demande.
+On ne mesure pas des watts. On reconstruit le chauffage à partir de l'eau et de l'air, seulement si la pièce demande.
 
 ---
 
@@ -78,9 +74,9 @@ Le chauffage n'est pas en watts : on construit un écart eau / air, seulement si
 
 Pas un thermostat magique recalé sur le même modèle.
 
-Pas des watts mesurés, ni un essai dans la vraie maison.
+Pas un essai dans la vraie maison.
 
-**Un plant simulé, un peu différent exprès, pour tester le contrôleur.**
+**Une maison simulée, un peu différente exprès, pour tester le contrôleur.**
 
 ---
 
@@ -88,16 +84,16 @@ Pas des watts mesurés, ni un essai dans la vraie maison.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# 2 h trop froid.
-# Le thermostat : 20.
+# 1,8 h sous le confort.
+# Le thermostat : 19,8 h.
 
-Même facture. Le gain est le confort, pas l'euro.
+48 h simulées. 18 h de froid en moins. Facture proxy ~16 € des deux côtés.
 
 ---
 
 <!-- _class: chart -->
 
-## Même facture. Vingt heures de froid en moins.
+## 48 h simulées : 18 h de froid en moins, facture proxy identique.
 
 ![w:980](../../pictures/presentations/s6-confort-conso.png)
 
@@ -105,23 +101,17 @@ Même facture. Le gain est le confort, pas l'euro.
 
 <!-- _class: chart -->
 
-## Le thermostat oscille. Le MPC préchauffe en heures creuses.
+## Le contrôleur monte avant 7 h. Le thermostat attend 7 h.
 
 ![w:980](../../pictures/presentations/s4-mpc-vs-bang-bang.png)
 
 ---
 
-<!-- _class: split -->
+<!-- _class: chart -->
 
-![bg left:40%](../../pictures/presentations/photos/hero.jpg)
+## On n'a pas rejoué le contrôleur sur le modèle appris.
 
-# Ce n'est pas
-# un artefact.
-
-On n'a pas rejoué le contrôleur sur le modèle appris.
-
-La maison simulée reçoit le soleil aussi dans les murs.
-Ce n'est pas celle qu'on a identifiée.
+![w:980](../../pictures/presentations/s3-plant-vs-r2c2.png)
 
 ---
 
@@ -131,7 +121,7 @@ Ce n'est pas celle qu'on a identifiée.
 
 # Lundi.
 
-**Exploitant** — garder le thermostat, mais compter les heures sous la consigne de confort.
+**Exploitant** — garder le thermostat, mais compter les heures trop froid.
 
 **Bureau d'études** — un modèle simple suffit pour anticiper ; la facture bouge peu, le froid disparaît.
 
@@ -147,6 +137,6 @@ Pas un produit. Une preuve de méthode.
 
 [Voir les slides](https://dimiphoton.github.io/basic-MPC/slides/presentation-recruteur-fr.html)
 
-[Jouer la leçon RC](https://dimiphoton.github.io/basic-MPC/simulator/)
+[Jouer la leçon](https://dimiphoton.github.io/basic-MPC/simulator/)
 
 [Code source](https://github.com/dimiphoton/basic-MPC)

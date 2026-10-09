@@ -9,6 +9,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Thème portfolio : crème, encre, accent (pas de cadre blanc)
 BG = "#F4EFE6"
@@ -33,6 +34,41 @@ def apply_publication_rc() -> None:
             "svg.fonttype": "none",
         }
     )
+
+
+def set_local_clock(ax: plt.Axes, hours: np.ndarray, start_hour: float = 18.0) -> None:
+    """Gradue « heures depuis le début » en heure locale.
+
+    Marques aux changements du scénario : 18 h, 22 h, 7 h, 12 h.
+    Le scénario de contrôle part à 18 h (``ControlConfig.start_local``).
+
+    Parameters
+    ----------
+    ax : Axes
+        Axe dont l'abscisse est en heures depuis le départ.
+    hours : ndarray
+        Abscisse déjà tracée.
+    start_hour : float
+        Heure locale du premier point.
+    """
+    if len(hours) == 0:
+        return
+    end = float(hours[-1])
+    marks = (7, 12, 18, 22)
+    ticks: list[float] = []
+    labels: list[str] = []
+    t = 0.0
+    while t <= end + 1e-6:
+        clock = (start_hour + t) % 24.0
+        if min(abs(clock - mark) for mark in marks) < 0.05:
+            ticks.append(t)
+            labels.append(f"{int(round(clock)) % 24} h")
+        t += 1.0
+    if not ticks:
+        return
+    ax.set_xticks(ticks)
+    ax.set_xticklabels(labels)
+    ax.set_xlabel("heure locale")
 
 
 def save_figure(fig: plt.Figure, path: Path, dpi: int = 200) -> list[Path]:

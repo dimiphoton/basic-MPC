@@ -52,16 +52,23 @@ def _delay_series(values: np.ndarray, n_steps: int) -> np.ndarray:
 
 
 def _step_response() -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Échelon de P au pas 0, T_ext et S constants."""
-    plant_p = literature_plant_params()
-    n = int(24.0 * 3600.0 / plant_p.dt_seconds)
+    """Échelon déterministe : extérieur 5 °C, départ à l'équilibre, P constant."""
+    plant_p = replace(
+        literature_plant_params(),
+        process_noise_std=0.0,
+        sensor_noise_std=0.0,
+    )
+    n = int(48.0 * 3600.0 / plant_p.dt_seconds)
     t_ext = np.full(n, 5.0)
     solar = np.zeros(n)
     heating = np.full(n, 80.0)
-    plant = ThermalPlant(params=plant_p, x0=np.array([5.0, 5.0]), seed=1)
+    plant = ThermalPlant(params=plant_p, x0=np.array([5.0, 5.0]), seed=0)
     traj = plant.simulate(t_ext, solar, heating)
-    hours = np.arange(n) * plant_p.dt_seconds / 3600.0
-    return hours, traj["ta_true"].to_numpy(), traj["tm_true"].to_numpy()
+    # Le simulateur enregistre l'état après le pas : on remet le départ à t = 0.
+    hours = np.arange(n + 1) * plant_p.dt_seconds / 3600.0
+    ta = np.concatenate([[5.0], traj["ta_true"].to_numpy()])
+    tm = np.concatenate([[5.0], traj["tm_true"].to_numpy()])
+    return hours, ta, tm
 
 
 def _bode_curves() -> tuple[np.ndarray, np.ndarray, np.ndarray | None, np.ndarray | None]:

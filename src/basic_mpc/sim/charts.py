@@ -80,8 +80,8 @@ def fig_lab_panels(
 
     ax = axes[0]
     _hc_spans(ax, index, pi, pi_hc)
-    ax.plot(index, traj["t_ext"], color=INK, lw=1.1, label=r"$T_{\mathrm{ext}}$")
-    ax.plot(index, t_conf, color=INK, lw=1.0, ls="--", label=r"$T_{\mathrm{conf}}$")
+    ax.plot(index, traj["t_ext"], color=INK, lw=1.1, label="dehors")
+    ax.plot(index, t_conf, color=INK, lw=1.0, ls="--", label="consigne de confort")
     if ov is not None:
         ax.plot(
             index,
@@ -90,14 +90,14 @@ def fig_lab_panels(
             lw=1.2,
             label="air (hystérésis)",
         )
-    ax.plot(index, traj["ta_true"], color=ACCENT, lw=1.7, label=r"$T_{\mathrm{air}}$")
+    ax.plot(index, traj["ta_true"], color=ACCENT, lw=1.7, label="air")
     ax.plot(
         index,
         traj["tm_true"],
         color=ACCENT_2,
         lw=1.3,
         ls=":",
-        label=r"$T_{\mathrm{masse}}$",
+        label="murs",
     )
     ax.set_ylabel("°C")
     ax.set_title("La masse retarde ; le capteur ne voit que l'air")
@@ -107,14 +107,14 @@ def fig_lab_panels(
     ax = axes[1]
     _hc_spans(ax, index, pi, pi_hc)
     if ov is not None:
-        ax.plot(index, ov["t_sp"], color=MUTED, lw=1.1, label=r"$T_{\mathrm{sp}}$ hyst.")
+        ax.plot(index, ov["t_sp"], color=MUTED, lw=1.1, label="consigne (thermostat)")
         ax.plot(index, ov["P"], color=MUTED, lw=0.9, alpha=0.7)
-    ax.plot(index, traj["t_sp"], color=ACCENT, lw=1.5, label=r"$T_{\mathrm{sp}}$")
-    ax.set_ylabel(r"$T_{\mathrm{sp}}$ (°C)")
+    ax.plot(index, traj["t_sp"], color=ACCENT, lw=1.5, label="consigne (MPC)")
+    ax.set_ylabel("consigne thermostat (°C)")
     ax_p = ax.twinx()
-    ax_p.plot(index, traj["P"], color=ACCENT_2, lw=1.2, label="P")
-    ax_p.set_ylabel("P (proxy)")
-    ax.set_title("La décision est une consigne ; P suit la bande n")
+    ax_p.plot(index, traj["P"], color=ACCENT_2, lw=1.2, label="chauffage")
+    ax_p.set_ylabel("chauffage (proxy)")
+    ax.set_title("La décision est une consigne ; le chauffage suit l'écart")
     ax.legend(frameon=False, loc="upper left", fontsize=9)
     ax.set_facecolor(BG)
     ax_p.set_facecolor(BG)

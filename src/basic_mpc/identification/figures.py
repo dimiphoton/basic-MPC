@@ -111,18 +111,18 @@ def plot_tair_vs_y(
     hours = np.arange(n) * 5.0 / 60.0
     fig, ax = plt.subplots(figsize=(8.0, 3.6))
     fig.patch.set_facecolor(_BG)
-    ax.plot(hours, ta_true[:n], color=_INK, label="T_air vraie", linewidth=1.6)
+    ax.plot(hours, ta_true[:n], color=_INK, label="air vrai", linewidth=1.6)
     ax.plot(
         hours,
         y[:n],
         color=_ACCENT,
-        label="y (0,1 °C)",
+        label="mesure (pas 0,1 °C)",
         linewidth=1.0,
         drawstyle="steps-post",
     )
     ax.set_xlabel("heures")
     ax.set_ylabel("°C")
-    ax.set_title("Le capteur n'est pas l'état : T_air vs y")
+    ax.set_title("Le capteur n'est pas l'air : il marche par dixièmes de degré")
     ax.legend(frameon=False)
     _style(ax)
     fig.tight_layout()

@@ -44,7 +44,7 @@ class PlantParams:
 
 
 def literature_plant_params() -> PlantParams:
-    """Jeu type maison : air ~40 min, masse plus lente, solaire sur les murs."""
+    """Jeu type maison : air ~3 h, masse ~11 h, solaire aussi sur les murs."""
     return PlantParams(
         ca=5.0e5,
         cm=8.0e6,

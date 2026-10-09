@@ -116,6 +116,10 @@ def run_compare_r1c1_r2c2(
     scores1 = multi_horizon_scores(
         y_test, u_test, filt1.x_filt, ad1, bd1, np.array([[1.0]]), 300.0, stride=HORIZON_STRIDE
     )
+    window = (
+        f"test {pd.Timestamp(test.index[0]):%Y-%m-%d}"
+        f" → {pd.Timestamp(test.index[-1]):%Y-%m-%d}"
+    )
     scores2 = multi_horizon_scores(
         y_test,
         u_test,
@@ -130,7 +134,12 @@ def run_compare_r1c1_r2c2(
     yhat1 = _one_step_yhat(y_test, filt1.innov)
     yhat2 = _one_step_yhat(y_test, filt2.innov)
 
-    plot_rmse_horizons(scores1, scores2, pictures_dir / "i1-rmse-horizons.png")
+    plot_rmse_horizons(
+        scores1,
+        scores2,
+        pictures_dir / "i1-rmse-horizons.png",
+        window=window,
+    )
     h, yw, a, b = _slice_48h(y_test, yhat1, yhat2, 0)
     plot_48h_overlay(
         h, yw, a, b, pictures_dir / "i2-48h-hiver.png", "48 h en début de test (février)"
@@ -227,8 +236,8 @@ def run_compare_r1c1_r2c2(
         "schemas": {k: f"pictures/experiments/{k}.png" for k in schemas},
         "notes": (
             "Même fenêtre PEM et même test que le R1C1. "
-            "C_a = 1. Solaire identifié sur l'air seulement. "
-            "Plant : alpha_s_mass > 0 (S3)."
+            "C_a = 1. τ_air et τ_murs bornés (pièce). σ_w fixé. "
+            "Solaire sur l'air seulement. Plant : alpha_s_mass > 0 (S3)."
         ),
     }
     json_path = config.processed_dir / "r1c1_r2c2_report.json"

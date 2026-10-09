@@ -9,8 +9,9 @@ paginate: true
 
 ![bg brightness:0.40](../../pictures/presentations/photos/hero.jpg)
 
-# Un RC identifiable
-# suffit-il au MPC ?
+# Un modèle simple
+# suffit-il à chauffer
+# en avance ?
 
 Machine learning · Bâtiment · Python / NumPy / SciPy
 
@@ -22,12 +23,12 @@ Maison instrumentée · 2020 · ~5 min
 
 ![bg left:46%](../../pictures/presentations/photos/action.jpg)
 
-# L'erreur se juge
-# à 24 heures.
+# Un état suffit
+# sur cette pièce.
 
-À un pas, R1C1 et R2C2 sont à égalité : 0,56 °C.
+À 1 h : 0,56 °C avec un état, 0,63 °C avec deux.
 
-**À 24 h, le second état gagne 0,2 °C. C'est pour ça qu'on le garde.**
+**À 24 h : 1,93 °C et 1,95 °C. Le second état, tenu dans une fourchette de pièce, ne gagne pas.**
 
 ---
 
@@ -40,53 +41,36 @@ Maison instrumentée · 2020 · ~5 min
 
 Pas un dashboard. Pas un rapport d'identification.
 
-Bureaux d'études et exploitants : une commande, une bande de confort, un plant distinct.
-
----
-
-<!-- _class: full -->
-
-![bg brightness:0.38](../../pictures/presentations/photos/cta.jpg)
-
-# Deux échelles.
-# Un état caché.
-
-L'air réagit. La masse stocke.
-Le capteur ne voit que l'air, et encore : par 0,1 °C.
-
----
-
-<!-- _class: split -->
-
-![bg left:46%](../../pictures/presentations/photos/action.jpg)
-
-# Logique du
-# traitement.
-
-Salon + extérieur, maille 5 min. Interpolation plafonnée à 10 min.
-
-Un trou de 12 h reste un trou. Quantification 0,1 °C vs 1 °C : capteur, pas RC.
-
-Pas de watts : `P` = écart eau/air si la zone demande, `S` = PV.
-
----
-
-<!-- _class: split -->
-
-![bg left:46%](../../pictures/presentations/photos/hero.jpg)
-
-# Ce qu'on isole.
-
-PEM : vraisemblance des innovations Kalman, split 70/30, fit sur 50 jours d'hiver.
-
-On retire la quantification du capteur de la dynamique.
-Ce qui reste, ce sont `R`, `C` et des gains proxy.
+Bureaux d'études et exploitants : une consigne thermostat, une bande de confort, une maison simulée distincte.
 
 ---
 
 <!-- _class: chart -->
 
-## Kalman : prédire, innover, mettre à jour — à la main.
+## Maison simulée : l'air part, les murs suivent.
+
+![w:980](../../pictures/presentations/h2-reponse-indicielle.png)
+
+---
+
+<!-- _class: split -->
+
+![bg left:46%](../../pictures/presentations/photos/physique.jpg)
+
+# D'où viennent
+# les chiffres.
+
+Salon et extérieur, toutes les cinq minutes. Un trou de plus de dix minutes reste un trou.
+
+Le capteur marche par dixièmes de degré — ce n'est pas une constante de temps.
+
+Pas de watts mesurés : on reconstruit le chauffage à partir de l'eau et de l'air, seulement si la pièce demande.
+
+---
+
+<!-- _class: chart -->
+
+## Kalman à la main : on avance, on compare, on corrige.
 
 ![w:920](../../pictures/presentations/schema-kalman.png)
 
@@ -96,18 +80,27 @@ Ce qui reste, ce sont `R`, `C` et des gains proxy.
 
 # Périmètre.
 
-On identifie un RC sur capteurs réels.
-On teste le MPC sur un plant littérature.
+On identifie le modèle sur des capteurs réels.
 
-Le solaire du plant tape aussi les murs. Ce n'est pas une validation en maison.
+On teste le contrôleur sur une maison simulée.
+
+Le soleil y tape aussi les murs. Ce n'est pas une validation en maison.
 
 ---
 
 <!-- _class: chart -->
 
-## Le second état se lit après 6 h, pas au pas suivant.
+## Un état reste devant, de 1 h à 24 h.
 
 ![w:920](../../pictures/presentations/i1-rmse-horizons.png)
+
+---
+
+<!-- _class: chart -->
+
+## Même météo, deux physiques : le contrôleur n'est pas recalé sur lui-même.
+
+![w:980](../../pictures/presentations/s3-plant-vs-r2c2.png)
 
 ---
 
@@ -115,54 +108,53 @@ Le solaire du plant tape aussi les murs. Ce n'est pas une validation en maison.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# 2 h sous T_conf
-# après le départ froid.
+# 1,8 h sous le confort.
+# Thermostat : 19,8 h.
 
-Hystérésis : 20 h. Facture ~16 € des deux côtés. Consigne thermostat, bande n, HP/HC.
+48 h, maison simulée, météo connue. Facture proxy ~16 €. Écart : 18 h.
 
 ---
 
 <!-- _class: chart -->
 
-## Consigne T_sp : le MPC préchauffe ; l'hystérésis attend 7 h.
+## Le MPC monte avant 7 h. Le thermostat attend 7 h.
+
+![w:980](../../pictures/presentations/s4-mpc-vs-bang-bang.png)
+
+---
+
+<!-- _class: chart -->
+
+## La décision est une consigne thermostat, pas des watts.
 
 ![w:980](../../pictures/presentations/s5-commande-p.png)
 
 ---
 
-<!-- _class: split -->
+<!-- _class: chart -->
 
-![bg left:40%](../../pictures/presentations/photos/action.jpg)
+## Une bande d'un degré : plus l'écart grandit, plus on chauffe.
 
-# Horizon glissant.
-
-Six heures d'avance. Commande constante par blocs de 30 min.
-
-Kalman à chaque pas. SciPy, pas cvxpy. J = facture HP/HC + inconfort. Météo oracle.
+![w:920](../../pictures/presentations/h1-loi-bande-n.png)
 
 ---
 
-<!-- _class: split -->
+<!-- _class: chart -->
 
-![bg left:40%](../../pictures/presentations/photos/cta.jpg)
+## Si la météo arrive avec six heures de retard, le confort se dégrade.
 
-# Pas circulaire.
-
-Même `u`, deux physiques : le plant a `α_s,mass`.
-
-Le R2C2 maison (τ ~ 140 h) ne pilote pas ce plant.
-Le modèle interne reprend la structure d'identification, sans solaire sur la masse.
+![w:980](../../pictures/presentations/h9-oracle-vs-retard.png)
 
 ---
 
 <!-- _class: dark -->
 
-# Pourquoi pas le R2C2 salon.
+# Le salon ne sépare pas
+# l'air et les murs.
 
-Les deux constantes de temps saturent vers 140 h.
-Ce n'est pas un air rapide plus une masse.
+6 h et 8 h, les deux au bord de la fourchette.
 
-On le dit. On ne s'en sert pas comme modèle interne du plant.
+Le contrôleur est jugé sur une autre maison : air ~3 h, murs ~11 h.
 
 ---
 
@@ -170,11 +162,11 @@ On le dit. On ne s'en sert pas comme modèle interne du plant.
 
 # Où ça casse.
 
-Prévisions météo parfaites (oracle).
+Météo connue à l'avance (oracle).
 
-`P` n'est pas des watts.
+Le chauffage n'est pas des watts.
 
-Une maison, un hiver de fit, pas un parc.
+Une maison, un hiver de calage, pas un parc.
 
 ---
 
@@ -191,7 +183,7 @@ Une maison, un hiver de fit, pas un parc.
 
 `pytest`
 
-[Leçon RC](https://dimiphoton.github.io/basic-MPC/simulator/)
+[Leçon](https://dimiphoton.github.io/basic-MPC/simulator/)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)

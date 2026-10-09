@@ -1,9 +1,9 @@
 """Modèle interne du MPC : R2C2 d'identification calé sur le plant.
 
-On ne réutilise pas le R2C2 identifié sur la maison réelle : τ ~ 140 h
-et l'échelle de P n'ont rien à voir avec le plant littérature (~3 h /
-~11 h). La misspecification volontaire reste ``alpha_s_mass`` : le
-contrôleur n'a le solaire que sur l'air.
+On ne réutilise pas le calage du salon. Le test est une autre maison
+(plant littérature, ~3 h / ~11 h) et P n'a pas les mêmes unités.
+La misspecification volontaire reste ``alpha_s_mass`` : le contrôleur
+n'a le solaire que sur l'air.
 """
 
 from __future__ import annotations

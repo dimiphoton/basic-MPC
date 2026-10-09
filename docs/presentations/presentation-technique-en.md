@@ -9,8 +9,9 @@ paginate: true
 
 ![bg brightness:0.40](../../pictures/presentations/photos/hero.jpg)
 
-# Can we close the loop
-# without cheating?
+# Can a small model
+# heat a house
+# ahead of time?
 
 Machine learning · Buildings · Python / NumPy / SciPy
 
@@ -22,12 +23,12 @@ Instrumented house · 2020 · ~5 min
 
 ![bg left:46%](../../pictures/presentations/photos/action.jpg)
 
-# A one-step RMSE
-# does not hire a model.
+# One state is enough
+# for this room.
 
-R1C1 and R2C2 tie at 1 h: 0.56 °C.
+At 1 h: 0.56 °C with one state, 0.63 °C with two.
 
-**At 24 h the extra state wins 0.2 °C. That is the hiring bar for MPC.**
+**At 24 h: 1.93 °C and 1.95 °C. Inside a room's time-constant box, the extra state does not win.**
 
 ---
 
@@ -40,53 +41,36 @@ R1C1 and R2C2 tie at 1 h: 0.56 °C.
 
 Not a dashboard. Not an identification memo.
 
-Consultancies and operators get a command, a comfort band, a plant that is not the fitted RC.
-
----
-
-<!-- _class: full -->
-
-![bg brightness:0.38](../../pictures/presentations/photos/cta.jpg)
-
-# Fast air.
-# Hidden mass.
-
-The sensor sees air, stepped at 0.1 °C.
-Walls are a memory the thermostat never uses.
-
----
-
-<!-- _class: split -->
-
-![bg left:46%](../../pictures/presentations/photos/action.jpg)
-
-# What the pipeline
-# refuses to invent.
-
-Living room + outdoor, 5-minute grid. Fill at most 10 minutes.
-
-A 12-hour hole stays NaN. 0.1 °C vs 1 °C is the sensor, not the RC.
-
-No measured watts: `P` is water–air lift if the zone calls, `S` is PV.
-
----
-
-<!-- _class: split -->
-
-![bg left:46%](../../pictures/presentations/photos/hero.jpg)
-
-# What we isolate.
-
-PEM on Kalman innovations, 70/30 split, 50 winter days for the fit.
-
-Quantization is not a time constant.
-What remains: `R`, `C`, and proxy gains.
+Consultancies and operators get a thermostat setpoint, a comfort band, a simulated house that is not the fitted model.
 
 ---
 
 <!-- _class: chart -->
 
-## Kalman by hand: predict, innovate, update.
+## Simulated house: air moves first, the walls follow.
+
+![w:980](../../pictures/presentations/h2-reponse-indicielle.png)
+
+---
+
+<!-- _class: split -->
+
+![bg left:46%](../../pictures/presentations/photos/physique.jpg)
+
+# Where the numbers
+# come from.
+
+Living room and outdoor, every five minutes. A gap longer than ten minutes stays a gap.
+
+The sensor steps by tenths of a degree — that is not a time constant.
+
+No measured watts: we rebuild heating from water and air, only when the room asks.
+
+---
+
+<!-- _class: chart -->
+
+## Kalman by hand: predict, compare, correct.
 
 ![w:920](../../pictures/presentations/schema-kalman.png)
 
@@ -96,18 +80,27 @@ What remains: `R`, `C`, and proxy gains.
 
 # Scope.
 
-Identify an RC on real sensors.
-Test the MPC on a literature plant.
+We fit the model on real sensors.
 
-Plant solar also hits the mass. This is not a live-house trial.
+We test the controller on a coded house.
+
+Sunlight there hits the walls too. This is not a live-house trial.
 
 ---
 
 <!-- _class: chart -->
 
-## The second state shows up after 6 h, not at the next step.
+## One state stays ahead, from 1 h to 24 h.
 
 ![w:920](../../pictures/presentations/i1-rmse-horizons.png)
+
+---
+
+<!-- _class: chart -->
+
+## Same weather, two physics: the controller is not scored on itself.
+
+![w:980](../../pictures/presentations/s3-plant-vs-r2c2.png)
 
 ---
 
@@ -115,54 +108,53 @@ Plant solar also hits the mass. This is not a live-house trial.
 
 ![bg brightness:0.38](../../pictures/presentations/photos/hero.jpg)
 
-# 2 h below T_conf
-# after the cold start.
+# 1.8 h below comfort.
+# Thermostat: 19.8 h.
 
-Hysteresis: 20 h. Bill ~€16 either way. Thermostat setpoint, band n, peak/off-peak.
+48 h, simulated house, weather known ahead. Proxy bill ~€16. Gap: 18 h.
 
 ---
 
 <!-- _class: chart -->
 
-## Setpoint T_sp: the MPC preheats; hysteresis waits for 7 a.m.
+## The MPC is up before 7 a.m. The thermostat waits for 7 a.m.
+
+![w:980](../../pictures/presentations/s4-mpc-vs-bang-bang.png)
+
+---
+
+<!-- _class: chart -->
+
+## The decision is a thermostat setpoint, not watts.
 
 ![w:980](../../pictures/presentations/s5-commande-p.png)
 
 ---
 
-<!-- _class: split -->
+<!-- _class: chart -->
 
-![bg left:40%](../../pictures/presentations/photos/action.jpg)
+## A one-degree band: the larger the gap, the harder we heat.
 
-# Receding horizon.
-
-Six hours ahead. Piecewise-constant moves of 30 minutes.
-
-Kalman at every step. SciPy, not cvxpy. J = peak/off-peak bill + discomfort. Weather is an oracle.
+![w:920](../../pictures/presentations/h1-loi-bande-n.png)
 
 ---
 
-<!-- _class: split -->
+<!-- _class: chart -->
 
-![bg left:40%](../../pictures/presentations/photos/cta.jpg)
+## If weather arrives six hours late, comfort drops.
 
-# Not circular.
-
-Same `u`, two physics: the plant has `α_s,mass`.
-
-The house R2C2 (τ ~ 140 h) cannot drive this plant.
-The internal model keeps the identification structure, no solar on the mass.
+![w:980](../../pictures/presentations/h9-oracle-vs-retard.png)
 
 ---
 
 <!-- _class: dark -->
 
-# Why not the salon R2C2.
+# The living room does not
+# split air and walls.
 
-Both time constants sit near 140 h.
-That is not fast air plus slow mass.
+6 h and 8 h, both on the edge of the allowed box.
 
-We state it. We do not feed it to the plant controller.
+The controller is scored on another house: air ~3 h, walls ~11 h.
 
 ---
 
@@ -170,9 +162,9 @@ We state it. We do not feed it to the plant controller.
 
 # Where it breaks.
 
-Perfect weather forecasts (oracle).
+Weather known in advance (oracle).
 
-`P` is not watts.
+Heating is not watts.
 
 One house, one winter fit, not a stock of buildings.
 
@@ -191,7 +183,7 @@ One house, one winter fit, not a stock of buildings.
 
 `pytest`
 
-[RC lesson](https://dimiphoton.github.io/basic-MPC/simulator/)
+[Lesson](https://dimiphoton.github.io/basic-MPC/simulator/)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)

@@ -170,13 +170,18 @@ B =
 \tau_{\mathrm{masse}} = R_{am} C_m.
 \]
 
-\(\theta_{\mathrm{R2C2}} = (R_{ae},\,R_{am},\,C_m,\,g_S,\,g_P,\,\sigma_w)\)
-avec \(\sigma_{w,\mathrm{masse}}=\sigma_w\) (un seul bruit identifié).
-Plafond : \(R_{ae}\le 5\cdot 10^5\,\mathrm{s}\) ⇒
-\(\tau_{\mathrm{air}}\le 139\,\mathrm{h}\). \(C_m\in[1{,}2,\,200]\).
+On estime \((\tau_{\mathrm{air}},\,\tau_{\mathrm{murs}},\,C_m/C_a,\,g_S,\,g_P)\).
+\(C_a=1\), donc \(R_{ae}=\tau_{\mathrm{air}}\) et \(R_{am}=\tau_{\mathrm{murs}}/C_m\)
+(en secondes). \(\sigma_w\) est fixé à \(0{,}05\,^\circ\mathrm{C}\) :
+sinon le filtre explique la série par le bruit et \(R\) part à l'infini.
 
-Résultat observé : les deux \(\tau\) saturent au lent (\(\sim 140\,\mathrm{h}\)).
-Ce n'est **pas** un air rapide + une masse.
+Bornes d'une pièce : \(\tau_{\mathrm{air}}\in[0{,}5,\,6]\,\mathrm{h}\),
+\(\tau_{\mathrm{murs}}\in[8,\,72]\,\mathrm{h}\), \(C_m/C_a\in[4,\,25]\).
+
+Sur le test (4 fév.–24 mai 2021) les trois paramètres sortent au bord :
+\(\tau_{\mathrm{air}}=6\,\mathrm{h}\), \(\tau_{\mathrm{murs}}=8\,\mathrm{h}\),
+\(C_m/C_a=25\). RMSE à 24 h : 1,95 °C contre 1,93 °C pour un état.
+Le second état ne réduit pas l'erreur.
 
 ### 2.3 Plant littérature (simulateur)
 
@@ -223,8 +228,8 @@ g_P = \alpha_h/C_a,\quad
 C_a^{\mathrm{int}}=1.
 \]
 
-Pas de \(\alpha_{s,\mathrm{mass}}\). Le \(\hat\theta\) salon (\(\tau\sim 140\,\mathrm{h}\))
-ne commande pas ce plant.
+Pas de \(\alpha_{s,\mathrm{mass}}\). Le calage salon ne commande pas
+ce plant : autre maison, autre échelle de \(P\).
 
 ---
 

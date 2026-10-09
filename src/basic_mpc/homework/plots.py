@@ -9,7 +9,7 @@ from scipy.stats import norm
 
 from basic_mpc.control.actuator import proportional_band_p
 from basic_mpc.figures.style import ACCENT, ACCENT_2, BG, INK, MUTED
-from basic_mpc.figures.style import apply_publication_rc, save_figure
+from basic_mpc.figures.style import apply_publication_rc, save_figure, set_local_clock
 from matplotlib import pyplot as plt
 
 
@@ -32,11 +32,11 @@ def plot_loi_bande_n(path: Path) -> None:
     t_meas = t_sp - gap
     for n_band, color in ((0.5, MUTED), (1.0, ACCENT), (2.0, ACCENT_2)):
         p = [proportional_band_p(t_sp, t, n_band, 1.0) for t in t_meas]
-        ax.plot(gap, p, color=color, lw=1.8, label=f"n = {n_band:g} °C")
+        ax.plot(gap, p, color=color, lw=1.8, label=f"bande {n_band:g} °C")
     ax.axvline(0.0, color=INK, lw=0.6, ls=":")
-    ax.set_xlabel(r"$T_{\mathrm{sp}} - y$ (°C)")
-    ax.set_ylabel(r"$P / P_{\max}$")
-    ax.set_title("La commande n'est pas des watts : une bande de n degrés")
+    ax.set_xlabel("consigne − mesure (°C)")
+    ax.set_ylabel("chauffage (0 = arrêt, 1 = à fond)")
+    ax.set_title("Plus l'écart consigne − mesure est grand, plus on chauffe")
     ax.legend(frameon=False)
     _axes_ink(ax)
     save_figure(fig, path)
@@ -52,11 +52,19 @@ def plot_reponse_indicielle(
     apply_publication_rc()
     fig, ax = plt.subplots(figsize=(8.0, 3.6))
     fig.patch.set_facecolor(BG)
-    ax.plot(hours, ta, color=ACCENT, lw=1.6, label=r"$T_{\mathrm{air}}$")
-    ax.plot(hours, tm, color=ACCENT_2, lw=1.6, label=r"$T_{\mathrm{masse}}$")
-    ax.set_xlabel("heures")
-    ax.set_ylabel("°C")
-    ax.set_title("Échelon de chauffage : les murs retardent l'air")
+    ax.plot(hours, ta, color=ACCENT, lw=1.8, label="air")
+    ax.plot(hours, tm, color=ACCENT_2, lw=1.8, label="murs")
+    ax.set_xlabel("heures depuis l'échelon")
+    ax.set_ylabel("température (°C)")
+    ax.set_title("Plant littérature : l'air part, les murs suivent")
+    ax.text(
+        0.0,
+        -0.22,
+        "Extérieur fixé à 5 °C, départ à 5 °C, chauffage constant, sans bruit.",
+        transform=ax.transAxes,
+        color=MUTED,
+        fontsize=9,
+    )
     ax.legend(frameon=False)
     _axes_ink(ax)
     save_figure(fig, path)
@@ -80,7 +88,7 @@ def plot_bode_module(
         ax.semilogx(periods, mag_r2, color=ACCENT, lw=1.5, label="R2C2 fit")
     ax.axvline(24.0, color=INK, lw=0.7, ls="--")
     ax.set_xlabel("période (h)")
-    ax.set_ylabel(r"$|Z/Z(0)|$")
+    ax.set_ylabel("gain thermique (relatif)")
     ax.set_title("Bode module : le plant filtre autrement que le fit salon")
     ax.legend(frameon=False)
     _axes_ink(ax)
@@ -121,9 +129,9 @@ def plot_kalman_trou(
     apply_publication_rc()
     fig, ax = plt.subplots(figsize=(8.0, 3.6))
     fig.patch.set_facecolor(BG)
-    ax.axvspan(t0, t1, color=MUTED, alpha=0.18, label="y manquant")
-    ax.plot(hours, tm_true, color=INK, lw=1.5, label=r"$T_{\mathrm{masse}}$ vraie")
-    ax.plot(hours, tm_hat, color=ACCENT, lw=1.4, label=r"$\hat T_{\mathrm{masse}}$")
+    ax.axvspan(t0, t1, color=MUTED, alpha=0.18, label="mesure absente")
+    ax.plot(hours, tm_true, color=INK, lw=1.5, label="murs (vrai)")
+    ax.plot(hours, tm_hat, color=ACCENT, lw=1.4, label="murs (estimés)")
     ax.set_xlabel("heures")
     ax.set_ylabel("°C")
     ax.set_title("Sans mesure, le Kalman continue de prédire (pas d'interpolation)")
@@ -175,11 +183,11 @@ def plot_mae_horizons(
     apply_publication_rc()
     fig, ax = plt.subplots(figsize=(7.2, 3.8))
     fig.patch.set_facecolor(BG)
-    ax.plot(hours, mae_r1, "o-", color=MUTED, label="R1C1", lw=1.8)
-    ax.plot(hours, mae_r2, "s-", color=ACCENT, label="R2C2", lw=1.8)
+    ax.plot(hours, mae_r1, "o-", color=MUTED, label="un état", lw=1.8)
+    ax.plot(hours, mae_r2, "s-", color=ACCENT, label="deux états", lw=1.8)
     ax.set_xlabel("horizon (h)")
     ax.set_ylabel("MAE (°C)")
-    ax.set_title("Même test : la MAE dit la même chose que le RMSE")
+    ax.set_title("Même test que le RMSE : la MAE raconte la même chose")
     ax.legend(frameon=False)
     _axes_ink(ax)
     save_figure(fig, path)
@@ -197,20 +205,28 @@ def plot_pareto_lambda(
     apply_publication_rc()
     fig, ax = plt.subplots(figsize=(6.4, 5.0))
     fig.patch.set_facecolor(BG)
-    ax.plot(hours_mpc, bill_mpc, "o-", color=ACCENT, lw=1.8, label="MPC (λ variable)")
+    bills = np.concatenate([np.asarray(bill_mpc, dtype=float), [bill_bb]])
+    lo = float(np.min(bills))
+    hi = float(np.max(bills))
+    ax.plot(hours_mpc, bill_mpc, "o-", color=ACCENT, lw=1.8, label="MPC (poids confort)")
+    # Les deux poids forts sont proches en heures : on les décalle.
+    decalages = {4.0: (8, 12), 1.0: (8, -16), 0.25: (-78, 10)}
     for lam, x, y in zip(lambdas, hours_mpc, bill_mpc, strict=True):
+        dx, dy = decalages.get(float(lam), (8, 8))
         ax.annotate(
-            f"λ={lam:g}",
+            f"poids = {lam:g}",
             (x, y),
             textcoords="offset points",
-            xytext=(6, 6),
+            xytext=(dx, dy),
             color=INK,
             fontsize=9,
         )
-    ax.scatter([hours_bb], [bill_bb], color=MUTED, s=70, zorder=3, label="hystérésis")
-    ax.set_xlabel("heures sous T_conf")
+    ax.scatter([hours_bb], [bill_bb], color=MUTED, s=70, zorder=3, label="thermostat")
+    # Axe depuis 0 : quelques centimes ne doivent pas ressembler à une falaise.
+    ax.set_ylim(0.0, hi * 1.45)
+    ax.set_xlabel("heures trop froid (écart > 0,1 °C)")
     ax.set_ylabel("facture proxy (€)")
-    ax.set_title("λ pèse l'inconfort : on ne minimise pas « un peu de tout »")
+    ax.set_title(f"Sur 16 h, la facture proxy reste entre {lo:.2f} et {hi:.2f} €")
     ax.legend(frameon=False)
     _axes_ink(ax)
     save_figure(fig, path)
@@ -227,12 +243,12 @@ def plot_oracle_vs_retard(
     apply_publication_rc()
     fig, ax = plt.subplots(figsize=(8.0, 3.8))
     fig.patch.set_facecolor(BG)
-    ax.plot(hours, t_conf, color=INK, lw=1.0, ls="--", label=r"$T_{\mathrm{conf}}$")
-    ax.plot(hours, ta_oracle, color=ACCENT, lw=1.6, label="MPC oracle")
-    ax.plot(hours, ta_delay, color=ACCENT_2, lw=1.5, label="MPC, T_ext retardé 6 h")
-    ax.set_xlabel("heures")
-    ax.set_ylabel(r"$T_{\mathrm{air}}$ (°C)")
-    ax.set_title("Limite dite : l'oracle n'est pas un prévisionniste")
+    ax.plot(hours, t_conf, color=INK, lw=1.0, ls="--", label="consigne de confort")
+    ax.plot(hours, ta_oracle, color=ACCENT, lw=1.6, label="MPC, météo connue")
+    ax.plot(hours, ta_delay, color=ACCENT_2, lw=1.5, label="MPC, extérieur retardé de 6 h")
+    set_local_clock(ax, hours, start_hour=18.0)
+    ax.set_ylabel("air (°C)")
+    ax.set_title("16 h : avec 6 h de retard sur l'extérieur, le confort se dégrade")
     ax.legend(frameon=False)
     _axes_ink(ax)
     save_figure(fig, path)
@@ -248,8 +264,8 @@ def plot_quantification_plant(
     apply_publication_rc()
     fig, ax = plt.subplots(figsize=(8.0, 3.6))
     fig.patch.set_facecolor(BG)
-    ax.plot(hours, ta, color=INK, lw=1.5, label="T_air vraie")
-    ax.plot(hours, y, color=ACCENT, lw=1.0, drawstyle="steps-post", label="y (0,1 °C)")
+    ax.plot(hours, ta, color=INK, lw=1.5, label="air vrai")
+    ax.plot(hours, y, color=ACCENT, lw=1.0, drawstyle="steps-post", label="mesure (pas 0,1 °C)")
     ax.set_xlabel("heures")
     ax.set_ylabel("°C")
     ax.set_title("Le capteur n'est pas l'état : quantification 0,1 °C")

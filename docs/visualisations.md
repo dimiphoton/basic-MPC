@@ -3,9 +3,9 @@
 Menu complet. On **produit** les figures depuis les notebooks
 (`notebooks/00`…`03`, `RECOMPUTE = True`) ou le CLI équivalent.
 Sortie : `pictures/experiments/` (PNG, parfois PDF). On **sélectionne**
-lesquelles vont dans les slides RH / technique (3 graphes max par deck,
-fond crème / transparent). L'app Streamlit n'est **pas** le registre
-des expériences.
+lesquelles vont dans les slides RH / technique (fond crème / transparent,
+libellés en mots — air, murs, consigne — pas \(T_i\)). L'app Streamlit
+n'est **pas** le registre des expériences.
 
 Noms de fichiers en kebab-case.
 
@@ -99,9 +99,9 @@ pour le rendu.
 - Travail : `pictures/experiments/<id>-<nom>.png`
 - Slides : copie choisie dans `pictures/presentations/` (suffixe `-fr` / `-en` seulement si le titre est *dans* l'image)
 
-Choix v1 (3 graphes max par récit, titres Marp au-dessus) :
+Choix v1.1 (titres Marp au-dessus, axes en mots) :
 
 | Deck | Graphes |
 |---|---|
-| Recruteur | S6 confort/conso, S4 \(T_\mathrm{air}\) 48 h |
-| Technique | schéma Kalman, I1 RMSE vs horizon, S5 commande \(P\) |
+| Recruteur | H2 air/murs, S6 facture + heures trop froid, S4 48 h, S3 maison simulée vs modèle |
+| Technique | H2, Kalman, I1 erreur vs horizon, S3, S4, S5 consigne thermostat, H1 bande, H9 météo retardée |

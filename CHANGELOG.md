@@ -2,6 +2,10 @@
 
 ## [Non publié]
 
+- Identification R2C2 dans une fourchette de pièce (τ_air 0,5–6 h,
+  τ_murs 8–72 h, σ_w fixé). Le fit sort au bord (6 h et 8 h) et ne bat
+  pas le R1C1 sur le test : RMSE 24 h 1,95 °C contre 1,93 °C.
+  Figures : protocole sur le graphe (RMSE, dates, heure locale, 48 h).
 - Cœur du repo : `src/` + notebooks d'expériences qui enregistrent
   les PNG (`pictures/experiments/`). Streamlit / Pages restent des
   démos optionnelles. Extra `[nb]` pour le kernel.

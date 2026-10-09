@@ -37,8 +37,9 @@ def test_pem_r2c2_cm_superieur_a_un() -> None:
     _x, y = simulate_r2c2(vrai, t_ext, solar, heating, x0=np.array([18.0, 17.0]), seed=6)
     u = np.column_stack([t_ext, solar, heating])
     estime, info = fit_r2c2(y, u)
-    assert estime.cm > 1.2
-    assert estime.tau_mass_hours > estime.tau_air_hours * 0.5
+    assert 0.5 <= estime.tau_air_hours <= 6.0
+    assert 8.0 <= estime.tau_mass_hours <= 72.0
+    assert estime.tau_mass_hours > estime.tau_air_hours
     assert np.isfinite(info["nll"])
 
 

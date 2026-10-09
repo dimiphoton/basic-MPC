@@ -7,24 +7,24 @@
     "g_heating": 0.0031639454099347355
   },
   "params_r2c2": {
-    "rae": 500000.0,
-    "ram": 124794.92493741839,
-    "cm": 4.268279633562142,
-    "tau_air_hours": 138.88888888888889,
-    "tau_mass_hours": 147.961010133972,
-    "g_solar": 2.061153622438558e-09,
-    "g_heating": 1.0316565835964444e-05,
-    "process_noise_std": 0.10460276442299554
+    "rae": 21599.995175972974,
+    "ram": 1152.0001207454054,
+    "cm": 24.999998979118605,
+    "tau_air_hours": 5.999998659992492,
+    "tau_mass_hours": 8.000000511827679,
+    "g_solar": 5.100639736744962e-08,
+    "g_heating": 2.678102521656223e-06,
+    "process_noise_std": 0.05
   },
   "fit_r1c1": {
     "loaded": true,
     "nll": 533951.2406234675
   },
   "fit_r2c2": {
-    "success": false,
-    "message": "Maximum number of iterations has been exceeded.",
-    "nll": -10203.488118889823,
-    "n_iter": 120,
+    "success": true,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "nll": -125.70963239740726,
+    "n_iter": 30,
     "sensor_noise_std_fixed": 0.05
   },
   "horizons_r1c1": {
@@ -56,28 +56,28 @@
   },
   "horizons_r2c2": {
     "1h": {
-      "rmse": 0.5563608157258815,
-      "mae": 0.314550058618425,
+      "rmse": 0.6253936508018274,
+      "mae": 0.3391418766060698,
       "n": 2609.0
     },
     "3h": {
-      "rmse": 1.1002630763674857,
-      "mae": 0.6757298801927091,
+      "rmse": 1.2207488046742292,
+      "mae": 0.7022146571624088,
       "n": 2589.0
     },
     "6h": {
-      "rmse": 1.4627320502634795,
-      "mae": 0.9734012198560364,
+      "rmse": 1.6007863249613867,
+      "mae": 1.0035435513791584,
       "n": 2559.0
     },
     "12h": {
-      "rmse": 1.6176018159315515,
-      "mae": 1.1519261993859355,
+      "rmse": 1.811284749246752,
+      "mae": 1.21711270365908,
       "n": 2499.0
     },
     "24h": {
-      "rmse": 1.7318967340252562,
-      "mae": 1.2358820410631666,
+      "rmse": 1.9527533135672859,
+      "mae": 1.4177280924004139,
       "n": 2379.0
     }
   },
@@ -88,5 +88,5 @@
     "schema-kalman": "pictures/experiments/schema-kalman.png",
     "schema-famille-rc": "pictures/experiments/schema-famille-rc.png"
   },
-  "notes": "Même fenêtre PEM et même test que le R1C1. C_a = 1. Solaire identifié sur l'air seulement. Plant : alpha_s_mass > 0 (S3)."
+  "notes": "Même fenêtre PEM et même test que le R1C1. C_a = 1. τ_air et τ_murs bornés (pièce). σ_w fixé. Solaire sur l'air seulement. Plant : alpha_s_mass > 0 (S3)."
 }
